@@ -9,7 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HotelManagementSystemmobile">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Account"></activity>
+        <activity android:name=".Signup" />
+        <activity android:name=".Login" />
+        <activity android:name=".eVouchers" />
+        <activity android:name=".FacilitiesBooking" />
+        <activity android:name=".CheckOut" />
+        <activity android:name=".CheckIn" />
+        <activity android:name=".Homepage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
