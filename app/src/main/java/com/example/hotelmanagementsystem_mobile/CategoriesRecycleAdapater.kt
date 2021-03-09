@@ -1,6 +1,8 @@
 package com.example.hotelmanagementsystem_mobile
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,9 +34,32 @@ class CategoriesRecycleAdapater(val arrayList:ArrayList<Model>,val context:Conte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       holder.bindItems(arrayList[position])
+        holder.bindItems(arrayList[position])
+
+
+        holder.itemView.imgCat.setOnClickListener {
+
+            when (position) {
+                0 -> {
+                    Log.d("position",position.toString())
+                    val intent=Intent(context,SportsCat::class.java)
+                    context.startActivities(arrayOf(intent))
+                }
+                1 -> {
+                    Log.d("position",position.toString())
+                    val intent=Intent(context,BoardGameCat::class.java)
+                    context.startActivities(arrayOf(intent))
+                }
+                2 -> {
+                    Log.d("position",position.toString())
+                    val intent=Intent(context,GamingRoomCat::class.java)
+                    context.startActivities(arrayOf(intent))
+                }
+            }
+
+
+        }
+
     }
-
-
 
 }

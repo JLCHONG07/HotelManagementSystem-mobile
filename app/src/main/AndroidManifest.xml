@@ -9,6 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GamingRoomCat"
+            android:parentActivityName=".Categories"
+            android:label="@string/bar_gaming_room"/>
+        <activity android:name=".BoardGameCat"
+            android:parentActivityName=".Categories"
+            android:label="@string/bar_board_game"/>
+        <activity
+            android:name=".SportsCat"
+            android:parentActivityName=".Categories"
+            android:label="@string/bar_sports"/>
         <activity
             android:name=".Account"
             android:theme="@style/homeTheme" />
