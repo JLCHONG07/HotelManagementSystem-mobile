@@ -15,12 +15,7 @@ class Categories : AppCompatActivity() {
         arrayList.add(Model( "Sports", R.drawable.categories_sports))
         arrayList.add(Model( "Board Game", R.drawable.categories_board_game))
         arrayList.add(Model("Gaming Room", R.drawable.categories_gaming_rooms))
-        arrayList.add(Model( "Sports", R.drawable.categories_sports))
-        arrayList.add(Model( "Board Game", R.drawable.categories_board_game))
-        arrayList.add(Model("Gaming Room", R.drawable.categories_gaming_rooms))
-        arrayList.add(Model( "Sports", R.drawable.categories_sports))
-        arrayList.add(Model( "Board Game", R.drawable.categories_board_game))
-        arrayList.add(Model("Gaming Room", R.drawable.categories_gaming_rooms))
+
 
         val categoriesRecycleAdapater=CategoriesRecycleAdapater(arrayList,this)
         recycleViewCategories.layoutManager=LinearLayoutManager(this)
