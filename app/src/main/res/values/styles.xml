@@ -4,4 +4,9 @@
     <style name="homeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/app_background</item>
     </style>
+    
+    <style name="Theme.NoActionBar" parent="homeTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

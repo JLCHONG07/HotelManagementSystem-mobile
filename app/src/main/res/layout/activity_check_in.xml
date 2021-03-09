@@ -6,4 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".CheckIn">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_check_in_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/barBrown">
+
+        <TextView
+            android:id="@+id/tv_check_in_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/check_in_title"
+            android:textColor="@color/text_color"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFB8977E"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:gravity="start"
+            android:theme="@style/Theme.MaterialComponents.Light">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_horizontal"
+                android:hint="Please enter your reservation ID"
+                android:inputType="text"
+                android:textSize="20sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_check_in_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/bc_add_button"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/btn_check_in_add" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#FFFFBA5C"
+        android:src="@drawable/ic_qrcode_scan"
+        android:scaleType="center"
+        app:maxImageSize="35dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
