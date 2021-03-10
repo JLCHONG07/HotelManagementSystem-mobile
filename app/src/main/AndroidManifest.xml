@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GamingRoomCat"
-            android:parentActivityName=".Categories"
+        <activity android:name="com.example.facilities_booking.GamingRoomCat"
+            android:parentActivityName="com.example.facilities_booking.Categories"
             android:label="@string/bar_gaming_room"/>
-        <activity android:name=".BoardGameCat"
-            android:parentActivityName=".Categories"
+        <activity android:name="com.example.facilities_booking.BoardGameCat"
+            android:parentActivityName="com.example.facilities_booking.Categories"
             android:label="@string/bar_board_game"/>
         <activity
-            android:name=".SportsCat"
-            android:parentActivityName=".Categories"
+            android:name="com.example.facilities_booking.SportsCat"
+            android:parentActivityName="com.example.facilities_booking.Categories"
             android:label="@string/bar_sports"/>
         <activity
             android:name=".Account"
@@ -26,7 +26,7 @@
         <activity android:name=".Login" />
         <activity android:name=".eVouchers" />
         <activity
-            android:name=".Categories"
+            android:name="com.example.facilities_booking.Categories"
             android:label="@string/bar_categories"
             android:parentActivityName=".Homepage" />
         <activity android:name=".CheckOut" />
