@@ -7,6 +7,7 @@
     app:cardCornerRadius="10pt"
     app:cardUseCompatPadding="true"
 
+
     >
 
 
@@ -14,9 +15,11 @@
         android:id="@+id/imgCat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground">
+        android:foreground="?attr/selectableItemBackground"
+        >
 
         <TextView
             android:id="@+id/txtViewCat"
@@ -24,9 +27,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="bottom"
-            android:text="CatName"
             android:textColor="@color/white"
-            android:textSize="31.5dp"
+            android:textSize="31.5sp"
             android:textStyle="bold" />
     </LinearLayout>
 

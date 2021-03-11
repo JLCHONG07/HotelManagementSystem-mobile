@@ -4,10 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.EVouchers">
+    tools:context=".activities.facilities_booking.SportsCat"
+    android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
+
+    <GridView
+        android:id="@+id/sports_cat_grid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycleView1"></androidx.recyclerview.widget.RecyclerView>
+        android:numColumns="2"
+        android:horizontalSpacing="15dp"
+        android:layout_marginTop="15pt"
+        android:verticalSpacing="15dp"/>
 </LinearLayout>

@@ -38,6 +38,7 @@ class CheckInActivity : AppCompatActivity() {
     private fun getCheckInDetails() {
         var checkInDetailsList : ArrayList<CheckIn> = ArrayList()
         checkInDetailsList.add(CheckIn("RSVTN0001", 3, 2, 2, 4, "Quest Room", "2 February 2021, 2:30pm", "checkin0001"))
+        checkInDetailsList.add(CheckIn("RSVTN0001", 3, 2, 2, 4, "Quest Room", "2 February 2021, 2:30pm", "checkin0001"))
 
         rv_check_in_details.visibility = View.VISIBLE
         rv_check_in_details.layoutManager = LinearLayoutManager(this)

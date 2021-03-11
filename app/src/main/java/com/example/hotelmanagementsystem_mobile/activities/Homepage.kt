@@ -1,13 +1,13 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import kotlinx.android.synthetic.main.activity_main.*
 
-class Homepage : AppCompatActivity() {
+class Homepage : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,9 +20,12 @@ class Homepage : AppCompatActivity() {
         }
 
         icon_check_in.setOnClickListener {
-            startActivity(Intent(this, CheckInActivity::class.java))
+            val intent = Intent(this, CheckInActivity::class.java)
+            startActivity(intent)
         }
     }
 
-
+    override fun onBackPressed() {
+        doubleBackToExit()
+    }
 }

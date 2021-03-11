@@ -2,7 +2,15 @@
     <string name="app_name">HotelManagementSystem-mobile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    FacilitiesBooking String-->
     <string name="bar_categories">Categories</string>
+    <string name="bar_sports">Sports</string>
+    <string name="bar_board_game">Board Game</string>
+    <string name="bar_gaming_room">Gaming Room</string>
+
+    <!-- Base Activity String -->
+    <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
 
     <!-- Check in Activity String -->
     <string name="content_description">image</string>

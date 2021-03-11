@@ -1,11 +1,10 @@
-package com.example.hotelmanagementsystem_mobile.activities
-
+package com.example.hotelmanagementsystem_mobile.activities.facilities_booking
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.hotelmanagementsystem_mobile.adapters.CategoriesRecycleAdapater
-import com.example.hotelmanagementsystem_mobile.models.Model
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.adapters.CategoriesRecycleAdapter
+import com.example.hotelmanagementsystem_mobile.models.Model
 import kotlinx.android.synthetic.main.activity_categories.*
 
 class Categories : AppCompatActivity() {
@@ -14,18 +13,13 @@ class Categories : AppCompatActivity() {
         setContentView(R.layout.activity_categories)
 
         val arrayList = ArrayList<Model>()
-        
-        arrayList.add(Model( "Sports", R.drawable.categories_sports))
-        arrayList.add(Model( "Board Game", R.drawable.categories_board_game))
-        arrayList.add(Model("Gaming Room", R.drawable.categories_gaming_rooms))
-        arrayList.add(Model( "Sports", R.drawable.categories_sports))
-        arrayList.add(Model( "Board Game", R.drawable.categories_board_game))
-        arrayList.add(Model("Gaming Room", R.drawable.categories_gaming_rooms))
+        /*add the data to arrayList of Model (Categories)*/
         arrayList.add(Model( "Sports", R.drawable.categories_sports))
         arrayList.add(Model( "Board Game", R.drawable.categories_board_game))
         arrayList.add(Model("Gaming Room", R.drawable.categories_gaming_rooms))
 
-        val categoriesRecycleAdapater= CategoriesRecycleAdapater(arrayList,this)
+        val categoriesRecycleAdapater = CategoriesRecycleAdapter(arrayList,this@Categories)
+
         recycleViewCategories.layoutManager=LinearLayoutManager(this)
         recycleViewCategories.adapter=categoriesRecycleAdapater
     }
