@@ -10,21 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Account"
+            android:name=".activities.Account"
             android:theme="@style/homeTheme" />
-        <activity android:name=".Signup" />
-        <activity android:name=".Login" />
-        <activity android:name=".eVouchers" />
+        <activity android:name=".activities.Signup" />
+        <activity android:name=".activities.Login" />
+        <activity android:name=".activities.eVouchers" />
         <activity
-            android:name=".Categories"
+            android:name=".activities.Categories"
             android:label="@string/bar_categories"
-            android:parentActivityName=".Homepage" />
-        <activity android:name=".CheckOut" />
+            android:parentActivityName=".activities.Homepage" />
+        <activity android:name=".activities.CheckOut" />
         <activity
-            android:name=".CheckIn"
+            android:name=".activities.CheckInActivity"
             android:theme="@style/Theme.NoActionBar" />
         <activity
-            android:name=".Homepage"
+            android:name=".activities.Homepage"
             android:theme="@style/homeTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

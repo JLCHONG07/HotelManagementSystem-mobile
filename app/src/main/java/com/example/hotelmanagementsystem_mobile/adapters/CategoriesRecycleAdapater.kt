@@ -1,16 +1,17 @@
-package com.example.hotelmanagementsystem_mobile
+package com.example.hotelmanagementsystem_mobile.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hotelmanagementsystem_mobile.models.Model
+import com.example.hotelmanagementsystem_mobile.R
 import kotlinx.android.synthetic.main.row_categories.view.*
 
 
-class CategoriesRecycleAdapater(val arrayList:ArrayList<Model>,val context:Context):
+open class CategoriesRecycleAdapater(val arrayList:ArrayList<Model>, val context:Context):
     RecyclerView.Adapter<CategoriesRecycleAdapater.ViewHolder>() {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -32,9 +33,18 @@ class CategoriesRecycleAdapater(val arrayList:ArrayList<Model>,val context:Conte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       holder.bindItems(arrayList[position])
+        TODO("Not yet implemented")
     }
 
-
-
+//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+//        holder.bindItems(arrayList[position])
+//
+//        holder.itemView.imgCat.setOnClickListener{
+//
+//            if (position == 0) {
+//                val intent = Intent(context, SportsCat::class.java)
+//                context.startActivities(arrayOf(intent))
+//            }
+//        }
+//    }
 }

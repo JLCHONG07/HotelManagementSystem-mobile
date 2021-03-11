@@ -5,6 +5,7 @@
     <string name="bar_categories">Categories</string>
 
     <!-- Check in Activity String -->
+    <string name="content_description">image</string>
     <string name="check_in_title">Recently Check in</string>
     <string name="tv_check_in_hint">Enter Your Check in ID</string>
     <string name="btn_check_in_add">ADD</string>

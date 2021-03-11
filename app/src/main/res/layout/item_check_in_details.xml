@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_gravity="center_horizontal"
+    android:elevation="5dp"
+    android:layout_margin="10dp"
+    app:cardBackgroundColor="@color/card_background_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_profile_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/content_description"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_user_place_holder"
+            android:background="@drawable/ic_default_profile_background" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:id="@+id/tv_check_in_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Foong Gah Seng"
+                android:textSize="18sp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_check_in_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="#checkinD001" />
+
+                <TextView
+                    android:id="@+id/tv_check_in__date_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Feb 2 > Feb 5" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_number_of_room"/>
+
+        <TextView
+            android:id="@+id/tv_check_in_number_of_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x2"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_number_of_customer"/>
+
+        <TextView
+            android:id="@+id/tv_check_in_number_of_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x4"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
+            android:textSize="16dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
