@@ -1,8 +1,10 @@
 package com.example.facilities_booking
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
@@ -25,15 +27,16 @@ BaseAdapter(){
         return position.toLong()
     }
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         /*Hold the sports card item*/
-        var v:View=View.inflate(context,R.layout.sports_card_view_item,null)
+        val v:View= inflate(context,R.layout.sports_card_view_item,null)
 
         /*get Image and TextView by the position of array*/
-        var sportsImage:RelativeLayout =v.findViewById(R.id.imgSports)
-        var sportsName:TextView=v.findViewById(R.id.txtViewSports)
-        var listItem:ModelSport= arrayList[position]
+        val sportsImage:RelativeLayout =v.findViewById(R.id.imgSports)
+        val sportsName:TextView=v.findViewById(R.id.txtViewSports)
+        val listItem:ModelSport= arrayList[position]
         sportsImage.setBackgroundResource(listItem.sportsImage)
         sportsName.text=listItem.sportsName
 

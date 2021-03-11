@@ -13,18 +13,17 @@
             android:id="@+id/imgSports"
             android:layout_width="wrap_content"
             android:layout_height="250dp"
-            android:background="@drawable/sports_badminton"
+
             >
 
         <TextView
             android:id="@+id/txtViewSports"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Badminton"
             android:gravity="bottom"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold"
            >
 
