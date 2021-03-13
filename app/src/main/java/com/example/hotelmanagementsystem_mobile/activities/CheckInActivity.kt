@@ -1,5 +1,6 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
+import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,5 +47,10 @@ class CheckInActivity : AppCompatActivity() {
 
         val adapter = CheckInDetailsAdapter(this, checkInDetailsList)
         rv_check_in_details.adapter = adapter
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent (this, Homepage::class.java)
+        startActivity(intent)
     }
 }

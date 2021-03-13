@@ -7,36 +7,27 @@
     tools:context=".activities.Homepage"
 
     >
-    <ImageView
-        android:id="@+id/icon_facilities_booking"
-        android:layout_width="93dp"
-        android:layout_height="93dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginLeft="42dp"
-        android:layout_marginTop="338dp"
-        android:layout_marginEnd="276dp"
-        android:layout_marginRight="276dp"
-        android:layout_marginBottom="300dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_facilities_booking" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fl_wrapper"/>
 
-    <ImageView
-        android:id="@+id/icon_check_in"
-        android:layout_width="93dp"
-        android:layout_height="93dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginLeft="42dp"
-        android:layout_marginEnd="276dp"
-        android:layout_marginRight="276dp"
-        android:layout_marginBottom="300dp"
-        android:clickable="true"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="?android:attr/windowBackground"
+        app:backgroundTint="@color/barBrown"
+        app:barrierMargin="10dp"
+        app:elevation="10dp"
+        app:itemBackground="@color/barBrown"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_check_in" />
+        app:menu="@menu/bottom_tab_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

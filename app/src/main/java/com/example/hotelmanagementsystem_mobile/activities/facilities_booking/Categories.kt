@@ -1,8 +1,10 @@
 package com.example.hotelmanagementsystem_mobile.activities.facilities_booking
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.adapters.CategoriesRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.models.Model
 import kotlinx.android.synthetic.main.activity_categories.*
@@ -22,5 +24,10 @@ class Categories : AppCompatActivity() {
 
         recycleViewCategories.layoutManager=LinearLayoutManager(this)
         recycleViewCategories.adapter=categoriesRecycleAdapater
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent (this, Homepage::class.java)
+        startActivity(intent)
     }
 }
