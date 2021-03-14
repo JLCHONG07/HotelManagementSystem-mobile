@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BoardGameCat
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.GamingRoomCat
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.SportsCat
 import com.example.hotelmanagementsystem_mobile.models.Model
@@ -44,24 +45,37 @@ class CategoriesRecycleAdapter(private val arrayList:ArrayList<Model>, val conte
 
        /* categories on click action which perform navigation*/
         holder.itemView.imgCat.setOnClickListener {
+            val cardPos=arrayList[position]
 
+            var actionBarTitle:String=cardPos.cat_name
             when (position) {
                 0 -> {
                     Log.d("position",position.toString())
                     val intent=Intent(context, SportsCat::class.java)
+                    intent.putExtra("aBarTitle",actionBarTitle)
                     context.startActivities(arrayOf(intent))
                 }
                 1 -> {
                     Log.d("position",position.toString())
-                    val intent=Intent(context, BoardGameCat::class.java)
+                    val intent=Intent(context,BookingAvailable::class.java)
+                    intent.putExtra("aBarTitle",actionBarTitle)
                     context.startActivities(arrayOf(intent))
                 }
                 2 -> {
                     Log.d("position",position.toString())
-                    val intent=Intent(context, GamingRoomCat::class.java)
+                    val intent=Intent(context,BookingAvailable::class.java)
+                    intent.putExtra("aBarTitle",actionBarTitle)
                     context.startActivities(arrayOf(intent))
                 }
             }
+
+
+
+
+
+
+
+
 
 
         }

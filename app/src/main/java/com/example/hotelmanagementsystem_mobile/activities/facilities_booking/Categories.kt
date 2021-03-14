@@ -26,8 +26,8 @@ class Categories : AppCompatActivity() {
         recycleViewCategories.adapter=categoriesRecycleAdapater
     }
 
-    override fun onBackPressed() {
+    /*override fun onBackPressed() {
         val intent = Intent (this, Homepage::class.java)
         startActivity(intent)
-    }
+    }*/
 }

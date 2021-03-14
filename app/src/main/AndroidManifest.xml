@@ -9,47 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activities.BaseActivity"></activity>
-
+        <activity android:name=".activities.facilities_booking.BookingAvailable"
+           />
+        <activity android:name=".activities.BaseActivity" />
         <activity
             android:name=".activities.facilities_booking.BoardGameCat"
-            android:label="@string/bar_board_game"
-            android:parentActivityName=".activities.facilities_booking.Categories"/>
-
+          />
         <activity
             android:name=".activities.facilities_booking.GamingRoomCat"
-            android:label="@string/bar_gaming_room"
-            android:parentActivityName=".activities.facilities_booking.Categories" />
-
+             />
         <activity
             android:name=".activities.facilities_booking.SportsCat"
-            android:label="@string/bar_sports"
             android:parentActivityName=".activities.facilities_booking.Categories" />
-
         <activity
             android:name=".activities.Account"
             android:theme="@style/homeTheme" />
-
-        <activity android:name=".activities.Signup"
-            android:theme="@style/AppThemeNoBar"/>
-
-        <activity android:name=".activities.Login"
-            android:theme="@style/loginTheme" >
-        </activity>
-
+        <activity
+            android:name=".activities.Signup"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".activities.Login"
+            android:theme="@style/loginTheme"></activity>
         <activity android:name=".activities.EVouchers" />
-
         <activity
             android:name=".activities.facilities_booking.Categories"
             android:label="@string/bar_categories"
             android:parentActivityName=".activities.Homepage" />
-
         <activity android:name=".activities.CheckOut" />
-
-        <activity
-            android:name=".activities.CheckInActivity" />
-
+        <activity android:name=".activities.CheckInActivity" />
         <activity
             android:name=".activities.Homepage"
             android:theme="@style/homeTheme">
@@ -59,7 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

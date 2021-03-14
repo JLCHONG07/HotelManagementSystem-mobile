@@ -1,10 +1,12 @@
 package com.example.hotelmanagementsystem_mobile.activities.facilities_booking
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
+import androidx.appcompat.app.ActionBar
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.adapters.SportsRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.models.ModelSport
@@ -19,6 +21,13 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sports_cat)
 
+        val actionBar: ActionBar?=supportActionBar
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar!!.setDisplayShowHomeEnabled(true)
+        var intent=intent
+        val aBarTitle=intent.getStringExtra("aBarTitle")
+
+        actionBar!!.title = aBarTitle
 
         gridView = findViewById(R.id.sports_cat_grid_view)
         arrayList = ArrayList()
@@ -44,6 +53,14 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
 
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+        val cardPos= arrayList?.get(position)
+        var actionBarTitle:String= cardPos!!.sportsName
+
+        val intent= Intent(this@SportsCat,BookingAvailable::class.java)
+        intent.putExtra("aBarTitle",actionBarTitle)
+        startActivity(intent)
+
 
     }
 }
