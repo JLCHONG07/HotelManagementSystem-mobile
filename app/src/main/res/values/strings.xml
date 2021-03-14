@@ -31,4 +31,16 @@
     <string name="check_in_term_and_condition">I agree with terms and conditions</string>
     <string name="check_in_details_title">Check In Details</string>
 
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="signup">Sign Up</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_up">Sign up to Get Started</string>
+    <string name="ic_num">IC/Passport Number</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign In</string>
+
 </resources>
