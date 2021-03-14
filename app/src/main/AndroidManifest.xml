@@ -14,15 +14,18 @@
 
         <activity
             android:name=".activities.facilities_booking.BoardGameCat"
-            android:theme="@style/homeTheme" />
+            android:label="@string/bar_board_game"
+            android:parentActivityName=".activities.facilities_booking.Categories"/>
 
         <activity
             android:name=".activities.facilities_booking.GamingRoomCat"
-            android:theme="@style/homeTheme" />
+            android:label="@string/bar_gaming_room"
+            android:parentActivityName=".activities.facilities_booking.Categories" />
 
         <activity
             android:name=".activities.facilities_booking.SportsCat"
-            android:theme="@style/homeTheme" />
+            android:label="@string/bar_sports"
+            android:parentActivityName=".activities.facilities_booking.Categories" />
 
         <activity
             android:name=".activities.Account"
