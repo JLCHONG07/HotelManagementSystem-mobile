@@ -29,7 +29,7 @@
             android:theme="@style/homeTheme" />
 
         <activity android:name=".activities.Signup"
-            android:theme="@style/AppThemeNoBar"/>
+            android:theme="@style/signupTheme"/>
 
         <activity android:name=".activities.Login"
             android:theme="@style/loginTheme" >
@@ -45,7 +45,8 @@
         <activity android:name=".activities.CheckOut" />
 
         <activity
-            android:name=".activities.CheckInActivity" />
+            android:name=".activities.CheckInActivity"
+            android:label="@string/check_in_title" />
 
         <activity
             android:name=".activities.Homepage"

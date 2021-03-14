@@ -7,26 +7,13 @@
         <item name="actionMenuTextColor">@color/white</item>
     </style>
 
-    <style name="Theme.NoActionBar" parent="homeTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="loginTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/login</item>
     </style>
 
-    <style name="create">
-        <item name="android:fontFamily">Lato</item>
-        <item name="android:textColor">#FF343F4B</item>
-        <item name="android:textSize">50sp</item>
-        <item name="android:lineSpacingMultiplier">1.3</item>
-    </style>
-
-    <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="signupTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/register</item>
     </style>
-
 
     <style name="NavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemTextAppearanceActive">@style/ActiveText</item>
@@ -38,6 +25,4 @@
     <style name="InactiveText">
         <item name="android:textColor">@color/white</item>
     </style>
-
-
 </resources>

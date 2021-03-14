@@ -24,7 +24,6 @@
 
     <RelativeLayout
         android:id="@+id/btnCheckin"
-
         android:layout_width="108dp"
         android:layout_height="93dp"
         android:layout_marginStart="16dp"
@@ -46,7 +45,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/checkin"></ImageView>
+            android:src="@drawable/checkin"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +90,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/checkout"></ImageView>
+            android:src="@drawable/checkout"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -132,7 +131,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/icon_facilities_booking"></ImageView>
+            android:src="@drawable/icon_facilities_booking"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -175,7 +174,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/image"></ImageView>
+            android:src="@drawable/image"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -188,11 +187,6 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="E-Voucher">
-
-
         </TextView>
-
     </RelativeLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
