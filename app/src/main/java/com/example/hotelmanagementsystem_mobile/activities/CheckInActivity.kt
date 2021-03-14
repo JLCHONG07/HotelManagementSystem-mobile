@@ -22,28 +22,11 @@ class CheckInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_in)
-
-        setupActionBar()
-
-        val typeface = Typeface.createFromAsset(assets, "BerkshireSwash-Regular.ttf")
-        tv_check_in_title.typeface = typeface
     }
 
     override fun onStart() {
         super.onStart()
         getCheckInDetails()
-    }
-
-    private fun setupActionBar() {
-        setSupportActionBar(toolbar_check_in_activity)
-
-        val actionBar = supportActionBar
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
-        }
-
-        toolbar_check_in_activity.setNavigationOnClickListener{onBackPressed()}
     }
 
     private fun getCheckInDetails() {
