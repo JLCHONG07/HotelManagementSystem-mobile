@@ -1,9 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.facilities_booking.BookingAvailable">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView60Minutes"
+            android:layout_width="138sp"
+            android:layout_height="130sp"
+            app:cardCornerRadius="9pt"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtViewNum1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="60"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="50sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/txtViewWord1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtViewNum1"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="bottom"
+                    android:text="Minutes"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView120Minutes"
+            android:layout_width="138sp"
+            android:layout_height="130sp"
+            app:cardCornerRadius="9pt"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtViewNum2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="120"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="50sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/txtViewWord2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtViewNum2"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="bottom"
+                    android:text="Minutes"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView180Minutes"
+            android:layout_width="138sp"
+            android:layout_height="130sp"
+            app:cardCornerRadius="9pt"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtViewNum3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="180"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="50sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/txtViewWord3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtViewNum3"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="bottom"
+                    android:text="Minutes"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+</HorizontalScrollView>
+
+
+</ScrollView>

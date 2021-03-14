@@ -12,12 +12,8 @@
         <activity android:name=".activities.facilities_booking.BookingAvailable"
            />
         <activity android:name=".activities.BaseActivity" />
-        <activity
-            android:name=".activities.facilities_booking.BoardGameCat"
-          />
-        <activity
-            android:name=".activities.facilities_booking.GamingRoomCat"
-             />
+
+
         <activity
             android:name=".activities.facilities_booking.SportsCat"
             android:parentActivityName=".activities.facilities_booking.Categories" />

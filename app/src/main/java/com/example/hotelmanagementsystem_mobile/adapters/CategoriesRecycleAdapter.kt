@@ -8,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BoardGameCat
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
-import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.GamingRoomCat
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.SportsCat
 import com.example.hotelmanagementsystem_mobile.models.Model
 import kotlinx.android.synthetic.main.row_categories.view.*
