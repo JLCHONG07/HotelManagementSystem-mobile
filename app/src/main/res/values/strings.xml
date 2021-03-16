@@ -12,6 +12,12 @@
     <string name="one_eight_zero">180</string>
     <string name="minutes">Minutes</string>
     <string name="time_duration">Time Duration :</string>
+    <string name="selection">Select Your</string>
+    <string name="select_court">Court</string>
+    <string name="select_room">Room</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="check_available">Check Available</string>
 
 
 

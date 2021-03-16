@@ -45,24 +45,33 @@ class CategoriesRecycleAdapter(private val arrayList:ArrayList<Model>, val conte
         holder.itemView.imgCat.setOnClickListener {
             val cardPos=arrayList[position]
 
-            var actionBarTitle:String=cardPos.cat_name
+            val actionBarTitle:String=cardPos.cat_name
+
             when (position) {
                 0 -> {
+                    val type:String=holder.itemView.context.getString(R.string.select_court)
                     Log.d("position",position.toString())
                     val intent=Intent(context, SportsCat::class.java)
                     intent.putExtra("aBarTitle",actionBarTitle)
+                    intent.putExtra("type", type)
+                    Log.d("court", type.toString())
                     context.startActivities(arrayOf(intent))
                 }
                 1 -> {
+                    val type:String=holder.itemView.context.getString(R.string.select_room)
                     Log.d("position",position.toString())
                     val intent=Intent(context,BookingAvailable::class.java)
                     intent.putExtra("aBarTitle",actionBarTitle)
+                    intent.putExtra("type", type)
                     context.startActivities(arrayOf(intent))
                 }
                 2 -> {
+                    val type:String=holder.itemView.context.getString(R.string.select_room)
                     Log.d("position",position.toString())
                     val intent=Intent(context,BookingAvailable::class.java)
                     intent.putExtra("aBarTitle",actionBarTitle)
+                    intent.putExtra("type", type)
+                    Log.d("room", type.toString())
                     context.startActivities(arrayOf(intent))
                 }
             }

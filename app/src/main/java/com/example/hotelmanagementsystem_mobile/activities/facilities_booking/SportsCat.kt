@@ -16,6 +16,7 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
     private var arrayList:ArrayList<ModelSport>?=null
     private var gridView:GridView?=null
     private var sportsRecycleAdapter: SportsRecycleAdapter?=null
+    private var type:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
         actionBar!!.setDisplayShowHomeEnabled(true)
         var intent=intent
         val aBarTitle=intent.getStringExtra("aBarTitle")
-
+        type=intent.getStringExtra("type")
         actionBar!!.title = aBarTitle
 
         gridView = findViewById(R.id.sports_cat_grid_view)
@@ -59,6 +60,7 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
 
         val intent= Intent(this@SportsCat,BookingAvailable::class.java)
         intent.putExtra("aBarTitle",actionBarTitle)
+        intent.putExtra("type",type)
         startActivity(intent)
 
 

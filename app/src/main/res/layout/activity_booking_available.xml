@@ -24,30 +24,31 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="11dp"
                 android:layout_marginLeft="11dp"
+                android:gravity="center_vertical"
                 android:text="@string/date"
                 android:textColor="@color/black"
-                android:textSize="30sp"
-                android:gravity="center_vertical"/>
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/btnDate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="30sp"
-                android:text="@string/date_picker"
                 android:background="#00000000"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:text="@string/date_picker"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/txtTimeDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:text="@string/time_duration"
             android:layout_marginStart="5pt"
-            android:layout_marginLeft="5pt">
+            android:layout_marginLeft="5pt"
+            android:text="@string/time_duration"
+            android:textColor="@color/black"
+            android:textSize="30sp">
 
         </TextView>
 
@@ -192,5 +193,127 @@
             </LinearLayout>
         </HorizontalScrollView>
 
+        <TextView
+            android:id="@+id/txtViewCourtRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5pt"
+            android:layout_marginLeft="5pt"
+            android:text="@string/selection"
+            android:textColor="@color/black"
+            android:textSize="30sp">
+
+        </TextView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewSelection1"
+                    android:layout_width="138sp"
+                    android:layout_height="130sp"
+                    app:cardCornerRadius="9pt"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtViewSelection1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:text="@string/select_court"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/txtViewSelectionWord1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtViewSelection1"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="bottom"
+                            android:text="@string/one"
+                            android:textColor="@color/red"
+                            android:textSize="50sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewSelection2"
+                    android:layout_width="138sp"
+                    android:layout_height="130sp"
+                    app:cardCornerRadius="9pt"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtViewSelection2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:text="@string/select_court"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/txtViewSelectionWord2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtViewSelection2"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="bottom"
+                            android:text="@string/two"
+                            android:textColor="@color/red"
+                            android:textSize="50sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/btnCheckAvailable"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="70sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/dark_grey"
+            android:gravity="center_vertical"
+            android:text="@string/check_available"
+            android:textSize="22.5sp"
+            android:layout_marginStart="5sp"
+            tools:targetApi="lollipop" />
     </LinearLayout>
 </ScrollView>
