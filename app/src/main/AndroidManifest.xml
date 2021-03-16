@@ -11,18 +11,12 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".activities.BaseActivity"></activity>
-
-        <activity
-            android:name=".activities.facilities_booking.BoardGameCat"
-            android:theme="@style/homeTheme" />
-
-        <activity
-            android:name=".activities.facilities_booking.GamingRoomCat"
-            android:theme="@style/homeTheme" />
+        <activity android:name=".activities.facilities_booking.BookingAvailable"
+            />
 
         <activity
             android:name=".activities.facilities_booking.SportsCat"
-            android:theme="@style/homeTheme" />
+            android:parentActivityName=".activities.facilities_booking.Categories" />
 
         <activity
             android:name=".activities.Account"

@@ -5,6 +5,14 @@
 
     <!--    FacilitiesBooking String-->
     <string name="bar_categories">Categories</string>
+    <string name="date_picker">dd/MM/yyyy</string>
+    <string name="date">Date :</string>
+    <string name="six_zero">60</string>
+    <string name="one_two_zero">120</string>
+    <string name="one_eight_zero">180</string>
+    <string name="minutes">Minutes</string>
+    <string name="time_duration">Time Duration :</string>
+
 
 
     <!-- Base Activity String -->
