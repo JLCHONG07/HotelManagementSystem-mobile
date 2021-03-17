@@ -1,31 +1,28 @@
 package com.example.hotelmanagementsystem_mobile.activities.facilities_booking
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.DatePicker
-import android.widget.TextView
-import android.widget.Toolbar
-import androidx.annotation.RequiresApi
+import android.view.WindowManager
+import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.R.string.selection
-import com.example.hotelmanagementsystem_mobile.activities.Homepage
+import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAdapter
+import com.example.hotelmanagementsystem_mobile.models.ModelTimer
 import kotlinx.android.synthetic.main.activity_booking_available.*
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import org.w3c.dom.Text
 import java.util.*
 
-class BookingAvailable : AppCompatActivity(), View.OnClickListener,
+class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
+
+
     DatePickerDialog.OnDateSetListener {
 
     var day = 0;
@@ -35,6 +32,13 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
     var savedDay = 0;
     var savedMonth = 0;
     var savedYear = 0;
+    var cvtMonth:String?=null;
+
+    private var arrayList:ArrayList<ModelTimer>?=null
+    private var timerAdapter: TimerAvailableRecycleAdapter?=null
+
+
+    private lateinit var alertDialog: AlertDialog
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +65,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
         cardView180Minutes.setOnClickListener(this)
         cardViewSelection1.setOnClickListener(this)
         cardViewSelection2.setOnClickListener(this)
-
+        btnCheckAvailable.setOnClickListener(this)
 
 
         pickDate()
@@ -86,13 +90,51 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
             R.id.cardView180Minutes -> {
                 selectedTimeDrtCard(cardView180Minutes, txtViewNum3)
             }
-            R.id.cardViewSelection1->{
+            R.id.cardViewSelection1 -> {
                 selectionRoomCourt(cardViewSelection1, txtViewSelectionWord1)
             }
-            R.id.cardViewSelection2->{
+            R.id.cardViewSelection2 -> {
                 selectionRoomCourt(cardViewSelection2, txtViewSelectionWord2)
             }
+            R.id.btnCheckAvailable -> {
+                showCustomDialog()
+
+            }
         }
+
+    }
+
+
+    private fun showCustomDialog() {
+
+
+        val inflater: LayoutInflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.slot_available_dialog, null)
+
+        val titleSlotAvailable=dialogView.findViewById<TextView>(R.id.txtViewWordSlotAvailable)
+        titleSlotAvailable.text="Slot Available"
+
+        val selectedDate=dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
+        selectedDate.text="$cvtMonth $day"
+
+        val gridView=dialogView.findViewById<GridView>(R.id.slot_available_time)
+
+        arrayList = ArrayList()
+        arrayList=setDataList()
+        timerAdapter = TimerAvailableRecycleAdapter(arrayList!!, applicationContext)
+        gridView?.adapter = timerAdapter
+        gridView?.onItemClickListener=this
+
+
+
+        val dialogBuilder: AlertDialog.Builder=AlertDialog.Builder(this)
+        dialogBuilder.setView(dialogView)
+
+        alertDialog = dialogBuilder.create()
+        alertDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        alertDialog.show()
+
+        Log.i("AlertDialog", alertDialog.isShowing.toString())
 
     }
 
@@ -103,6 +145,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
         tvNum.setTextColor(Color.parseColor("#FFFFFFFF"))
 
     }
+
     //change design of card for selection room/court
     private fun selectionRoomCourt(cv: CardView, tvNum: TextView) {
         selectionCardDefView()
@@ -121,8 +164,9 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
         txtViewNum3.setTextColor(Color.parseColor("#F95F62"))
 
     }
+
     //reset selection room/court design
-    private fun selectionCardDefView(){
+    private fun selectionCardDefView() {
         cardViewSelection1.setCardBackgroundColor(Color.parseColor("#FFFFFFFF"))
         cardViewSelection2.setCardBackgroundColor(Color.parseColor("#FFFFFFFF"))
         txtViewSelectionWord1.setTextColor(Color.parseColor("#F95F62"))
@@ -130,7 +174,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
 
     }
 
-    //trigger when click on dd/MM/yyyy
+    //trigger when click on dd MMM yyyy
     private fun pickDate() {
 
         btnDate.setOnClickListener {
@@ -146,8 +190,9 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
     private fun getDateCalender() {
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
-        month = cal.get(Calendar.MONTH)
+        month=cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
+
 
     }
 
@@ -157,6 +202,83 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener,
         savedMonth = month
         savedYear = year
 
-        btnDate.text = "$savedDay/$savedMonth/$savedYear"
+        cvtMonth = converter(savedMonth)
+
+
+        btnDate.text = "$savedDay $cvtMonth $savedYear"
+    }
+
+    private fun converter(month: Int?): String {
+
+        when (month) {
+            0 -> {
+                return "Jan"
+            }
+            1 -> {
+                return "Feb"
+
+            }
+            2 -> {
+                return "Mar"
+
+            }
+            3 -> {
+                return "Apr"
+
+            }
+            4 -> {
+                return "May"
+
+            }
+            5 -> {
+                return "Jun"
+
+            }
+            6 -> {
+                return "Jul"
+
+            }
+            7 -> {
+                return "Aug"
+
+            }
+            8 -> {
+                return "Sep"
+
+
+            }
+            9 -> {
+                return "Oct"
+
+            }
+            10 -> {
+                return "Nov"
+
+            }
+            11 -> {
+                return "Dec"
+
+            }
+        }
+        return "null"
+    }
+
+    private fun setDataList(): ArrayList<ModelTimer>? {
+
+        /*assign data by passing parameter to Sports Model*/
+        val arrayList=ArrayList<ModelTimer>()
+
+        arrayList.add(ModelTimer("Time1", "11:00 AM"))
+        arrayList.add(ModelTimer("Time2", "12:00 PM"))
+        arrayList.add(ModelTimer("Time3", "1:00 PM"))
+        arrayList.add(ModelTimer("Time1", "2:00 PM"))
+
+
+
+        return arrayList
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
     }
 }

@@ -5,7 +5,7 @@
 
     <!--    FacilitiesBooking String-->
     <string name="bar_categories">Categories</string>
-    <string name="date_picker">dd/MM/yyyy</string>
+    <string name="date_picker">dd MMM yyyy</string>
     <string name="date">Date :</string>
     <string name="six_zero">60</string>
     <string name="one_two_zero">120</string>
