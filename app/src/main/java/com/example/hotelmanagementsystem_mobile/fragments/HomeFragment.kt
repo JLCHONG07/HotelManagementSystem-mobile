@@ -56,11 +56,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i("HomeFragment", "OnViewCreated")
         (activity as AppCompatActivity).supportActionBar?.title = "Home"
-        carouselView.pageCount = sampleImages.size
 
         carouselView.setImageListener { position, imageView ->
             imageView.setImageResource(sampleImages[position])
         }
+        carouselView.pageCount = sampleImages.size
 
         btnCheckin.setOnClickListener {
             activity?.let {

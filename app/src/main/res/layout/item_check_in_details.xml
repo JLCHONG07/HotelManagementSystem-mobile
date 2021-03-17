@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_check_in_details"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -8,7 +9,8 @@
     android:layout_gravity="center"
     android:elevation="5dp"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/card_background_color">
+    app:cardBackgroundColor="@color/card_background_color"
+    tools:targetApi="lollipop">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,18 +20,20 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_profile_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
             android:contentDescription="@string/content_description"
             android:layout_gravity="center"
             android:src="@drawable/ic_user_place_holder"
             android:background="@drawable/ic_default_profile_background" />
 
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp">
 
             <TextView
                 android:id="@+id/tv_check_in_user_name"
@@ -57,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="Feb 2 > Feb 5" />
             </LinearLayout>
+
         </LinearLayout>
 
         <ImageView
@@ -64,7 +69,8 @@
             android:layout_height="20dp"
             android:layout_marginLeft="5dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_number_of_room"/>
+            android:src="@drawable/ic_number_of_room"
+            android:layout_marginStart="5dp" />
 
         <TextView
             android:id="@+id/tv_check_in_number_of_room"
@@ -73,14 +79,16 @@
             android:text="x2"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:layout_marginStart="5dp" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_number_of_customer"/>
+            android:src="@drawable/ic_number_of_customer"
+            android:layout_marginStart="5dp" />
 
         <TextView
             android:id="@+id/tv_check_in_number_of_customer"
@@ -89,6 +97,8 @@
             android:text="x4"
             android:layout_gravity="center"
             android:layout_marginLeft="2dp"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:layout_marginStart="2dp" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
