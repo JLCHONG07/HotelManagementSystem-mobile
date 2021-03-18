@@ -32,10 +32,12 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     var savedDay = 0;
     var savedMonth = 0;
     var savedYear = 0;
-    var cvtMonth:String?=null;
+    var cvtMonth: String? = null
+    var previousParent: AdapterView<*>? = null
+    var previousPosition = -1;
 
-    private var arrayList:ArrayList<ModelTimer>?=null
-    private var timerAdapter: TimerAvailableRecycleAdapter?=null
+    private var arrayList: ArrayList<ModelTimer>? = null
+    private var timerAdapter: TimerAvailableRecycleAdapter? = null
 
 
     private lateinit var alertDialog: AlertDialog
@@ -105,40 +107,40 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     }
 
 
+    //create dialog after click on Check Available button
+    @SuppressLint("SetTextI18n")
     private fun showCustomDialog() {
 
 
         val inflater: LayoutInflater = this.layoutInflater
         val dialogView: View = inflater.inflate(R.layout.slot_available_dialog, null)
 
-        val titleSlotAvailable=dialogView.findViewById<TextView>(R.id.txtViewWordSlotAvailable)
-        titleSlotAvailable.text="Slot Available"
+        val titleSlotAvailable = dialogView.findViewById<TextView>(R.id.txtViewWordSlotAvailable)
+        titleSlotAvailable.text = "Slot Available"
 
-        val selectedDate=dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
-        selectedDate.text="$cvtMonth $day"
+        val selectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
+        selectedDate.text = "$cvtMonth $day"
 
-        val gridView=dialogView.findViewById<GridView>(R.id.slot_available_time)
+        val gridView = dialogView.findViewById<GridView>(R.id.slot_available_time)
 
         arrayList = ArrayList()
-        arrayList=setDataList()
+        arrayList = setDataList()
         timerAdapter = TimerAvailableRecycleAdapter(arrayList!!, applicationContext)
         gridView?.adapter = timerAdapter
-        gridView?.onItemClickListener=this
+        gridView?.onItemClickListener = this
 
 
-
-        val dialogBuilder: AlertDialog.Builder=AlertDialog.Builder(this)
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
         dialogBuilder.setView(dialogView)
 
         alertDialog = dialogBuilder.create()
-        alertDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
         alertDialog.show()
 
-        Log.i("AlertDialog", alertDialog.isShowing.toString())
 
     }
 
-    //change design of card for time duration card selection
+    //change design of card for time duration after card selection
     private fun selectedTimeDrtCard(cv: CardView, tvNum: TextView) {
         cardDefaultView()
         cv.setCardBackgroundColor(Color.parseColor("#969FAA"))
@@ -190,12 +192,13 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     private fun getDateCalender() {
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
-        month=cal.get(Calendar.MONTH)
+        month = cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
 
 
     }
 
+    //Update the date after selected from calender
     @SuppressLint("SetTextI18n")
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         savedDay = dayOfMonth
@@ -208,6 +211,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         btnDate.text = "$savedDay $cvtMonth $savedYear"
     }
 
+    //convert month in Integer form to String MMM
     private fun converter(month: Int?): String {
 
         when (month) {
@@ -263,22 +267,53 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         return "null"
     }
 
+    //assign data for grid view which is time slots available
     private fun setDataList(): ArrayList<ModelTimer>? {
 
         /*assign data by passing parameter to Sports Model*/
-        val arrayList=ArrayList<ModelTimer>()
+        val arrayList = ArrayList<ModelTimer>()
 
         arrayList.add(ModelTimer("Time1", "11:00 AM"))
         arrayList.add(ModelTimer("Time2", "12:00 PM"))
         arrayList.add(ModelTimer("Time3", "1:00 PM"))
-        arrayList.add(ModelTimer("Time1", "2:00 PM"))
+        arrayList.add(ModelTimer("Time4", "2:00 PM"))
+        arrayList.add(ModelTimer("Time5", "3:00 PM"))
+        arrayList.add(ModelTimer("Time6", "4:00 PM"))
 
 
 
         return arrayList
     }
 
+    //click on the time slots available
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
+        if (previousPosition >= 0) {
+            timeCardDefaultView(previousParent, previousPosition)
+        }
+
+        val v: View = parent!!.getChildAt(position)
+
+        v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
+            .setBackgroundResource(R.drawable.clicked_time_border_outline)
+        v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FFFFFFFF"))
+        previousPosition = position
+        previousParent = parent
+
+
     }
+
+    //reset time card default view
+    private fun timeCardDefaultView(parent: AdapterView<*>?, position: Int) {
+
+
+        val v: View = parent!!.getChildAt(position)
+        v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
+            .setBackgroundResource(R.drawable.default_time_border_outline)
+        v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FF000000"))
+
+
+    }
+
+
 }

@@ -1,79 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    app:cardCornerRadius="27.5dp"
-    >
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/dialog_background_color">
-
-    <TextView
-        android:id="@+id/txtViewWordSlotAvailable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Slots Available"
-        android:textSize="25sp"
-        android:layout_margin="5dp" />
-
-
-
-    <TextView
-        android:id="@+id/txtViewSelectedDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Feb 9"
-        android:textSize="20sp"
-        android:layout_marginStart="10dp"
-        android:paddingTop="20dp"
-        android:layout_marginLeft="10dp" />
+    app:cardCornerRadius="27.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/slot_available_border_outline"
         android:orientation="vertical">
-        <GridView
-            android:id="@+id/slot_available_time"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/txtViewWordSlotAvailable"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="3"
-            android:horizontalSpacing="15dp"
-            android:layout_marginTop="5dp"
-            android:verticalSpacing="15dp"
-            android:layout_marginLeft="15dp" />
+            android:layout_margin="5dp"
+            android:text="Slots Available"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:id="@+id/txtViewSelectedDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingTop="20dp"
+            android:text="Feb 9"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <GridView
+                android:id="@+id/slot_available_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="25dp"
+                android:horizontalSpacing="15dp"
+                android:numColumns="3"
+                android:verticalSpacing="15dp" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btnCheckAvailable"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/dark_grey"
+            android:gravity="center"
+            android:text="Book Now"
+            android:textColor="@color/white"
+            android:textSize="22.5sp"
+            tools:targetApi="lollipop" />
+
 
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btnCheckAvailable"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="70sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/dark_grey"
-        android:gravity="center"
-        android:text="Book Now"
-        android:textSize="22.5sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_gravity="center_horizontal"
-        tools:targetApi="lollipop"
-        android:layout_marginLeft="5sp"
-        android:layout_marginBottom="10dp"/>
-
-
-
-
-</LinearLayout>
 </androidx.cardview.widget.CardView>

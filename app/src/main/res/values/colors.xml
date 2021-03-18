@@ -10,6 +10,7 @@
     <color name="barBrown">#B8977E</color>
     <color name="red">#F95F62</color>
     <color name="dark_grey">#5A6978</color>
+    <color name="light_grey">#969FAA</color>
 
     <color name="text_color">#FF47525E</color>
     <color name="card_background_color">#FFFFBA5C</color>

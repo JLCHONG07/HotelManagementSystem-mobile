@@ -56,7 +56,7 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         val cardPos= arrayList?.get(position)
-        var actionBarTitle:String= cardPos!!.sportsName
+        val actionBarTitle:String= cardPos!!.sportsName
 
         val intent= Intent(this@SportsCat,BookingAvailable::class.java)
         intent.putExtra("aBarTitle",actionBarTitle)

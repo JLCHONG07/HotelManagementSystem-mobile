@@ -34,7 +34,7 @@ class TimerAvailableRecycleAdapter(private val arrayList: ArrayList<ModelTimer>,
         val v: View = View.inflate(context, R.layout.slot_available_card, null)
 
         /*get Image and TextView by the position of array*/
-        val timerTextView:TextView=v.findViewById(R.id.time)
+        val timerTextView:TextView=v.findViewById(R.id.txtViewTime)
 
         val listItem: ModelTimer = arrayList[position]
 
