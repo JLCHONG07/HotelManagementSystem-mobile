@@ -15,8 +15,8 @@ class EVouchers : AppCompatActivity() {
         setContentView(R.layout.activity_e_vouchers)
 
         val arrayListVoucher = ArrayList<ModelVoucher>()
-        arrayListVoucher.add(ModelVoucher(R.drawable.voucherbg,"MYR 20","E-voucher Code","HCNY2021","FOODS"));
-        arrayListVoucher.add(ModelVoucher(R.drawable.voucherbg,"120 Minutes","E-voucher Code","HCNY2021","SPORTS"));
+        arrayListVoucher.add(ModelVoucher(R.drawable.e_voucher,"MYR 20","E-voucher Code","HCNY2021","FOODS"));
+        arrayListVoucher.add(ModelVoucher(R.drawable.e_voucher,"120 Minutes","E-voucher Code","HCNY2021","SPORTS"));
 
         val voucherRecycleAdapter = VoucherRecycleAdapter(arrayListVoucher,this@EVouchers)
 

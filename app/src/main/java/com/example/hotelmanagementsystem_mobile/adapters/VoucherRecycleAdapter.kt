@@ -1,6 +1,7 @@
 package com.example.hotelmanagementsystem_mobile.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,7 @@ class VoucherRecycleAdapter(private val arrayListVoucher: ArrayList<ModelVoucher
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        holder.bindItems(arrayListVoucher[position])
+        Log.d("holder", holder.bindItems(arrayListVoucher[position]).toString())
     }
 }
