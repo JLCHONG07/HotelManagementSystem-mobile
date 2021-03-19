@@ -29,7 +29,8 @@
             android:theme="@style/loginTheme" >
         </activity>
 
-        <activity android:name=".activities.EVouchers" />
+        <activity android:name=".activities.EVouchers"
+        android:parentActivityName=".activities.Homepage"/>
 
         <activity
             android:name=".activities.facilities_booking.Categories"
@@ -52,6 +53,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 

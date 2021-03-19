@@ -39,6 +39,6 @@ class VoucherRecycleAdapter(private val arrayListVoucher: ArrayList<ModelVoucher
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
     }
 }

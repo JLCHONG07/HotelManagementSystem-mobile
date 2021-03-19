@@ -16,7 +16,9 @@
 
     <style name="MyActionBarTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textStyle">italic</item>
+        <item name="fontFamily">@font/berkshire_swash</item>
+        <item name="android:fontFamily">@font/berkshire_swash</item>
+
     </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">

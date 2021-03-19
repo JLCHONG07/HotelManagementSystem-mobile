@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
+import com.example.hotelmanagementsystem_mobile.activities.EVouchers
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -74,6 +75,13 @@ class HomeFragment : Fragment() {
                 val intent = Intent(it, Categories::class.java)
                 it.startActivity(intent)
             }
+        }
+        btnVoucher.setOnClickListener{
+            activity?.let {
+                val intent = Intent(it, EVouchers::class.java)
+                it.startActivity(intent)
+            }
+
         }
 
 

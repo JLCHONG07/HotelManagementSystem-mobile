@@ -25,11 +25,11 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
     DatePickerDialog.OnDateSetListener {
 
-    var day = 0;
-    var month = 0;
-    var year = 0;
+    private var day = 0;
+    private var month = 0;
+    private var year = 0;
 
-    var savedDay = 0;
+    private var savedDay = 0;
     var savedMonth = 0;
     var savedYear = 0;
     var cvtMonth: String? = null
@@ -305,7 +305,6 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
     //reset time card default view
     private fun timeCardDefaultView(parent: AdapterView<*>?, position: Int) {
-
 
         val v: View = parent!!.getChildAt(position)
         v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
