@@ -8,19 +8,19 @@
     tools:context=".fragments.HomeFragment">
 
     <com.synnapps.carouselview.CarouselView
+        android:id="@+id/carouselView"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        app:autoPlay="true"
+        app:fillColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/carouselView"
-        app:autoPlay="true"
-        app:fillColor="@color/white"
         app:pageColor="@color/black"
         app:radius="6dp"
         app:slideInterval="4000"
         app:strokeColor="#FF777777"
-        app:strokeWidth="1dp"/>
+        app:strokeWidth="1dp" />
 
     <RelativeLayout
         android:id="@+id/btnCheckin"
@@ -45,7 +45,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/checkin"/>
+            android:src="@drawable/checkin" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/checkout"/>
+            android:src="@drawable/checkout" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/icon_facilities_booking"/>
+            android:src="@drawable/icon_facilities_booking" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="10dp"
-            android:src="@drawable/image"/>
+            android:src="@drawable/image" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -186,7 +186,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="E-Voucher">
-        </TextView>
+            android:text="E-Voucher"></TextView>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

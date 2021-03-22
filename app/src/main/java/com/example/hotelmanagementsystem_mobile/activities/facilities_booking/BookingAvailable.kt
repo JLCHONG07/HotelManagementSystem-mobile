@@ -18,6 +18,7 @@ import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAd
 import com.example.hotelmanagementsystem_mobile.models.ModelTimer
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
 import java.util.*
 
 class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
