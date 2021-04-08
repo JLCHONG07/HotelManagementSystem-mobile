@@ -18,7 +18,8 @@
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="check_available">Check Available</string>
-
+    <string name="booking_summary">Booking Summary</string>
+    <string name="agree_TC"><u>I agree with term and condition</u></string>
 
 
     <!-- Base Activity String -->

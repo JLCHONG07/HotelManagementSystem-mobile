@@ -82,7 +82,8 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
     //clicking button/card functions of the activities
     override fun onClick(v: View?) {
-        when (v?.id) {
+        when (v?.id)
+        {
             R.id.cardView60Minutes -> {
                 selectedTimeDrtCard(cardView60Minutes, txtViewNum1)
             }
