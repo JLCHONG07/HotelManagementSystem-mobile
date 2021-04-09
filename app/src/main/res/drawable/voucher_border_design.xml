@@ -9,6 +9,7 @@
 
     <stroke
         android:color="#757575"
+        android:width="1dp"
        />
 
     <gradient

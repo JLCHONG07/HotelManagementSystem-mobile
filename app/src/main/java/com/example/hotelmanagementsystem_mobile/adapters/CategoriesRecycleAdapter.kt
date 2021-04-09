@@ -49,7 +49,7 @@ class CategoriesRecycleAdapter(private val arrayList:ArrayList<Model>, val conte
 
             when (position) {
                 0 -> {
-                    val type:String=holder.itemView.context.getString(R.string.select_court)
+                    val type:String="Court"
                     Log.d("position",position.toString())
                     val intent=Intent(context, SportsCat::class.java)
                     intent.putExtra("aBarTitle",actionBarTitle)

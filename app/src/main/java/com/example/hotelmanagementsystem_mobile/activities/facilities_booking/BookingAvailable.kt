@@ -37,7 +37,10 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     var savedYear = 0;
     var cvtMonth: String? = null
     var previousParent: AdapterView<*>? = null
-    var previousPosition = -1;
+    var previousPosition = -1
+    var selectedTime:String?=null
+    var selectedDuration:String?=null
+
 
     private var arrayList: ArrayList<ModelTimer>? = null
     private var timerAdapter: TimerAvailableRecycleAdapter? = null
@@ -53,7 +56,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
         val actionBar: ActionBar? = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar!!.setDisplayShowHomeEnabled(true)
+        actionBar.setDisplayShowHomeEnabled(true)
         val intent = intent
         val aBarTitle = intent.getStringExtra("aBarTitle")
         val type = intent.getStringExtra("type")
@@ -63,7 +66,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         txtViewCourtRoom.text = "$selection $type :"
         txtViewSelection1.text = type
         txtViewSelection2.text = type
-        actionBar!!.title = aBarTitle
+        actionBar.title = aBarTitle
 
         cardView60Minutes.setOnClickListener(this)
         cardView120Minutes.setOnClickListener(this)
@@ -130,7 +133,13 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
         dialogView.findViewById<Button>(R.id.btnBookNow).setOnClickListener {
             val intent= Intent(this,SummaryBookDetails::class.java)
-            startActivity(intent)
+            intent.putExtra("selectedDate",btnDate.text)
+            intent.putExtra("startTime",selectedTime)
+            intent.putExtra("selectedDuration",selectedDuration)
+
+            if(btnDate.text!=null) {
+                startActivity(intent)
+            }
         }
 
         arrayList = ArrayList()
@@ -155,7 +164,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         cardDefaultView()
         cv.setCardBackgroundColor(Color.parseColor("#969FAA"))
         tvNum.setTextColor(Color.parseColor("#FFFFFFFF"))
-
+        selectedDuration=tvNum.text.toString()
     }
 
     //change design of card for selection room/court
@@ -307,7 +316,9 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
             .setBackgroundResource(R.drawable.clicked_time_border_outline)
         v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FFFFFFFF"))
+
         previousPosition = position
+        selectedTime=v.findViewById<TextView>(R.id.txtViewTime).text.toString()
         previousParent = parent
 
 
@@ -320,6 +331,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
             .setBackgroundResource(R.drawable.default_time_border_outline)
         v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FF000000"))
+        selectedTime=v.findViewById<TextView>(R.id.txtViewTime).text.toString()
 
 
     }
