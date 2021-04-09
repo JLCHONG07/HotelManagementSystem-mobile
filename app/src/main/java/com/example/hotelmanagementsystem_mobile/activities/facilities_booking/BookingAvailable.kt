@@ -3,6 +3,7 @@ package com.example.hotelmanagementsystem_mobile.activities.facilities_booking
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.models.ModelTimer
 import kotlinx.android.synthetic.main.activity_booking_available.*
+import kotlinx.android.synthetic.main.slot_available_dialog.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
@@ -71,6 +73,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         btnCheckAvailable.setOnClickListener(this)
 
 
+
         pickDate()
     }
 
@@ -83,8 +86,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
     //clicking button/card functions of the activities
     override fun onClick(v: View?) {
-        when (v?.id)
-        {
+        when (v?.id) {
             R.id.cardView60Minutes -> {
                 selectedTimeDrtCard(cardView60Minutes, txtViewNum1)
             }
@@ -104,6 +106,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
                 showCustomDialog()
 
             }
+
         }
 
     }
@@ -124,6 +127,11 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         selectedDate.text = "$cvtMonth $day"
 
         val gridView = dialogView.findViewById<GridView>(R.id.slot_available_time)
+
+        dialogView.findViewById<Button>(R.id.btnBookNow).setOnClickListener {
+            val intent= Intent(this,SummaryBookDetails::class.java)
+            startActivity(intent)
+        }
 
         arrayList = ArrayList()
         arrayList = setDataList()
