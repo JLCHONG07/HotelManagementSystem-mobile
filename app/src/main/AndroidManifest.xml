@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.facilities_booking.SummaryBookDetails"
-            android:label="@string/booking_summary"/>
-        <activity android:name=".test" />
+            android:label="@string/booking_summary"
+            android:parentActivityName=".activities.facilities_booking.BookingAvailable"/>
         <activity android:name=".activities.BaseActivity" />
         <activity android:name=".activities.facilities_booking.BookingAvailable" />
         <activity

@@ -20,6 +20,7 @@
     <string name="check_available">Check Available</string>
     <string name="booking_summary">Booking Summary</string>
     <string name="agree_TC"><u>I agree with term and condition</u></string>
+    <string name="successfully_msg">Well done, you have successfully book</string>
 
 
     <!-- Base Activity String -->
