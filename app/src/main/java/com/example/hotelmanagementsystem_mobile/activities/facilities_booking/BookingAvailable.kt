@@ -127,7 +127,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         titleSlotAvailable.text = "Slot Available"
 
         val selectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
-        selectedDate.text = "$cvtMonth $day"
+        selectedDate.text = "$cvtMonth $savedDay"
 
         val gridView = dialogView.findViewById<GridView>(R.id.slot_available_time)
 
