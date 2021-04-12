@@ -38,8 +38,9 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     var cvtMonth: String? = null
     var previousParent: AdapterView<*>? = null
     var previousPosition = -1
-    var selectedTime:String?=null
-    var selectedDuration:String?=null
+    var selectedTime: String? = null
+    var selectedDuration: String? = null
+    var selectedRoomCourt: String? = null
 
 
     private var arrayList: ArrayList<ModelTimer>? = null
@@ -106,7 +107,20 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
                 selectionRoomCourt(cardViewSelection2, txtViewSelectionWord2)
             }
             R.id.btnCheckAvailable -> {
-                showCustomDialog()
+                validationRequiredField()
+
+
+                if (validationRequiredField()) {
+
+                    if (validationDate()) {
+                        txtViewDateErrorMsg.visibility = View.INVISIBLE
+                        showCustomDialog()
+                    } else {
+                        val dateError = getString(R.string.date_error)
+                        txtViewDateErrorMsg.text = dateError
+                        txtViewDateErrorMsg.visibility = View.VISIBLE
+                    }
+                }
 
             }
 
@@ -129,16 +143,24 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         val selectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
         selectedDate.text = "$cvtMonth $savedDay"
 
+
         val gridView = dialogView.findViewById<GridView>(R.id.slot_available_time)
 
         dialogView.findViewById<Button>(R.id.btnBookNow).setOnClickListener {
-            val intent= Intent(this,SummaryBookDetails::class.java)
-            intent.putExtra("selectedDate",btnDate.text)
-            intent.putExtra("startTime",selectedTime)
-            intent.putExtra("selectedDuration",selectedDuration)
 
-            if(btnDate.text!=null) {
+
+            if (selectedTime != null) {
+                dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =
+                    View.INVISIBLE
+                val intent = Intent(this, SummaryBookDetails::class.java)
+                intent.putExtra("selectedDate", btnDate.text)
+                intent.putExtra("startTime", selectedTime)
+                intent.putExtra("selectedDuration", selectedDuration)
                 startActivity(intent)
+            } else {
+                dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =
+                    View.VISIBLE
+
             }
         }
 
@@ -159,12 +181,84 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
     }
 
+    //validation for date, time duration, room/court which unable to blank
+    private fun validationRequiredField(): Boolean {
+        //val requiredErrorMsg = getString(R.string.require_error)
+        var pass = true
+        if (savedDay != 0 && selectedDuration != null && selectedRoomCourt != null) {
+            txtViewDateErrorMsg.visibility = View.INVISIBLE
+            txtViewTimeError.visibility = View.INVISIBLE
+            txtViewCourtRoomError.visibility = View.INVISIBLE
+            validationDate()
+            return pass
+        } else {
+            if (savedDay == 0) {
+                // txtViewDateErrorMsg.text = requiredErrorMsg
+                txtViewDateErrorMsg.visibility = View.VISIBLE
+                pass = false
+            } else {
+                txtViewDateErrorMsg.visibility = View.INVISIBLE
+
+            }
+            if (selectedDuration == null) {
+                //txtViewTimeError.text = requiredErrorMsg
+                txtViewTimeError.visibility = View.VISIBLE
+                pass = false
+
+            } else {
+                txtViewTimeError.visibility = View.INVISIBLE
+
+            }
+
+            if (selectedRoomCourt == null) {
+                // txtViewCourtRoomError.text = requiredErrorMsg
+                txtViewCourtRoomError.visibility = View.VISIBLE
+                pass = false
+            } else {
+                txtViewCourtRoomError.visibility = View.INVISIBLE
+            }
+        }
+        return pass
+    }
+
+    //validation for selected Date
+    private fun validationDate(): Boolean {
+
+        //first 3 if is checking the date,month,year not lesser than current
+        if (year > savedYear) {
+            return false
+        }
+        if (month > savedMonth) {
+
+            return false
+        }
+        if (day > savedDay) {
+            return false
+        }
+
+        //if within 30 days then return true
+        return when {
+            month == savedMonth -> {
+                day <= savedDay
+
+            }
+            month < savedMonth -> {
+                (day + 30) - savedDay == 30
+            }
+
+            else -> {
+                false
+            }
+        }
+
+    }
+
     //change design of card for time duration after card selection
     private fun selectedTimeDrtCard(cv: CardView, tvNum: TextView) {
         cardDefaultView()
         cv.setCardBackgroundColor(Color.parseColor("#969FAA"))
         tvNum.setTextColor(Color.parseColor("#FFFFFFFF"))
-        selectedDuration=tvNum.text.toString()
+        selectedDuration = tvNum.text.toString()
     }
 
     //change design of card for selection room/court
@@ -172,6 +266,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         selectionCardDefView()
         cv.setCardBackgroundColor(Color.parseColor("#969FAA"))
         tvNum.setTextColor(Color.parseColor("#FFFFFFFF"))
+        selectedRoomCourt = tvNum.text.toString()
 
     }
 
@@ -207,12 +302,16 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
     }
 
-    //get calender
+    //get current Date on calender
     private fun getDateCalender() {
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
+
+
+        val currentDate = "${day}/${month}/${year}"
+        Log.d("currentDate", currentDate)
 
 
     }
@@ -223,6 +322,10 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
+
+
+        val selectedDate = "${savedDay}/${savedMonth + 1}/${savedYear}"
+        Log.d("selectedDate", selectedDate)
 
         cvtMonth = converter(savedMonth)
 
@@ -318,7 +421,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FFFFFFFF"))
 
         previousPosition = position
-        selectedTime=v.findViewById<TextView>(R.id.txtViewTime).text.toString()
+        selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
         previousParent = parent
 
 
@@ -331,7 +434,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
             .setBackgroundResource(R.drawable.default_time_border_outline)
         v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FF000000"))
-        selectedTime=v.findViewById<TextView>(R.id.txtViewTime).text.toString()
+        selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
 
 
     }
