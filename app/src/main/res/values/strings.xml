@@ -22,12 +22,97 @@
     <string name="booking_summary">Booking Summary</string>
     <string name="agree_TC"><u>I agree with term and condition</u></string>
     <string name="successfully_msg">Well done, you have successfully book</string>
+    <string name="voucher_code_hint">Enter Your Voucher Code</string>
+    <string name="booking_title"><u>BOOKING TERMS &amp; CONDITIONS</u></string>
+    <string name="ping_pong_tAndC"><b>PING PONG: </b>
+        <br />
+        The amount of people you have in your group size will determine the amount of tables and the length of time we can allocate you.
+        Our tables have been designed for our customers to eat, drink and play around the tables with enough standing space for up to 20 people.
+        around the tables with enough standing space for up to 20 people.
+        <br />
+        <br />
+        At the time of booking, we will charge:
+        <br />
+        RM 6 per person for groups of 2-29
+        <br />
+        RM5 per person for groups of 30+
+        <br />
+        <br />
+        <b>Any changes or cancellations are not refundable</b>
+    </string>
+
+    <string name="badminton_tAndC"><b>BADMINTON : </b>
+        <br />
+        The amount of people you have in your group size will determine the amount of tables and the length of time we can allocate you.
+        Our tables have been designed for our customers to eat, drink and play around the tables with enough standing space for up to 20 people.
+        around the tables with enough standing space for up to 20 people.
+        <br />
+        <br />
+        At the time of booking, we will charge:
+        <br />
+        RM 6 per person for groups of 2-29
+        <br />
+        RM5 per person for groups of 30+
+        <br />
+        <br />
+        <b>Any changes or cancellations are not refundable</b>
+    </string>
+
+    <string name="snooker_tAndC"><b>SNOOKER: </b>
+        <br />
+        The amount of people you have in your group size will determine the amount of tables and the length of time we can allocate you.
+        Our tables have been designed for our customers to eat, drink and play around the tables with enough standing space for up to 20 people.
+        around the tables with enough standing space for up to 20 people.
+        <br />
+        At the time of booking, we will charge:
+        <br />
+        RM 6 per person for groups of 2-29
+        <br />
+        RM5 per person for groups of 30+
+        <br />
+        <b>Any changes or cancellations are not refundable</b>
+
+    </string>
+    <string name="gaming_room_tAndC"><b>GAMING ROOM: </b>
+        <br />
+        The amount of people you have in your group size will determine the amount of tables and the length of time we can allocate you.
+        Our tables have been designed for our customers to eat, drink and play around the tables with enough standing space for up to 20 people.
+        around the tables with enough standing space for up to 20 people.
+        <br />
+        At the time of booking, we will charge:
+        <br />
+        RM 6 per person for groups of 2-29
+        <br />
+        RM5 per person for groups of 30+
+        <br />
+        <b>Any changes or cancellations are not refundable</b>
+
+    </string>
+    <string name="board_game_tAndC"><b>BOARD GAME: </b>
+        <br />
+        The amount of people you have in your group size will determine the amount of tables and the length of time we can allocate you.
+        Our tables have been designed for our customers to eat, drink and play around the tables with enough standing space for up to 20 people.
+        around the tables with enough standing space for up to 20 people.
+        <br />
+        At the time of booking, we will charge:
+        <br />
+        RM 6 per person for groups of 2-29
+        <br />
+        RM5 per person for groups of 30+
+        <br />
+        <br />
+        <b>Any changes or cancellations are not refundable</b>
+
+    </string>
+
 
     <!--Below are Error message for Facilities Booking module Use-->
     <string name="date_error">* Date can only select within 30 days</string>
     <string name="require_error">* This fields must required</string>
     <string name="time_slot_require_error">* Please choose a time slot</string>
-
+    <string name="voucher_incorrect_error">* Please enter a valid voucher</string>
+    <string name="voucher_require">* Please enter a voucher code</string>
+    <string name="check_TAC">* Please tick the T&amp;C above</string>
 
 
     <!-- Base Activity String -->

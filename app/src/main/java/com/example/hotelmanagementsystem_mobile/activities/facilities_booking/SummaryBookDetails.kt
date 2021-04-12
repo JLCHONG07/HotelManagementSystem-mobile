@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import kotlinx.android.synthetic.main.activity_booking_available.*
@@ -38,16 +40,57 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
         bookDrtMin.text = selectDuration + " " + getString(R.string.sc_minutes)
         endTime.text = calEndTime
         btnConfirm.setOnClickListener(this)
+        textViewTAndC.setOnClickListener(this)
+        btnApply.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnConfirm -> {
-                showSuccessfulAlertBox()
+
+                val checkBoxChecked = findViewById<CheckBox>(R.id.CheckBoxPayment)
+                if (checkBoxChecked.isChecked) {
+                    txtViewCheckErrorMsg.visibility = View.INVISIBLE
+
+                }
+                if (validVoucher() && checkBoxChecked.isChecked) {
+                    showSuccessfulAlertBox()
+                } else {
+                    txtViewCheckErrorMsg.visibility = View.VISIBLE
+                }
+            }
+            R.id.textViewTAndC -> {
+                showTAndCAlertBox()
+            }
+            R.id.btnApply -> {
+                val checkBoxChecked = findViewById<CheckBox>(R.id.CheckBoxPayment)
+                if (checkBoxChecked.isChecked) {
+                    txtViewCheckErrorMsg.visibility = View.INVISIBLE
+
+                }
+                validVoucher()
             }
 
 
         }
+    }
+
+    private fun showTAndCAlertBox() {
+        val inflater: LayoutInflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.term_and_condition, null)
+
+
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        dialogBuilder.setView(dialogView)
+
+
+        alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
+        alertDialog.show()
+        alertDialog.window?.setLayout(600, 1000);
+
+
     }
 
     private fun showSuccessfulAlertBox() {
@@ -67,6 +110,24 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
         alertDialog = dialogBuilder.create()
         alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
         alertDialog.show()
+
+
+    }
+
+    private fun validVoucher(): Boolean {
+
+        val voucherEditText = findViewById<EditText>(R.id.editTextVoucher).text.toString().trim()
+        Log.d("voucher code", voucherEditText)
+
+        if (voucherEditText.isNullOrBlank()) {
+            txtViewVoucherErrorMsg.visibility = View.VISIBLE
+            return false
+
+        } else {
+            txtViewVoucherErrorMsg.visibility = View.INVISIBLE
+            return true
+            //any validation here
+        }
 
 
     }
