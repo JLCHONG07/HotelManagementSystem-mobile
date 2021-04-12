@@ -14,6 +14,6 @@
         android:layout_height="wrap_content"
         android:numColumns="2"
         android:horizontalSpacing="15dp"
-        android:layout_marginTop="15pt"
+        android:paddingTop="15dp"
         android:verticalSpacing="15dp"/>
 </LinearLayout>
