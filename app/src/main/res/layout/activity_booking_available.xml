@@ -39,7 +39,20 @@
                 android:text="@string/date_picker"
                 android:textSize="30sp" />
 
+
+
         </LinearLayout>
+        <TextView
+            android:id="@+id/txtViewDateErrorMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:gravity="center_vertical"
+            android:text="@string/require_error"
+            android:textColor="@color/red"
+            android:visibility="invisible"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/txtTimeDuration"
@@ -52,6 +65,20 @@
             android:textSize="30sp">
 
         </TextView>
+
+        <TextView
+            android:id="@+id/txtViewTimeError"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:gravity="center_vertical"
+            android:text="@string/require_error"
+            android:textColor="@color/red"
+            android:visibility="invisible"
+            android:textSize="15sp" />
+
+
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -205,6 +232,21 @@
             android:textSize="30sp">
 
         </TextView>
+
+
+        <TextView
+            android:id="@+id/txtViewCourtRoomError"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:gravity="center_vertical"
+            android:text="@string/require_error"
+            android:textColor="@color/red"
+            android:visibility="invisible"
+            android:textSize="15sp" />
+
+
 
         <HorizontalScrollView
             android:layout_width="match_parent"

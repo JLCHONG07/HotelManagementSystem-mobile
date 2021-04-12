@@ -16,13 +16,16 @@ class VoucherRecycleAdapter(private val arrayListVoucher: ArrayList<ModelVoucher
 
         /* Bind image and text view together by get the variable*/
         fun bindItems(model: ModelVoucher) {
-            itemView.imageVoucher.setBackgroundResource(model._image)
-            /*vouchType is MYR or Minutes*/
-           /* itemView.tvVouchType.text = model.vouchType
-            *//*VCat is sports or food*//*
-            itemView.tvVCat.text = model.vouchCat
-            itemView.tvVoucher.text = model.voucher
-            itemView.tvVCode.text = model.vouchCode*/
+            //voucher image
+            itemView.voucherImage.setBackgroundResource(model._image)
+            //Voucher Duration
+            itemView.tvMinutes.text = model.timeDuration.toString()
+            //Voucher type eg badminton, table tennis, snooker may nullable also
+            itemView.tvFBTypes.text = model.vouchType
+            //Voucher code
+            itemView.tvEVCode.text = model.vouchCode
+            //Voucher categories eg, sport, board game, Gaming Room
+            itemView.tvCategories.text = model.vouchCat
 
 
         }

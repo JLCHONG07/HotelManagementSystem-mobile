@@ -23,6 +23,12 @@
     <string name="agree_TC"><u>I agree with term and condition</u></string>
     <string name="successfully_msg">Well done, you have successfully book</string>
 
+    <!--Below are Error message for Facilities Booking module Use-->
+    <string name="date_error">* Date can only select within 30 days</string>
+    <string name="require_error">* This fields must required</string>
+    <string name="time_slot_require_error">* Please choose a time slot</string>
+
+
 
     <!-- Base Activity String -->
     <string name="please_wait">Please Wait&#8230;</string>
