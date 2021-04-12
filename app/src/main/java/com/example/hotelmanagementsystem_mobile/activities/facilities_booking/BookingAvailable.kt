@@ -156,6 +156,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
                 intent.putExtra("selectedDate", btnDate.text)
                 intent.putExtra("startTime", selectedTime)
                 intent.putExtra("selectedDuration", selectedDuration)
+                alertDialog.dismiss()
                 startActivity(intent)
             } else {
                 dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =

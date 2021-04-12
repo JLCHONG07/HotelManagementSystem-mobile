@@ -61,6 +61,7 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
         dialogView.findViewById<Button>(R.id.btnOK).setOnClickListener {
             val intent = Intent(this, Homepage::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            alertDialog.dismiss()
             startActivity(intent)
         }
         alertDialog = dialogBuilder.create()
