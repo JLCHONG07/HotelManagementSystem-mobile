@@ -1,7 +1,5 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
-import android.content.Context
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log

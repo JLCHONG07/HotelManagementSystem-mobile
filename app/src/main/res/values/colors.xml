@@ -17,4 +17,7 @@
     <color name="civ_background_color">#FF969FAA</color>
     <color name="dialog_background_color">#FFFFD185</color>
 
+    <color name="progress_dialog_text_color">#363A43</color>
+    <color name="snackbar_error_color">#F72400</color>
+
 </resources>
