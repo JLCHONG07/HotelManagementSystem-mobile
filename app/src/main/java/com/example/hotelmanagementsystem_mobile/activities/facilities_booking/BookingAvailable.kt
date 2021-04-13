@@ -15,15 +15,18 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAdapter
-import com.example.hotelmanagementsystem_mobile.models.ModelTimer
+import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
+import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.slot_available_dialog.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
+class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
 
 
     DatePickerDialog.OnDateSetListener {
@@ -43,9 +46,8 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     var selectedRoomCourt: String? = null
 
 
-    private var arrayList: ArrayList<ModelTimer>? = null
+    private var arrayList: ArrayList<TimeSlot>? = null
     private var timerAdapter: TimerAvailableRecycleAdapter? = null
-
 
     private lateinit var alertDialog: AlertDialog
 
@@ -63,7 +65,6 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
         val type = intent.getStringExtra("type")
         val selection = getString(R.string.selection)
 
-
         txtViewCourtRoom.text = "$selection $type :"
         txtViewSelection1.text = type
         txtViewSelection2.text = type
@@ -80,6 +81,7 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
 
         pickDate()
     }
+
 
 
     /* Back to previous activity*/
@@ -391,17 +393,23 @@ class BookingAvailable : AppCompatActivity(), View.OnClickListener, AdapterView.
     }
 
     //assign data for grid view which is time slots available
-    private fun setDataList(): ArrayList<ModelTimer>? {
+    private fun setDataList(): ArrayList<TimeSlot>? {
 
         /*assign data by passing parameter to Sports Model*/
-        val arrayList = ArrayList<ModelTimer>()
+        val arrayList = ArrayList<TimeSlot>()
 
-        arrayList.add(ModelTimer("Time1", "11:00 AM"))
-        arrayList.add(ModelTimer("Time2", "12:00 PM"))
-        arrayList.add(ModelTimer("Time3", "1:00 PM"))
-        arrayList.add(ModelTimer("Time4", "2:00 PM"))
-        arrayList.add(ModelTimer("Time5", "3:00 PM"))
-        arrayList.add(ModelTimer("Time6", "4:00 PM"))
+        arrayList.add(TimeSlot("timeID01", "10:00 AM"))
+        arrayList.add(TimeSlot("timeID02", "11:00 AM"))
+        arrayList.add(TimeSlot("timeID03", "12:00 PM"))
+        arrayList.add(TimeSlot("timeID04", "1:00 PM"))
+        arrayList.add(TimeSlot("timeID05", "2:00 PM"))
+        arrayList.add(TimeSlot("timeID06", "3:00 PM"))
+        arrayList.add(TimeSlot("timeID07", "4:00 PM"))
+        arrayList.add(TimeSlot("timeID08", "5:00 PM"))
+        arrayList.add(TimeSlot("timeID09", "6:00 PM"))
+        arrayList.add(TimeSlot("timeID10", "7:00 PM"))
+        arrayList.add(TimeSlot("timeID11", "8:00 PM"))
+        arrayList.add(TimeSlot("timeID12", "9:00 PM"))
 
 
 

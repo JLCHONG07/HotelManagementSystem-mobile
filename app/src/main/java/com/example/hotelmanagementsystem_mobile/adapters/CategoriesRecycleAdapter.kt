@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.SportsCat
-import com.example.hotelmanagementsystem_mobile.models.Model
+import com.example.hotelmanagementsystem_mobile.models.categories
 import kotlinx.android.synthetic.main.row_categories.view.*
 
 
-class CategoriesRecycleAdapter(private val arrayList:ArrayList<Model>, val context:Context):
+class CategoriesRecycleAdapter(private val arrayList:ArrayList<categories>, val context:Context):
     RecyclerView.Adapter<CategoriesRecycleAdapter.ViewHolder>() {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
        /* Bind image and text view together by get the variable*/
-        fun bindItems(model: Model){
+        fun bindItems(model: categories){
             itemView.txtViewCat.text=model.cat_name
             itemView.imgCat.setBackgroundResource(model._image)
 

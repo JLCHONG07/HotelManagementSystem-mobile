@@ -6,10 +6,10 @@ import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.*
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.models.ModelSport
+import com.example.hotelmanagementsystem_mobile.models.Sport
 
 
-class SportsRecycleAdapter(private val arrayList: ArrayList<ModelSport>, val context: Context):
+class SportsRecycleAdapter(private val arrayList: ArrayList<Sport>, val context: Context):
 BaseAdapter(){
     override fun getCount(): Int {
         return arrayList.size
@@ -32,7 +32,7 @@ BaseAdapter(){
         /*get Image and TextView by the position of array*/
         val sportsImage:RelativeLayout =v.findViewById(R.id.imgSports)
         val sportsName:TextView=v.findViewById(R.id.txtViewSports)
-        val listItem: ModelSport = arrayList[position]
+        val listItem: Sport = arrayList[position]
         sportsImage.setBackgroundResource(listItem.sportsImage)
         sportsName.text=listItem.sportsName
 
