@@ -19,12 +19,21 @@ import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
+import com.example.hotelmanagementsystem_mobile.models.User
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.slot_available_dialog.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
 
 class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
 
@@ -44,7 +53,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     var selectedTime: String? = null
     var selectedDuration: String? = null
     var selectedRoomCourt: String? = null
-
+    var selectedTimeSlot: String? = null
+    var selectedDate: String? = null
 
     private var arrayList: ArrayList<TimeSlot>? = null
     private var timerAdapter: TimerAvailableRecycleAdapter? = null
@@ -81,7 +91,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         pickDate()
     }
-
 
 
     /* Back to previous activity*/
@@ -159,6 +168,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 intent.putExtra("startTime", selectedTime)
                 intent.putExtra("selectedDuration", selectedDuration)
                 alertDialog.dismiss()
+                saveBookedData()
+                retriveBookedData()
                 startActivity(intent)
             } else {
                 dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =
@@ -183,6 +194,48 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
 
     }
+
+    private fun saveBookedData() {
+        val db = FirebaseFirestore.getInstance()
+        val timeSlot: MutableMap<String, Any> = HashMap()
+        // val date: MutableMap<String,Any> = HashMap()
+
+
+        // date["date"]="$selectedDate"
+        timeSlot["timerID"] = "timeID0$selectedTimeSlot"
+        timeSlot["time"] = "$selectedTime"
+
+        db.collection("facilities_booking").document("badminton").collection("court_1")
+            .document("$selectedDate").set(timeSlot)
+            .addOnSuccessListener {
+                Log.d("status", "successful added")
+            }
+            .addOnFailureListener {
+                Log.d("status", "fail added")
+            }
+
+
+    }
+
+
+    private fun retriveBookedData() {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("facilities_booking").document("badminton").collection("court_1")
+
+            .get()
+            .addOnSuccessListener {
+                val timerID= it.documents[0].data?.get("timerID")
+                val time= it.documents[0].data?.get("time")
+
+                Log.d("timerID",timerID.toString())
+                Log.d("time",time.toString())
+            }
+            .addOnFailureListener{exception->
+                Log.d("Error",exception.toString())
+            }
+    }
+
 
     //validation for date, time duration, room/court which unable to blank
     private fun validationRequiredField(): Boolean {
@@ -327,7 +380,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         savedYear = year
 
 
-        val selectedDate = "${savedDay}/${savedMonth + 1}/${savedYear}"
+        selectedDate = "${savedDay}_${savedMonth + 1}_${savedYear}"
+
         Log.d("selectedDate", selectedDate)
 
         cvtMonth = converter(savedMonth)
@@ -398,18 +452,18 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         /*assign data by passing parameter to Sports Model*/
         val arrayList = ArrayList<TimeSlot>()
 
-        arrayList.add(TimeSlot("timeID01", "10:00 AM"))
-        arrayList.add(TimeSlot("timeID02", "11:00 AM"))
-        arrayList.add(TimeSlot("timeID03", "12:00 PM"))
-        arrayList.add(TimeSlot("timeID04", "1:00 PM"))
-        arrayList.add(TimeSlot("timeID05", "2:00 PM"))
-        arrayList.add(TimeSlot("timeID06", "3:00 PM"))
-        arrayList.add(TimeSlot("timeID07", "4:00 PM"))
-        arrayList.add(TimeSlot("timeID08", "5:00 PM"))
-        arrayList.add(TimeSlot("timeID09", "6:00 PM"))
-        arrayList.add(TimeSlot("timeID10", "7:00 PM"))
-        arrayList.add(TimeSlot("timeID11", "8:00 PM"))
-        arrayList.add(TimeSlot("timeID12", "9:00 PM"))
+        arrayList.add(TimeSlot("timeID00", "10:00 AM"))
+        arrayList.add(TimeSlot("timeID01", "11:00 AM"))
+        arrayList.add(TimeSlot("timeID02", "12:00 PM"))
+        arrayList.add(TimeSlot("timeID03", "1:00 PM"))
+        arrayList.add(TimeSlot("timeID04", "2:00 PM"))
+        arrayList.add(TimeSlot("timeID05", "3:00 PM"))
+        arrayList.add(TimeSlot("timeID06", "4:00 PM"))
+        arrayList.add(TimeSlot("timeID07", "5:00 PM"))
+        arrayList.add(TimeSlot("timeID08", "6:00 PM"))
+        arrayList.add(TimeSlot("timeID09", "7:00 PM"))
+        arrayList.add(TimeSlot("timeID10", "8:00 PM"))
+        arrayList.add(TimeSlot("timeID11", "9:00 PM"))
 
 
 
@@ -431,6 +485,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         previousPosition = position
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
+        selectedTimeSlot = id.toString()
+        Log.d("selected ID", id.toString())
         previousParent = parent
 
 
