@@ -9,9 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.facilities_booking.SummaryBookDetails"
+        <activity android:name=".activities.SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.facilities_booking.SummaryBookDetails"
             android:label="@string/booking_summary"
-            android:parentActivityName=".activities.facilities_booking.BookingAvailable"/>
+            android:parentActivityName=".activities.facilities_booking.BookingAvailable" />
         <activity android:name=".activities.BaseActivity" />
         <activity android:name=".activities.facilities_booking.BookingAvailable" />
         <activity
@@ -25,15 +34,7 @@
             android:theme="@style/signupTheme" />
         <activity
             android:name=".activities.Login"
-            android:theme="@style/loginTheme" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:theme="@style/loginTheme"/>
         <activity
             android:name=".activities.EVouchers"
             android:parentActivityName=".activities.Homepage" />
@@ -48,8 +49,7 @@
             android:parentActivityName=".activities.Homepage" />
         <activity
             android:name=".activities.Homepage"
-            android:theme="@style/homeTheme">
-        </activity>
+            android:theme="@style/homeTheme"/>
 
         <meta-data
             android:name="preloaded_fonts"
