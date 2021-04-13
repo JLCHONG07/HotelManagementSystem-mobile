@@ -25,7 +25,15 @@
             android:theme="@style/signupTheme" />
         <activity
             android:name=".activities.Login"
-            android:theme="@style/loginTheme" />
+            android:theme="@style/loginTheme" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".activities.EVouchers"
             android:parentActivityName=".activities.Homepage" />
@@ -41,11 +49,6 @@
         <activity
             android:name=".activities.Homepage"
             android:theme="@style/homeTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

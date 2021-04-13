@@ -32,18 +32,18 @@ class Signup : BaseActivity() {
     }
 
     fun userRegisterSuccess() {
-        Toast.makeText(this, "You have successfully registered the email address", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "You have successfully registered an account", Toast.LENGTH_LONG).show()
         hideProgressDialog()
         FirebaseAuth.getInstance().signOut()
-        //TODO: Instead of finish(), can navigate to login page
+        startActivity(Intent(this, Login::class.java))
         finish()
     }
 
     private fun registerUser() {
-        val name : String = editSignUpUsername.toString().trim { it <= ' ' }
-        val passportNumber : String = editIC.toString().trim { it <= ' ' }
-        val email : String = editSignUpUsername3.toString().trim { it <= ' ' }
-        val password : String = editSignUpPassword.toString().trim { it <= ' ' }
+        val name : String = et_sign_up_username.text.toString().trim { it <= ' ' }
+        val passportNumber : String = et_sign_up_ic_passport.text.toString().trim { it <= ' ' }
+        val email : String = et_sign_up_email.text.toString().trim { it <= ' ' }
+        val password : String = et_sign_up_password.text.toString().trim { it <= ' ' }
 
         if(validateForm(name, passportNumber, email, password)) {
             showProgressDialog(resources.getString(R.string.please_wait))

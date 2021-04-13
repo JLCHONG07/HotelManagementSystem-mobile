@@ -29,7 +29,7 @@
         android:background="#83969FAA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></RelativeLayout>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textViewSignUsername"
@@ -42,12 +42,12 @@
         android:text="@string/username"
         android:textColor="#FFFDFD"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/editSignUpUsername"
+        app:layout_constraintBottom_toTopOf="@+id/et_log_in_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/relativeLayout2" />
 
     <EditText
-        android:id="@+id/editSignUpUsername"
+        android:id="@+id/et_log_in_email"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
@@ -59,7 +59,7 @@
         android:ems="10"
         android:hint="@string/username"
         android:includeFontPadding="false"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:paddingLeft="@dimen/edit_padding"
         android:paddingRight="@dimen/edit_padding"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
@@ -75,11 +75,11 @@
         android:text="@string/password"
         android:textColor="#FFFDFD"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/editSignUpPassword"
+        app:layout_constraintBottom_toTopOf="@+id/et_log_in_password"
         app:layout_constraintStart_toStartOf="@+id/textViewSignUsername" />
 
     <EditText
-        android:id="@+id/editSignUpPassword"
+        android:id="@+id/et_log_in_password"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"

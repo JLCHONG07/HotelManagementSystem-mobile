@@ -18,10 +18,10 @@
         android:background="#83969FAA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"></RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView2"/>
 
     <EditText
-        android:id="@+id/editSignUpUsername3"
+        android:id="@+id/et_sign_up_email"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
@@ -33,7 +33,7 @@
         android:ems="10"
         android:hint="@string/email"
         android:includeFontPadding="false"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:paddingLeft="@dimen/edit_padding"
         android:paddingRight="@dimen/edit_padding"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
         android:textColor="#FFFDFD"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textViewSignUsername"
-        app:layout_constraintTop_toBottomOf="@+id/editIC" />
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_ic_passport" />
 
     <TextView
         android:id="@+id/textView7"
@@ -61,10 +61,10 @@
         android:textColor="#FFFDFD"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textViewSignUsername"
-        app:layout_constraintTop_toBottomOf="@+id/editSignUpUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_username" />
 
     <EditText
-        android:id="@+id/editIC"
+        android:id="@+id/et_sign_up_ic_passport"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
@@ -76,7 +76,7 @@
         android:ems="10"
         android:hint="@string/ic_num"
         android:includeFontPadding="false"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:paddingLeft="@dimen/edit_padding"
         android:paddingRight="@dimen/edit_padding"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editSignUpUsername"
+        android:id="@+id/et_sign_up_username"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
@@ -158,10 +158,10 @@
         android:textColor="#FFFDFD"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textViewSignUsername"
-        app:layout_constraintTop_toBottomOf="@+id/editSignUpUsername3" />
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email" />
 
     <EditText
-        android:id="@+id/editSignUpPassword"
+        android:id="@+id/et_sign_up_password"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
@@ -193,7 +193,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSignUpPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password" />
 
     <TextView
         android:id="@+id/textViewSignIn"

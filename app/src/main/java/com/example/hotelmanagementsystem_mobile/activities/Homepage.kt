@@ -1,32 +1,42 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.example.hotelmanagementsystem_mobile.fragments.AccountFragment
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
+import com.example.hotelmanagementsystem_mobile.models.User
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class Homepage : BaseActivity() {
+
+    private lateinit var mUserName : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setCurrentFragment(HomeFragment())
 
-        val mainFragment = HomeFragment.newInstance("", "")
-        val accountFragment = AccountFragment.newInstance("", "")
-        setCurrentFragment(mainFragment)
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+    }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.home->setCurrentFragment(mainFragment)
-                R.id.account->setCurrentFragment(accountFragment)
+    fun updateUserDetails(user: User) {
+        mUserName = user.name
+    }
+
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item ->
+        when(item.itemId) {
+            R.id.home -> {
+                setCurrentFragment(HomeFragment())
+                return@OnNavigationItemSelectedListener true
             }
-            true
+            R.id.account -> {
+                setCurrentFragment(AccountFragment())
+                return@OnNavigationItemSelectedListener true
+            }
         }
-
+        false
     }
 
     private fun setCurrentFragment(fragment: Fragment)=
