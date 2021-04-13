@@ -9,11 +9,11 @@ import android.widget.GridView
 import androidx.appcompat.app.ActionBar
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.adapters.SportsRecycleAdapter
-import com.example.hotelmanagementsystem_mobile.models.ModelSport
+import com.example.hotelmanagementsystem_mobile.models.Sport
 
 class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
 
-    private var arrayList:ArrayList<ModelSport>?=null
+    private var arrayList:ArrayList<Sport>?=null
     private var gridView:GridView?=null
     private var sportsRecycleAdapter: SportsRecycleAdapter?=null
     private var type:String?=null
@@ -38,14 +38,14 @@ class SportsCat : AppCompatActivity(),AdapterView.OnItemClickListener{
         gridView?.onItemClickListener=this
     }
 
-    private fun setDataList(): ArrayList<ModelSport>? {
+    private fun setDataList(): ArrayList<Sport>? {
 
         /*assign data by passing parameter to Sports Model*/
-       var arrayList=ArrayList<ModelSport>()
+       val arrayList=ArrayList<Sport>()
 
-        arrayList.add(ModelSport("Badminton",R.drawable.sports_badminton))
-        arrayList.add(ModelSport("Table Tennis",R.drawable.sports_table_tennis))
-        arrayList.add(ModelSport("Snooker",R.drawable.sports_snooker))
+        arrayList.add(Sport("Badminton",R.drawable.sports_badminton))
+        arrayList.add(Sport("Table Tennis",R.drawable.sports_table_tennis))
+        arrayList.add(Sport("Snooker",R.drawable.sports_snooker))
 
 
 

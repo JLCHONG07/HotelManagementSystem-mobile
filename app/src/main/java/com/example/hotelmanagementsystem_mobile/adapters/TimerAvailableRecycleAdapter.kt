@@ -8,11 +8,10 @@ import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.models.ModelSport
-import com.example.hotelmanagementsystem_mobile.models.ModelTimer
+import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import org.w3c.dom.Text
 
-class TimerAvailableRecycleAdapter(private val arrayList: ArrayList<ModelTimer>, val context: Context):
+class TimerAvailableRecycleAdapter(private val arrayList: ArrayList<TimeSlot>, val context: Context):
     BaseAdapter(){
     override fun getCount(): Int {
         return arrayList.size
@@ -36,7 +35,7 @@ class TimerAvailableRecycleAdapter(private val arrayList: ArrayList<ModelTimer>,
         /*get Image and TextView by the position of array*/
         val timerTextView:TextView=v.findViewById(R.id.txtViewTime)
 
-        val listItem: ModelTimer = arrayList[position]
+        val listItem: TimeSlot = arrayList[position]
 
         timerTextView.text=listItem.timer
 
