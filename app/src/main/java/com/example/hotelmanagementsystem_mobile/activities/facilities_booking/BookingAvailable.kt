@@ -33,16 +33,18 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private var year = 0;
 
     private var savedDay = 0;
-    var savedMonth = 0;
-    var savedYear = 0;
-    var cvtMonth: String? = null
-    var previousParent: AdapterView<*>? = null
-    var previousPosition = -1
-    var selectedTime: String? = null
-    var selectedDuration: String? = null
-    var selectedRoomCourt: String? = null
-    var selectedTimeSlot: String? = null
-    var selectedDate: String? = null
+    private var savedMonth = 0;
+    private  var savedYear = 0;
+    private var cvtMonth: String? = null
+    private var previousParent: AdapterView<*>? = null
+    private var previousPosition = -1
+    private var selectedTime: String? = null
+    private var selectedDuration: String? = null
+    private var selectedRoomCourt: String? = null
+    private var selectedTimeSlot: String? = null
+    private var selectedDate: String? = null
+    private var aBarTitle:String?=null
+    private var type:String?=null
 
     private var arrayList: ArrayList<TimeSlot>? = null
     private var timerAdapter: TimerAvailableRecycleAdapter? = null
@@ -59,8 +61,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
         val intent = intent
-        val aBarTitle = intent.getStringExtra("aBarTitle")
-        val type = intent.getStringExtra("type")
+        aBarTitle = intent.getStringExtra("aBarTitle")
+        type = intent.getStringExtra("type")
         val selection = getString(R.string.selection)
 
         txtViewCourtRoom.text = "$selection $type :"
@@ -157,9 +159,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 intent.putExtra("selectedDuration", selectedDuration)
                 alertDialog.dismiss()
                 FirestoreClass().saveBookedData(selectedTimeSlot,selectedTime,
-                    selectedDate
-                )
-                FirestoreClass().retriveBookedData(selectedDate)
+                    selectedDate,selectedRoomCourt,aBarTitle,type)
+
+                FirestoreClass().retrieveBookedData(selectedDate,selectedRoomCourt,aBarTitle,type)
                 startActivity(intent)
             } else {
                 dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =

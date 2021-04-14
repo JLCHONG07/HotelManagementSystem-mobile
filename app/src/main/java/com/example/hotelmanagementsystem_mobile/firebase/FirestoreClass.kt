@@ -73,15 +73,18 @@ class FirestoreClass {
     }
 
     //below here is facilities_booking
-    fun saveBookedData(selectedTimeSlot: String?, selectedTime: String?, selectedDate: String?) {
+    //add booked data to database
+    fun saveBookedData(selectedTimeSlot: String?, selectedTime: String?, selectedDate: String?,selectedRoomCourt:String?,categories:String?,type:String?) {
         val db = FirebaseFirestore.getInstance()
         val timeSlot: MutableMap<String, Any> = HashMap()
 
         timeSlot["timerID"] = "timeID0$selectedTimeSlot"
         timeSlot["timer"] = "$selectedTime"
 
-        db.collection("facilities_booking").document("badminton").collection("court")
-            .document("court_1").collection("$selectedDate").document().set(timeSlot)
+        val court= "$type $selectedRoomCourt"
+
+        db.collection("facilities_booking").document("$categories").collection("court")
+            .document(court).collection("$selectedDate").document().set(timeSlot)
 
             .addOnSuccessListener {
                 Log.d("status", "successful added")
@@ -93,10 +96,13 @@ class FirestoreClass {
 
     }
 
-    fun retriveBookedData(selectedDate: String?) {
+    //read data from database
+    fun retrieveBookedData(selectedDate: String?,selectedRoomCourt:String?,categories:String?,type:String?) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("facilities_booking").document("badminton").collection("court")
-            .document("court_1").collection("$selectedDate")
+
+        val court= "$type $selectedRoomCourt"
+        db.collection("facilities_booking").document("$categories").collection("court")
+            .document(court).collection("$selectedDate")
 
             .get()
             .addOnSuccessListener {
