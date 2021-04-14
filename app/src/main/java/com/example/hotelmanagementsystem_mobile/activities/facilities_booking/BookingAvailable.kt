@@ -9,30 +9,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
-import com.example.hotelmanagementsystem_mobile.models.User
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_booking_available.*
-import kotlinx.android.synthetic.main.slot_available_dialog.*
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
@@ -151,8 +139,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         val titleSlotAvailable = dialogView.findViewById<TextView>(R.id.txtViewWordSlotAvailable)
         titleSlotAvailable.text = "Slot Available"
 
-        val selectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
-        selectedDate.text = "$cvtMonth $savedDay"
+        val txtViewselectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
+        txtViewselectedDate.text = "$cvtMonth $savedDay"
 
 
         val gridView = dialogView.findViewById<GridView>(R.id.slot_available_time)
@@ -168,8 +156,10 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 intent.putExtra("startTime", selectedTime)
                 intent.putExtra("selectedDuration", selectedDuration)
                 alertDialog.dismiss()
-                saveBookedData()
-                retriveBookedData()
+                FirestoreClass().saveBookedData(selectedTimeSlot,selectedTime,
+                    selectedDate
+                )
+                FirestoreClass().retriveBookedData(selectedDate)
                 startActivity(intent)
             } else {
                 dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =
@@ -195,46 +185,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
-    private fun saveBookedData() {
-        val db = FirebaseFirestore.getInstance()
-        val timeSlot: MutableMap<String, Any> = HashMap()
-        // val date: MutableMap<String,Any> = HashMap()
 
 
-        // date["date"]="$selectedDate"
-        timeSlot["timerID"] = "timeID0$selectedTimeSlot"
-        timeSlot["time"] = "$selectedTime"
 
-        db.collection("facilities_booking").document("badminton").collection("court_1")
-            .document("$selectedDate").set(timeSlot)
-            .addOnSuccessListener {
-                Log.d("status", "successful added")
-            }
-            .addOnFailureListener {
-                Log.d("status", "fail added")
-            }
-
-
-    }
-
-
-    private fun retriveBookedData() {
-        val db = FirebaseFirestore.getInstance()
-
-        db.collection("facilities_booking").document("badminton").collection("court_1")
-
-            .get()
-            .addOnSuccessListener {
-                val timerID= it.documents[0].data?.get("timerID")
-                val time= it.documents[0].data?.get("time")
-
-                Log.d("timerID",timerID.toString())
-                Log.d("time",time.toString())
-            }
-            .addOnFailureListener{exception->
-                Log.d("Error",exception.toString())
-            }
-    }
 
 
     //validation for date, time duration, room/court which unable to blank
