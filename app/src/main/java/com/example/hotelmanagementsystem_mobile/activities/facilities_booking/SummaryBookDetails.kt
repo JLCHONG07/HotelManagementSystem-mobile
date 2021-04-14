@@ -132,7 +132,7 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun sumHours(hours: Int, startTime: String): String {
+     fun sumHours(hours: Int, startTime: String): String {
         //get hours of startTime
         var i = 0
         val startTimeLength = startTime.length

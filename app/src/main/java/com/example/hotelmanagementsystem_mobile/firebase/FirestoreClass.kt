@@ -2,17 +2,16 @@ package com.example.hotelmanagementsystem_mobile.firebase
 
 import android.app.Activity
 import android.util.Log
-import android.widget.TextView
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.Login
 import com.example.hotelmanagementsystem_mobile.activities.Signup
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import org.w3c.dom.Text
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -74,16 +73,22 @@ class FirestoreClass {
 
     //below here is facilities_booking
     //add booked data to database
-    fun saveBookedData(selectedTimeSlot: String?, selectedTime: String?, selectedDate: String?,selectedRoomCourt:String?,categories:String?,type:String?) {
-        val db = FirebaseFirestore.getInstance()
+    fun saveBookedData(
+        selectedTimeSlot: Long?, selectedTime: String?, selectedDate: String?,
+        selectedRoomCourt:String?,
+        categories:String?,
+        type:String?,
+    ) {
+
         val timeSlot: MutableMap<String, Any> = HashMap()
 
-        timeSlot["timerID"] = "timeID0$selectedTimeSlot"
+        val selectedTimeSlotID= BookingAvailable().formatID(selectedTimeSlot)
+        timeSlot["timerID"] = "timeID$selectedTimeSlotID"
         timeSlot["timer"] = "$selectedTime"
 
         val court= "$type $selectedRoomCourt"
 
-        db.collection("facilities_booking").document("$categories").collection("court")
+        mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate").document().set(timeSlot)
 
             .addOnSuccessListener {
@@ -98,10 +103,10 @@ class FirestoreClass {
 
     //read data from database
     fun retrieveBookedData(selectedDate: String?,selectedRoomCourt:String?,categories:String?,type:String?) {
-        val db = FirebaseFirestore.getInstance()
+
 
         val court= "$type $selectedRoomCourt"
-        db.collection("facilities_booking").document("$categories").collection("court")
+        mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
 
             .get()
