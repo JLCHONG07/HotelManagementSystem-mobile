@@ -18,7 +18,7 @@ class EVouchers : AppCompatActivity() {
         setContentView(R.layout.activity_e_vouchers)
 
         val arrayListVoucher = ArrayList<ModelVoucher>()
-        retriveVoucher(arrayListVoucher)
+        retrieveVoucher(arrayListVoucher)
 
 
         // val arrayListVoucher = ArrayList<ModelVoucher>()
@@ -43,7 +43,7 @@ class EVouchers : AppCompatActivity() {
 
     }
 
-    private fun retriveVoucher(arrayListVoucher: ArrayList<ModelVoucher>) {
+    private fun retrieveVoucher(arrayListVoucher: ArrayList<ModelVoucher>) {
         val db = FirebaseFirestore.getInstance()
 
         db.collection("e_voucher")
