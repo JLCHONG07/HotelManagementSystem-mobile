@@ -16,6 +16,7 @@ data class ModelVoucher(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
+
     ) {
     }
 
