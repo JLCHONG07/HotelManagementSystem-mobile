@@ -9,10 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
@@ -20,11 +18,9 @@ import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAd
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import kotlinx.android.synthetic.main.activity_booking_available.*
-import kotlinx.android.synthetic.main.slot_available_dialog.*
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnItemClickListener,
 
@@ -36,15 +32,18 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private var year = 0;
 
     private var savedDay = 0;
-    var savedMonth = 0;
-    var savedYear = 0;
-    var cvtMonth: String? = null
-    var previousParent: AdapterView<*>? = null
-    var previousPosition = -1
-    var selectedTime: String? = null
-    var selectedDuration: String? = null
-    var selectedRoomCourt: String? = null
-
+    private var savedMonth = 0;
+    private var savedYear = 0;
+    private var cvtMonth: String? = null
+    private var previousParent: AdapterView<*>? = null
+    private var previousPosition = -1
+    private var selectedTime: String? = null
+    private var selectedDuration: String? = null
+    private var selectedRoomCourt: String? = null
+    private var selectedTimeSlot: Long? = null
+    private var selectedDate: String? = null
+    private var aBarTitle: String? = null
+    private var type: String? = null
 
     private var arrayList: ArrayList<TimeSlot>? = null
     private var timerAdapter: TimerAvailableRecycleAdapter? = null
@@ -61,8 +60,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
         val intent = intent
-        val aBarTitle = intent.getStringExtra("aBarTitle")
-        val type = intent.getStringExtra("type")
+        aBarTitle = intent.getStringExtra("aBarTitle")
+        type = intent.getStringExtra("type")
         val selection = getString(R.string.selection)
 
         txtViewCourtRoom.text = "$selection $type :"
@@ -81,7 +80,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         pickDate()
     }
-
 
 
     /* Back to previous activity*/
@@ -110,7 +108,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             }
             R.id.btnCheckAvailable -> {
                 validationRequiredField()
-
+                retrieveBookedData()
 
                 if (validationRequiredField()) {
 
@@ -142,8 +140,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         val titleSlotAvailable = dialogView.findViewById<TextView>(R.id.txtViewWordSlotAvailable)
         titleSlotAvailable.text = "Slot Available"
 
-        val selectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
-        selectedDate.text = "$cvtMonth $savedDay"
+        val txtViewselectedDate = dialogView.findViewById<TextView>(R.id.txtViewSelectedDate)
+        txtViewselectedDate.text = "$cvtMonth $savedDay"
 
 
         val gridView = dialogView.findViewById<GridView>(R.id.slot_available_time)
@@ -159,6 +157,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 intent.putExtra("startTime", selectedTime)
                 intent.putExtra("selectedDuration", selectedDuration)
                 alertDialog.dismiss()
+
+                saveBookData()
+
                 startActivity(intent)
             } else {
                 dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =
@@ -183,6 +184,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
 
     }
+
 
     //validation for date, time duration, room/court which unable to blank
     private fun validationRequiredField(): Boolean {
@@ -327,7 +329,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         savedYear = year
 
 
-        val selectedDate = "${savedDay}/${savedMonth + 1}/${savedYear}"
+        selectedDate = "${savedDay}_${savedMonth + 1}_${savedYear}"
+
         Log.d("selectedDate", selectedDate)
 
         cvtMonth = converter(savedMonth)
@@ -398,19 +401,47 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         /*assign data by passing parameter to Sports Model*/
         val arrayList = ArrayList<TimeSlot>()
 
-        arrayList.add(TimeSlot("timeID01", "10:00 AM"))
-        arrayList.add(TimeSlot("timeID02", "11:00 AM"))
-        arrayList.add(TimeSlot("timeID03", "12:00 PM"))
-        arrayList.add(TimeSlot("timeID04", "1:00 PM"))
-        arrayList.add(TimeSlot("timeID05", "2:00 PM"))
-        arrayList.add(TimeSlot("timeID06", "3:00 PM"))
-        arrayList.add(TimeSlot("timeID07", "4:00 PM"))
-        arrayList.add(TimeSlot("timeID08", "5:00 PM"))
-        arrayList.add(TimeSlot("timeID09", "6:00 PM"))
-        arrayList.add(TimeSlot("timeID10", "7:00 PM"))
-        arrayList.add(TimeSlot("timeID11", "8:00 PM"))
-        arrayList.add(TimeSlot("timeID12", "9:00 PM"))
 
+        if(selectedDuration.equals("60")) {
+            arrayList.add(TimeSlot("timeID00", "10:00 AM"))
+            arrayList.add(TimeSlot("timeID01", "11:00 AM"))
+            arrayList.add(TimeSlot("timeID02", "12:00 PM"))
+            arrayList.add(TimeSlot("timeID03", "1:00 PM"))
+            arrayList.add(TimeSlot("timeID04", "2:00 PM"))
+            arrayList.add(TimeSlot("timeID05", "3:00 PM"))
+            arrayList.add(TimeSlot("timeID06", "4:00 PM"))
+            arrayList.add(TimeSlot("timeID07", "5:00 PM"))
+            arrayList.add(TimeSlot("timeID08", "6:00 PM"))
+            arrayList.add(TimeSlot("timeID09", "7:00 PM"))
+            arrayList.add(TimeSlot("timeID10", "8:00 PM"))
+            arrayList.add(TimeSlot("timeID11", "9:00 PM"))
+        }
+        else if(selectedDuration.equals("120")){
+            arrayList.add(TimeSlot("timeID00", "10:00 AM"))
+            arrayList.add(TimeSlot("timeID01", "11:00 AM"))
+            arrayList.add(TimeSlot("timeID02", "12:00 PM"))
+            arrayList.add(TimeSlot("timeID03", "1:00 PM"))
+            arrayList.add(TimeSlot("timeID04", "2:00 PM"))
+            arrayList.add(TimeSlot("timeID05", "3:00 PM"))
+            arrayList.add(TimeSlot("timeID06", "4:00 PM"))
+            arrayList.add(TimeSlot("timeID07", "5:00 PM"))
+            arrayList.add(TimeSlot("timeID08", "6:00 PM"))
+            arrayList.add(TimeSlot("timeID09", "7:00 PM"))
+            arrayList.add(TimeSlot("timeID10", "8:00 PM"))
+
+        }
+        else{
+            arrayList.add(TimeSlot("timeID00", "10:00 AM"))
+            arrayList.add(TimeSlot("timeID01", "11:00 AM"))
+            arrayList.add(TimeSlot("timeID02", "12:00 PM"))
+            arrayList.add(TimeSlot("timeID03", "1:00 PM"))
+            arrayList.add(TimeSlot("timeID04", "2:00 PM"))
+            arrayList.add(TimeSlot("timeID05", "3:00 PM"))
+            arrayList.add(TimeSlot("timeID06", "4:00 PM"))
+            arrayList.add(TimeSlot("timeID07", "5:00 PM"))
+            arrayList.add(TimeSlot("timeID08", "6:00 PM"))
+            arrayList.add(TimeSlot("timeID09", "7:00 PM"))
+        }
 
 
         return arrayList
@@ -431,6 +462,8 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         previousPosition = position
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
+        selectedTimeSlot = id
+        Log.d("selected ID", selectedTimeSlot.toString())
         previousParent = parent
 
 
@@ -445,6 +478,62 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FF000000"))
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
 
+
+    }
+
+    //format id eg 1 --> 01
+    fun formatID(id: Long?): String? {
+
+        var selectedTimeSlot1: String? = null
+        if (id != null) {
+            if (id < 10) {
+
+                selectedTimeSlot1 = "0$id"
+
+
+            } else {
+                selectedTimeSlot1 = id.toString()
+            }
+        }
+
+        return selectedTimeSlot1
+
+    }
+
+    //post booked data
+    private fun saveBookData() {
+        var cvtToHours = selectedDuration?.toInt()
+        cvtToHours = cvtToHours?.div(60)
+        if (cvtToHours!! > 1) {
+            var counter = 0
+            while (counter < cvtToHours) {
+                FirestoreClass().saveBookedData(
+                    selectedTimeSlot, selectedTime,
+                    selectedDate, selectedRoomCourt, aBarTitle, type
+                )
+                counter++
+                selectedTimeSlot = selectedTimeSlot?.plus(1)
+                selectedTime = SummaryBookDetails().sumHours(1, selectedTime.toString())
+
+
+            }
+        } else {
+            FirestoreClass().saveBookedData(
+                selectedTimeSlot, selectedTime,
+                selectedDate, selectedRoomCourt, aBarTitle, type
+            )
+        }
+
+    }
+
+    //read booked data
+    private fun retrieveBookedData() {
+        FirestoreClass().retrieveBookedData(
+            selectedDate,
+            selectedRoomCourt,
+            aBarTitle,
+            type
+        )
 
     }
 
