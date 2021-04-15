@@ -1,3 +1,4 @@
+
 package com.example.hotelmanagementsystem_mobile.adapters
 
 import android.content.Context

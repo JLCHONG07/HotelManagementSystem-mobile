@@ -11,8 +11,11 @@ import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
 import com.example.hotelmanagementsystem_mobile.activities.EVouchers
+import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
-import kotlinx.android.synthetic.main.activity_login.*
+import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
+import com.example.hotelmanagementsystem_mobile.models.User
+import com.example.hotelmanagementsystem_mobile.utils.Constants
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -26,10 +29,13 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class HomeFragment() : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
+    private var param1: User? = null
     private var param2: String? = null
+
+    private lateinit var mUserDetail : User
+
     var sampleImages = intArrayOf(
         R.drawable.hotel1,
         R.drawable.hotel2,
@@ -39,9 +45,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            param1 = it.getParcelable<User>(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        FirestoreClass().loadUserData(Homepage(), this)
     }
 
     override fun onCreateView(
@@ -66,6 +74,7 @@ class HomeFragment : Fragment() {
         btnCheckin.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, CheckInActivity::class.java)
+                intent.putExtra(Constants.USERS, mUserDetail)
                 startActivity(intent)
             }
         }
@@ -83,9 +92,12 @@ class HomeFragment : Fragment() {
             }
 
         }
+    }
 
-
-
+    fun updateUserDetails(user: User) {
+        mUserDetail = user
+        //TODO: Remove later
+        Log.i("HomeFragment", mUserDetail.toString())
     }
 
     companion object {
@@ -99,10 +111,10 @@ class HomeFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: User, param2: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putParcelable(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }

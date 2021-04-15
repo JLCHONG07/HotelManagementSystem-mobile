@@ -121,7 +121,8 @@
 
     <!-- Check in Activity String -->
     <string name="content_description">image</string>
-    <string name="check_in_title">Recently Check in</string>
+    <string name="recently_check_in_title">Recently Check in</string>
+    <string name="check_in_title">Check in</string>
     <string name="tv_check_in_hint">Enter Your Check in ID</string>
     <string name="btn_check_in_add">ADD</string>
     <string name="check_in_username">Username</string>
@@ -135,7 +136,7 @@
     <string name="check_in_details_check_in_id">Check In ID</string>
     <string name="tv_check_in_reservation_id">Enter your reservation ID</string>
     <string name="btn_check_in_confirm">CONFIRM</string>
-    <string name="check_in_term_and_condition">I agree with terms and conditions</string>
+    <string name="check_in_term_and_condition"><u>I agree with terms and conditions</u></string>
     <string name="check_in_details_title">Check In Details</string>
 
     <string name="username">Username</string>

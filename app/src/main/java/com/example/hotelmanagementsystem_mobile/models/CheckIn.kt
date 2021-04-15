@@ -11,7 +11,8 @@ data class CheckIn(
     val numberOfQuests : Int = 0,
     val roomTypes : String = "",
     val checkInId : String = "",
-    val checkInDateAndTime : String = ""
+    val checkInDateAndTime : String = "",
+    val checkInStatus : String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

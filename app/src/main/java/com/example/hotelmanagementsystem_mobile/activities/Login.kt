@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
+import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -51,7 +52,7 @@ class Login : BaseActivity() {
                 .addOnCompleteListener {task ->
                     hideProgressDialog()
                     if(task.isSuccessful) {
-                        FirestoreClass().loadUserData(this)
+                        FirestoreClass().loadUserData(this, HomeFragment())
                     } else {
                         Toast.makeText(this, "Login failed! Please enter a valid email and password", Toast.LENGTH_SHORT).show()
                     }

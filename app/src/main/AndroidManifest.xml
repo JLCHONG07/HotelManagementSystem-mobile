@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hotelmanagementsystem_mobile">
 
     <application
@@ -45,8 +46,10 @@
         <activity android:name=".activities.CheckOut" />
         <activity
             android:name=".activities.CheckInActivity"
-            android:label="@string/check_in_title"
-            android:parentActivityName=".activities.Homepage" />
+            android:label="@string/recently_check_in_title"
+            android:parentActivityName=".activities.Homepage"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation"/>
         <activity
             android:name=".activities.Homepage"
             android:theme="@style/homeTheme"/>
