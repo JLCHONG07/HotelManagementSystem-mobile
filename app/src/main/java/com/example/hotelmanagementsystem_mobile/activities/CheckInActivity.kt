@@ -100,8 +100,6 @@ class CheckInActivity : AppCompatActivity() {
         val checkInConfirm = dialogView.findViewById<Button>(R.id.btn_check_in_confirm)
         checkInConfirm.setOnClickListener {
             val scanner = IntentIntegrator(this)
-            scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            scanner.setBeepEnabled(false)
             scanner.initiateScan()
         }
 
