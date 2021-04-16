@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -44,10 +46,12 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private var selectedRoomCourt: String? = null
     private var selectedTimeSlot: Long? = null
     private var selectedDate: String? = null
-    private lateinit var aBarTitle: String
-    private lateinit var type: String
+    private  var aBarTitle:String?=null
+    private  var type: String?=null
     private var savedHour = 0
     private var savedMinute = 0
+
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     private var arrayList: ArrayList<TimeSlot>? = null
@@ -63,6 +67,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         setContentView(R.layout.activity_booking_available)
 
 
+        Log.d("onCreate", "onCreate")
         val actionBar: ActionBar? = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
@@ -71,10 +76,26 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         type = intent.getStringExtra("type")
         val selection = getString(R.string.selection)
 
+
+        if(type==null) {
+            sharedPreferences =
+                getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
+            aBarTitle = sharedPreferences.getString("aBarTitle", aBarTitle)
+            type = sharedPreferences.getString("type", type)
+        }
+
+
         txtViewCourtRoom.text = "$selection $type :"
         txtViewSelection1.text = type
         txtViewSelection2.text = type
         actionBar.title = aBarTitle
+
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
+        aBarTitle = sharedPreferences.getString("aBarTitle", aBarTitle)
+        type = sharedPreferences.getString("type", type)
+
+
 
         cardView60Minutes.setOnClickListener(this)
         cardView120Minutes.setOnClickListener(this)
@@ -86,6 +107,30 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         pickDate()
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d("onStop", "Stop")
+       with(sharedPreferences.edit()) {
+            putString("aBarTitle", intent.getStringExtra("aBarTitle")).apply()
+            putString("type", intent.getStringExtra("type")).apply()
+
+        }
+
+
+    }
+
+
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("onRestart", "Restart")
+/*        sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
+        aBarTitle = sharedPreferences.getString("aBarTitle", aBarTitle)
+        type = sharedPreferences.getString("type", type)*/
+
+    }
+
 
     /* Back to previous activity*/
     override fun onSupportNavigateUp(): Boolean {
@@ -93,25 +138,59 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         return true
     }
 
-/*    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        savedInstanceState.putString("aBarTitle", aBarTitle)
-        savedInstanceState.putString("type", type)
+    /*   override fun onSaveInstanceState(savedInstanceState: Bundle) {
+           super.onSaveInstanceState(savedInstanceState)
+           // Save UI state changes to the savedInstanceState.
+           // This bundle will be passed to onCreate if the process is
+           // +
+           savedInstanceState.putString("aBarTitle", aBarTitle)
+           savedInstanceState.putString("type", type)
 
-        // etc.
+           // etc.
+       }
+
+       override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+           super.onRestoreInstanceState(savedInstanceState)
+           // Restore UI state from the savedInstanceState.
+           // This bundle has also been passed to onCreate.
+
+           aBarTitle = savedInstanceState.getString("aBarTitle").toString()
+           type = savedInstanceState.getString("type").toString()
+       }*/
+    override fun onPause() {
+        super.onPause()
+        Log.d("onPause", "onPause")
+      with(sharedPreferences.edit()) {
+            putString("aBarTitle", intent.getStringExtra("aBarTitle")).apply()
+            putString("type", intent.getStringExtra("type")).apply()
+
+        }
+
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        // Restore UI state from the savedInstanceState.
-        // This bundle has also been passed to onCreate.
+    override fun onStart() {
+        super.onStart()
 
-        aBarTitle = savedInstanceState.getString("aBarTitle").toString()
-        type = savedInstanceState.getString("type").toString()
-    }*/
+        Log.d("onStart", "onStart")
+        //Log.d("onPause", "onPause")
+        with(sharedPreferences.edit()) {
+            putString("aBarTitle1", intent.getStringExtra("aBarTitle")).apply()
+            putString("type1", intent.getStringExtra("type")).apply()
+
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("onResume", "onResume")
+/*       sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
+        aBarTitle = sharedPreferences.getString("aBarTitle", aBarTitle)
+        type = sharedPreferences.getString("type", type)*/
+
+    }
+
+
 
     //clicking button/card functions of the activities
     override fun onClick(v: View?) {
@@ -156,6 +235,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
+
     // check slot available
     fun checkSlotAvailable(arrayListSlotBooked: ArrayList<TimeSlot>) {
 
@@ -172,7 +252,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private fun checkForSlotSize(arrayListSlotBooked: ArrayList<TimeSlot>): Boolean {
 
         var slotAvailability: Boolean = false
-        //  Log.d("size", arrayListSlotBooked.size.toString())
+         Log.d("size", arrayListSlotBooked.size.toString())
         if (arrayListSlotBooked.size != 12) {
             slotAvailability = checkForCurrent()
 
@@ -215,7 +295,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     //check for midnight book or morning and afternoon booking
     private fun assignFakeData(arrayListSlotBooked: ArrayList<TimeSlot>) {
         //selected date is not current date
-        if (savedHour<9|| day < savedDay) {
+        if (savedHour < 9 || day < savedDay) {
 
             val timeSlot: MutableMap<String, Any> = HashMap()
             for (timeSlotArrayList in arrayListSlotBooked.indices) {
@@ -258,7 +338,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                     // Log.d("exists", "true")
                 } else {
                     timeSlot.put(addNewTime, currentTimer)
-                   // Log.d("exists", "false")
+                    // Log.d("exists", "false")
 
                 }
                 startTimeSlot -= 1
@@ -666,10 +746,37 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         previousPosition = position
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
-        selectedTimeSlot = id
+        selectedTimeSlot = convertIDtoLong(selectedTime!!)
         Log.d("selected ID", selectedTimeSlot.toString())
         previousParent = parent
 
+    }
+
+    //
+    private fun convertIDtoLong(selectedTime: String): Long {
+        //get hours of selectedTime
+        var i = 0
+        val startTimeLength = selectedTime.length
+        var startHours: String? = ""
+
+        while (i < startTimeLength) {
+            val currentChar: Char = selectedTime.get(i)
+            if (currentChar.compareTo(':') != 0) {
+                startHours += currentChar
+                i++
+
+            } else {
+
+                break
+            }
+        }
+        var bookedTime = startHours!!.toLong()
+        if (bookedTime < 10) {
+            bookedTime += 12 - 10
+        } else {
+            bookedTime -= 10
+        }
+        return bookedTime
     }
 
     //reset time card default view
@@ -689,6 +796,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         if (id != null) {
             if (id < 10) {
                 selectedTimeSlot1 = "0$id"
+                Log.d("selectedTimeSlot1", selectedTimeSlot1)
             } else {
                 selectedTimeSlot1 = id.toString()
             }

@@ -6,6 +6,6 @@ object Constants {
 
     //facilities_booking
     const val FACILITIES_BOOKING:String="facilities_booking"
-
+    const val BADMINTON:String="badminton"
 
 }

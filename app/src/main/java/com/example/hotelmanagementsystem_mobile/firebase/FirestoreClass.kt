@@ -112,7 +112,8 @@ class FirestoreClass {
         categories: String?,
         type: String?
     ) {
-
+        val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
+        alSlotAvailable.clear()
         val court = "$type $selectedRoomCourt"
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
@@ -120,7 +121,7 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener {
 
-                val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
+
                 for (document in it.documents.indices) {
 
 
@@ -134,7 +135,7 @@ class FirestoreClass {
                 }
 
 
-                activity.checkSlotAvailable(alSlotAvailable)
+                //activity.checkSlotAvailable(alSlotAvailable)
 
                 //for (document in alSlotAvailable.indices) {
                  //   Log.d("timerID", alSlotAvailable[document].timerID)
@@ -143,9 +144,14 @@ class FirestoreClass {
                // }
 
             }
+            .addOnCompleteListener{
+                activity.checkSlotAvailable(alSlotAvailable)
+
+            }
             .addOnFailureListener { exception ->
                 Log.d("Error", exception.toString())
             }
+
 
     }
 }
