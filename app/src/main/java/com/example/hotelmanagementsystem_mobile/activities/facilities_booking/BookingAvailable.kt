@@ -194,7 +194,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         //check for current day slot available for time
         if (day == savedDay) {
-            //duration is 60 minutes but current hour is more than 10:00pm
+            //duration is 60 minutes but current hour is more than 9:00pm
             if (selectedDuration.equals("60") && savedHour >= 21 && savedMinute > 0) {
                 return false
 
