@@ -105,6 +105,8 @@
 
     </string>
 
+    <string name="fully_book">Sorry Current Selected Booking is Full</string>
+
 
     <!--Below are Error message for Facilities Booking module Use-->
     <string name="date_error">* Date can only select within 30 days</string>

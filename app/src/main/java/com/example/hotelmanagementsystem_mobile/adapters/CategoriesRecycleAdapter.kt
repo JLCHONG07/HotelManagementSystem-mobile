@@ -38,6 +38,8 @@ class CategoriesRecycleAdapter(private val arrayList:ArrayList<categories>, val 
         return arrayList.size
     }
 
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayList[position])
 

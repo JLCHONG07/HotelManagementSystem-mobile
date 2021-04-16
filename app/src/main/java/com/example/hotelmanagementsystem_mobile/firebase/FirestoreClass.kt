@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
+import java.sql.Time
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -25,8 +26,7 @@ class FirestoreClass {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisterSuccess()
-            }.addOnFailureListener{
-                    e ->
+            }.addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error register user !")
             }
     }
@@ -38,24 +38,23 @@ class FirestoreClass {
             .addOnSuccessListener { document ->
                 val loggedInUser = document.toObject(User::class.java)!!
 
-                when(activity) {
+                when (activity) {
                     is Login -> {
-                        if(loggedInUser != null) {
+                        if (loggedInUser != null) {
                             activity.signInSuccess()
                         }
                     }
                 }
 
-                when(fragment) {
+                when (fragment) {
                     is HomeFragment -> {
-                        if(loggedInUser != null) {
+                        if (loggedInUser != null) {
                             fragment.updateUserDetails(loggedInUser)
                         }
                     }
                 }
-            }.addOnFailureListener{
-                    e ->
-                when(activity) {
+            }.addOnFailureListener { e ->
+                when (activity) {
                     is Login -> {
                         activity.hideProgressDialog()
                     }
@@ -64,11 +63,11 @@ class FirestoreClass {
             }
     }
 
-    fun getCurrentUserId() : String {
+    fun getCurrentUserId(): String {
         var currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
 
-        if(currentUser != null) {
+        if (currentUser != null) {
             currentUserID = currentUser.uid
         }
 
@@ -79,18 +78,18 @@ class FirestoreClass {
     //add booked data to database
     fun saveBookedData(
         selectedTimeSlot: Long?, selectedTime: String?, selectedDate: String?,
-        selectedRoomCourt:String?,
-        categories:String?,
-        type:String?,
+        selectedRoomCourt: String?,
+        categories: String?,
+        type: String?,
     ) {
 
         val timeSlot: MutableMap<String, Any> = HashMap()
 
-        val selectedTimeSlotID= BookingAvailable().formatID(selectedTimeSlot)
+        val selectedTimeSlotID = BookingAvailable().formatID(selectedTimeSlot)
         timeSlot["timerID"] = "timeID$selectedTimeSlotID"
         timeSlot["timer"] = "$selectedTime"
 
-        val court= "$type $selectedRoomCourt"
+        val court = "$type $selectedRoomCourt"
 
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate").document().set(timeSlot)
@@ -106,17 +105,22 @@ class FirestoreClass {
     }
 
     //read data from database
-    fun retrieveBookedData(selectedDate: String?,selectedRoomCourt:String?,categories:String?,type:String?) {
+    fun retrieveBookedData(
+        activity: BookingAvailable,
+        selectedDate: String?,
+        selectedRoomCourt: String?,
+        categories: String?,
+        type: String?
+    ) {
 
-
-        val court= "$type $selectedRoomCourt"
+        val court = "$type $selectedRoomCourt"
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
 
             .get()
             .addOnSuccessListener {
-                val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
 
+                val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
                 for (document in it.documents.indices) {
 
 
@@ -129,15 +133,19 @@ class FirestoreClass {
 
                 }
 
-                for (document in alSlotAvailable.indices) {
-                    Log.d("timerID", alSlotAvailable[document].timerID)
-                    Log.d("timer", alSlotAvailable[document].timer)
 
-                }
+                activity.checkSlotAvailable(alSlotAvailable)
+
+                //for (document in alSlotAvailable.indices) {
+                 //   Log.d("timerID", alSlotAvailable[document].timerID)
+                 //   Log.d("timer", alSlotAvailable[document].timer)
+
+               // }
 
             }
             .addOnFailureListener { exception ->
                 Log.d("Error", exception.toString())
             }
+
     }
 }

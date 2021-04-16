@@ -50,19 +50,19 @@ class EVouchers : AppCompatActivity() {
             .get()
             .addOnSuccessListener {
 
-                var counter = 0
-                for (i in it.documents) {
+               // var counter = 0
+                for (i in it.documents.indices) {
 
                     arrayListVoucher.add(
                         ModelVoucher(
                             R.drawable.e_voucher,
-                            it.documents[counter].data?.get("timeDuration") as String,
-                            it.documents[counter].data?.get("vouchType") as String,
-                            it.documents[counter].data?.get("vouchCode") as String,
-                            it.documents[counter].data?.get("vouchCat") as String
+                            it.documents[i].data?.get("timeDuration") as String,
+                            it.documents[i].data?.get("vouchType") as String,
+                            it.documents[i].data?.get("vouchCode") as String,
+                            it.documents[i].data?.get("vouchCat") as String
                         )
                     )
-                    counter++;
+                  //  counter++;
                 }
 
                 assignVoucher(arrayListVoucher)
