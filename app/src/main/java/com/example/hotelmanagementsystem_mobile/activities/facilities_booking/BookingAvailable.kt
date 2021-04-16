@@ -215,7 +215,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     //check for midnight book or morning and afternoon booking
     private fun assignFakeData(arrayListSlotBooked: ArrayList<TimeSlot>) {
         //selected date is not current date
-        if (day < savedDay) {
+        if (savedHour<9|| day < savedDay) {
 
             val timeSlot: MutableMap<String, Any> = HashMap()
             for (timeSlotArrayList in arrayListSlotBooked.indices) {
@@ -235,8 +235,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             val timeSlot: MutableMap<String, Any> = HashMap()
             // var addNewTime: String? = null
             var hourForID = savedHour - 10
-
-
             Log.d("hourForID", hourForID.toString())
             var currentTimeSlot = formatID(hourForID.toLong())
             var addNewTime = "timeID$currentTimeSlot"
@@ -251,7 +249,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
             }
 
-
             // var counterTime=0
             var currentHour = savedHour
             var currentTimer = cvtTo12Hours(currentHour)
@@ -259,10 +256,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             while (startTimeSlot != 0) {
                 if (timeSlot.containsKey(addNewTime)) {
                     // Log.d("exists", "true")
-
                 } else {
                     timeSlot.put(addNewTime, currentTimer)
-                    // Log.d("exists", "false")
+                   // Log.d("exists", "false")
 
                 }
                 startTimeSlot -= 1
@@ -272,7 +268,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 currentTimeSlot = formatID(hourForID.toLong())
                 addNewTime = "timeID$currentTimeSlot"
             }
-
             showCustomDialogAvailable(timeSlot)
             /* for (key in timeSlot.keys) {
                  Log.d("timerID", key)
