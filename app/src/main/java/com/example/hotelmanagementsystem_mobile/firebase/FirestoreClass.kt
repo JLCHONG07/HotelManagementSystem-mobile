@@ -112,8 +112,9 @@ class FirestoreClass {
         categories: String?,
         type: String?
     ) {
-        val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
-        alSlotAvailable.clear()
+        //val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
+       // alSlotAvailable.clear()
+        val timeSlot: MutableMap<String, Any> = HashMap()
         val court = "$type $selectedRoomCourt"
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
@@ -125,12 +126,11 @@ class FirestoreClass {
                 for (document in it.documents.indices) {
 
 
-                    alSlotAvailable.add(
-                        TimeSlot(
+                    timeSlot.put(
                             it.documents[document].data!!["timerID"] as String,
                             it.documents[document].data!!["timer"] as String
                         )
-                    )
+
 
                 }
 
@@ -145,7 +145,7 @@ class FirestoreClass {
 
             }
             .addOnCompleteListener{
-                activity.checkSlotAvailable(alSlotAvailable)
+                activity.checkSlotAvailable(timeSlot)
 
             }
             .addOnFailureListener { exception ->

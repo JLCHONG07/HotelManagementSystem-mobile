@@ -135,6 +135,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     /* Back to previous activity*/
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
+        finish()
         return true
     }
 
@@ -237,9 +238,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
 
     // check slot available
-    fun checkSlotAvailable(arrayListSlotBooked: ArrayList<TimeSlot>) {
+    fun checkSlotAvailable(timeSlot: MutableMap<String, Any>) {
 
-        val slotAvailability = checkForSlotSize(arrayListSlotBooked)
+        val slotAvailability = checkForSlotSize(timeSlot)
 
         if (!slotAvailability) {
 
@@ -249,16 +250,16 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
-    private fun checkForSlotSize(arrayListSlotBooked: ArrayList<TimeSlot>): Boolean {
+    private fun checkForSlotSize(timeSlot: MutableMap<String, Any>): Boolean {
 
         var slotAvailability: Boolean = false
-         Log.d("size", arrayListSlotBooked.size.toString())
-        if (arrayListSlotBooked.size != 12) {
+         Log.d("size", timeSlot.size.toString())
+        if (timeSlot.size != 12) {
             slotAvailability = checkForCurrent()
 
             if (slotAvailability) {
                 //making fake data with hashmap and use to compare with arraylist
-                assignFakeData(arrayListSlotBooked)
+                assignFakeData(timeSlot)
 
             } else {
                 return slotAvailability
@@ -293,18 +294,18 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     }
 
     //check for midnight book or morning and afternoon booking
-    private fun assignFakeData(arrayListSlotBooked: ArrayList<TimeSlot>) {
+    private fun assignFakeData(timeSlot: MutableMap<String, Any>) {
         //selected date is not current date
         if (savedHour < 9 || day < savedDay) {
 
-            val timeSlot: MutableMap<String, Any> = HashMap()
+      /*      val timeSlot: MutableMap<String, Any> = HashMap()
             for (timeSlotArrayList in arrayListSlotBooked.indices) {
                 timeSlot.put(
                     arrayListSlotBooked[timeSlotArrayList].timerID,
                     arrayListSlotBooked[timeSlotArrayList].timer
                 )
 
-            }
+            }*/
             showCustomDialogAvailable(timeSlot)
             //return true
 
@@ -312,7 +313,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         // this is current date from 10:00 AM to 10:00 PM booking, as the time will passed even it is not booked
         else {
 
-            val timeSlot: MutableMap<String, Any> = HashMap()
+           // val timeSlot: MutableMap<String, Any> = HashMap()
             // var addNewTime: String? = null
             var hourForID = savedHour - 10
             Log.d("hourForID", hourForID.toString())
@@ -321,13 +322,13 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             //currentHour - 10 to get the range from start to current end time booking
             var startTimeSlot = savedHour - 10
             Log.d("addNewTime", addNewTime)
-            for (timeSlotArrayList in arrayListSlotBooked.indices) {
+/*            for (timeSlotArrayList in arrayListSlotBooked.indices) {
                 timeSlot.put(
                     arrayListSlotBooked[timeSlotArrayList].timerID,
                     arrayListSlotBooked[timeSlotArrayList].timer
                 )
 
-            }
+            }*/
 
             // var counterTime=0
             var currentHour = savedHour
