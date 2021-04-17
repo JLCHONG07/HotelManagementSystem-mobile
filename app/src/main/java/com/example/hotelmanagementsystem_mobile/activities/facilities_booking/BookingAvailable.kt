@@ -60,7 +60,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private var timerAdapter: TimerAvailableRecycleAdapter? = null
 
     private lateinit var alertDialog: AlertDialog
-    //private lateinit var alertDialogFull: AlertDialog
 
 
     @SuppressLint("SetTextI18n")
@@ -143,25 +142,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         return true
     }
 
-    /*   override fun onSaveInstanceState(savedInstanceState: Bundle) {
-           super.onSaveInstanceState(savedInstanceState)
-           // Save UI state changes to the savedInstanceState.
-           // This bundle will be passed to onCreate if the process is
-           // +
-           savedInstanceState.putString("aBarTitle", aBarTitle)
-           savedInstanceState.putString("type", type)
-
-           // etc.
-       }
-
-       override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-           super.onRestoreInstanceState(savedInstanceState)
-           // Restore UI state from the savedInstanceState.
-           // This bundle has also been passed to onCreate.
-
-           aBarTitle = savedInstanceState.getString("aBarTitle").toString()
-           type = savedInstanceState.getString("type").toString()
-       }*/
     override fun onPause() {
         super.onPause()
         Log.d("onPause", "onPause")
@@ -240,7 +220,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     }
 
 
-    // check slot available
+    // retrieved data and called from fireStore class
     fun checkSlotAvailable(timeSlot: MutableMap<String, Any>) {
 
         val slotAvailability = checkForSlotSize(timeSlot)
@@ -253,6 +233,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
+    //check for the booked slots time
     private fun checkForSlotSize(timeSlot: MutableMap<String, Any>): Boolean {
 
         var slotAvailability: Boolean = false
@@ -274,6 +255,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
+    // check for close time as 10:00 AM to 10:00 PM of facilities opening
     private fun checkForCurrent(): Boolean {
 
         //check for current day slot available for time
@@ -296,28 +278,18 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         return true
     }
 
-    //check for midnight book or morning and afternoon booking
+    //check for booking time
     private fun assignFakeData(timeSlot: MutableMap<String, Any>) {
-        //selected date is not current date
+        //selected date is not current date or same date before 9AM
         if ((savedHour < 9 && day == savedDay) || day < savedDay) {
 
-            /*      val timeSlot: MutableMap<String, Any> = HashMap()
-                  for (timeSlotArrayList in arrayListSlotBooked.indices) {
-                      timeSlot.put(
-                          arrayListSlotBooked[timeSlotArrayList].timerID,
-                          arrayListSlotBooked[timeSlotArrayList].timer
-                      )
-
-                  }*/
             showCustomDialogAvailable(timeSlot)
-            //return true
 
         }
         // this is current date from 10:00 AM to 10:00 PM booking, as the time will passed even it is not booked
         else {
 
-            // val timeSlot: MutableMap<String, Any> = HashMap()
-            // var addNewTime: String? = null
+
             var hourForID = savedHour - 10
             Log.d("hourForID", hourForID.toString())
             var currentTimeSlot = formatID(hourForID.toLong())
@@ -325,13 +297,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             //currentHour - 10 to get the range from start to current end time booking
             var startTimeSlot = savedHour - 10
             Log.d("addNewTime", addNewTime)
-/*            for (timeSlotArrayList in arrayListSlotBooked.indices) {
-                timeSlot.put(
-                    arrayListSlotBooked[timeSlotArrayList].timerID,
-                    arrayListSlotBooked[timeSlotArrayList].timer
-                )
 
-            }*/
 
             // var counterTime=0
             Log.d("startTimeSlot", startTimeSlot.toString())
@@ -340,12 +306,16 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             //   Log.d("currentTime2", currentTimer)
             while (startTimeSlot >= 0) {
 
-                if (timeSlot.containsKey(addNewTime)) {
+/*                if (timeSlot.containsKey(addNewTime)) {
                     // Log.d("exists", "true")
                 } else {
                     timeSlot.put(addNewTime, currentTimer)
                     // Log.d("exists", "false")
 
+                }*/
+                if (!timeSlot.containsKey(addNewTime)) {
+                    timeSlot.put(addNewTime, currentTimer)
+                    // Log.d("exists", "true")
                 }
                 startTimeSlot -= 1
                 hourForID -= 1
@@ -366,6 +336,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
+    //24 hours format to 12 hours format eg 13:00 to 1:00 PM
     private fun cvtTo12Hours(currentHour: Int): String {
         var currentHour = currentHour
         var result: String? = null
@@ -382,6 +353,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         return result
     }
 
+    //create dialog after click on Check Available button when full
     private fun showCustomDialogFull() {
 
         val inflater: LayoutInflater = this.layoutInflater
@@ -401,7 +373,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     }
 
 
-    //create dialog after click on Check Available button
+    //create dialog after click on Check Available button when not full
     @SuppressLint("SetTextI18n")
     private fun showCustomDialogAvailable(timeSlot: MutableMap<String, Any>) {
         val inflater: LayoutInflater = this.layoutInflater
@@ -744,6 +716,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             selectedDuration.equals("120") -> {
                 for (arrayListTem in arrayList.indices) {
                     if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                        //check for next hours id exists
                         if (arrayListTem + 1 < arrayList.size) {
                             if (!timeSlot.containsKey(arrayList[arrayListTem + 1].timerID)) {
                                 arrayListResult.add(
@@ -753,7 +726,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                                     )
                                 )
                             }
-
+                            //if not the last position then will check with the exists id
                         } else {
                             if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
                                 arrayListResult.add(
@@ -776,8 +749,10 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             else -> {
                 for (arrayListTem in arrayList.indices) {
                     if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                        //check for next hours id exists
                         if (arrayListTem + 1 < arrayList.size) {
                             if (!timeSlot.containsKey(arrayList[arrayListTem + 1].timerID)) {
+                                //check for next two  id exists
                                 if (arrayListTem + 2 < arrayList.size) {
                                     if (!timeSlot.containsKey(arrayList[arrayListTem + 2].timerID)) {
                                         arrayListResult.add(
@@ -850,7 +825,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
-    //
+    //get id from time text view eg 11:00 AM --> "11" with return long var
     private fun convertIDtoLong(selectedTime: String): Long {
         //get hours of selectedTime
         var i = 0
@@ -891,23 +866,23 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     //format id eg 1 --> 01
     fun formatID(id: Long?): String? {
 
-        var selectedTimeSlot1: String? = null
+        var selectedTimeSlot: String? = null
         if (id != null) {
             if (id < 10) {
-                selectedTimeSlot1 = "0$id"
-                Log.d("selectedTimeSlot1", selectedTimeSlot1)
+                selectedTimeSlot = "0$id"
+                Log.d("selectedTimeSlot1", selectedTimeSlot)
             } else {
-                selectedTimeSlot1 = id.toString()
+                selectedTimeSlot = id.toString()
             }
         }
-        return selectedTimeSlot1
+        return selectedTimeSlot
     }
 
     //post booked data
     private fun saveBookData() {
         var cvtToHours = selectedDuration?.toInt()
         cvtToHours = cvtToHours?.div(60)
-        if (cvtToHours!! > 0) {
+        if (cvtToHours!! > 1) {
             var counter = 0
             while (counter < cvtToHours) {
                 FirestoreClass().saveBookedData(
@@ -946,62 +921,5 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         //showProgressDialog(resources.getString(R.string.please_wait))
     }
 
-/*    private fun sumHours(startTime1: String): String {
-        //get hours of startTime
-       // Log.d("startTime",startTime)
-        val startTime=startTime1
-        Log.d("startTime",startTime)
-        var i = 0
-        val hours=1
-        val startTimeLength = startTime.length
-        var startHours=""
-        var totalSum: String? = null
-        while (i < startTimeLength) {
-            val currentChar: Char = startTime.get(i)
-            if (currentChar.compareTo(':') != 0) {
-                startHours += currentChar
-                Log.d("startHoursPlus",startHours)
-                i++
 
-            } else {
-
-                break
-            }
-        }
-        if(startHours.equals(" 1")){
-            startHours= 11.toString()
-        }
-        Log.d("startHours",startHours)
-        var endHours = startHours?.toInt()
-        endHours = endHours?.plus(hours)
-        when {
-            endHours!! == 12 -> {
-                totalSum = "$endHours:00 PM"
-
-            }
-            endHours == 11 -> {
-
-
-                totalSum = "$endHours:00 AM"
-
-            }
-            endHours > 12 -> {
-
-                endHours -= 12
-                totalSum = " $endHours:00 PM"
-            }
-            else -> {
-                totalSum = "$endHours:00 PM"
-            }
-        }
-
-
-        Log.d("startHours", startHours.toString())
-        Log.d("endHours", endHours.toString())
-        Log.d("endTime", totalSum.toString())
-
-        return totalSum.toString()
-
-
-    }*/
 }
