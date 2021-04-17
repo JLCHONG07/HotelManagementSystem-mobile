@@ -132,7 +132,7 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
     }
 
-     fun sumHours(hours: Int, startTime: String): String {
+    fun sumHours(hours: Int, startTime: String): String {
         //get hours of startTime
         var i = 0
         val startTimeLength = startTime.length
@@ -149,6 +149,10 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
                 break
             }
         }
+
+         if(startHours.equals(" 1")){
+             startHours= 11.toString()
+         }
 
         var endHours = startHours?.toInt()
         endHours = endHours?.plus(hours)
