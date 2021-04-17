@@ -426,7 +426,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             alertDialog.show()
         } else {
 
-            alertDialog.dismiss()
+//            alertDialog.dismiss()
             showCustomDialogFull()
         }
 
@@ -485,9 +485,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
             return false
         }
-        if (day > savedDay) {
-            return false
-        }
+//        if (day > savedDay) {
+//            return false
+//        }
 
         //if within 30 days then return true
         return when {
@@ -496,7 +496,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
             }
             month < savedMonth -> {
-                (day + 30) - savedDay == 30
+                (savedDay + 30) - day <= 30
             }
 
             else -> {
