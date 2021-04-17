@@ -54,7 +54,7 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
             intent.putExtra("selectedTimeSlot",selectedTimeSlot)
             intent.putExtra("currentCat",currentCat)
             intent.putExtra("currentType", currentType)
-            //idk actually
+            //idk actually about this
         }
 
         var cvtToHours = selectDuration.toInt()
