@@ -13,6 +13,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
+import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.activity_summary_book_details.*
 
@@ -20,15 +21,41 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var alertDialog: AlertDialog
 
+    private var selectedTime: String? = null
+    private var selectedDuration: String? = null
+    private var selectedRoomCourt: String? = null
+    private var selectedTimeSlot: Long? = null
+    private var selectedDate: String? = null
+    private var currentCat: String? = null
+    private var currentType: String? = null
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_summary_book_details)
 
 
-        val selectedDate = intent.getStringExtra("selectedDate")
+        val selectedDate = intent. getStringExtra("selectedDate")
         val selectedStartTime = intent.getStringExtra("startTime")
         val selectDuration = intent.getStringExtra("selectedDuration")
+        val selectedRoomCourt =intent.getStringExtra("selectedRoomCourt")
+        val selectedTimeSlot =intent.getStringExtra("selectedTimeSlot")
+        val currentCat = intent.getStringExtra("currentCat")
+        val currentType = intent.getStringExtra("currentType")
+
+        if (selectedTime != null) {
+
+            val intent = Intent(this, SummaryBookDetails::class.java)
+            intent.putExtra("selectedDate", btnDate.text)
+            intent.putExtra("selectedStartTime",selectedStartTime)
+            intent.putExtra("selectedRoomCourt",selectedRoomCourt)
+            intent.putExtra("startTime", selectedTime)
+            intent.putExtra("selectedDuration", selectedDuration)
+            intent.putExtra("selectedTimeSlot",selectedTimeSlot)
+            intent.putExtra("currentCat",currentCat)
+            intent.putExtra("currentType", currentType)
+            //idk actually
+        }
 
         var cvtToHours = selectDuration.toInt()
         cvtToHours /= 60
@@ -83,7 +110,6 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
         dialogBuilder.setView(dialogView)
-
 
         alertDialog = dialogBuilder.create()
         alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
@@ -183,7 +209,34 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
         Log.d("endTime", totalSum.toString())
 
         return totalSum.toString()
-
-
     }
+
+    private fun history() {
+        var cvtToHours = selectedDuration?.toInt()
+        cvtToHours = cvtToHours?.div(60)
+        if (cvtToHours!! > 1) {
+            var counter = 0
+            while (counter < cvtToHours) {
+                FirestoreClass().saveBookedData(
+                    selectedTimeSlot, selectedTime,
+                    selectedDate, selectedRoomCourt, currentCat, currentType
+                )
+                Log.d("currentCat", currentCat)
+                Log.d("currentType", currentType)
+                counter++
+                selectedTimeSlot = selectedTimeSlot?.plus(1)
+                selectedTime = SummaryBookDetails().sumHours(1, selectedTime.toString())
+                //selectedTime = sumHours(selectedTime.toString())
+            }
+        } else {
+            Log.d("currentCat", currentCat)
+            Log.d("currentType", currentType)
+            FirestoreClass().saveBookedData(
+                selectedTimeSlot, selectedTime,
+                selectedDate, selectedRoomCourt, currentCat, currentType
+            )
+
+        }
+    }
+
 }
