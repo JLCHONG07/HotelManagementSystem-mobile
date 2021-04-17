@@ -46,10 +46,12 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private var selectedRoomCourt: String? = null
     private var selectedTimeSlot: Long? = null
     private var selectedDate: String? = null
-    private  var aBarTitle:String?=null
-    private  var type: String?=null
+    private var aBarTitle: String? = null
+    private var type: String? = null
     private var savedHour = 0
     private var savedMinute = 0
+    private var currentCat: String? = null
+    private var currentType: String? = null
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -77,7 +79,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         val selection = getString(R.string.selection)
 
 
-        if(type==null) {
+        if (type == null) {
             sharedPreferences =
                 getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
             aBarTitle = sharedPreferences.getString("aBarTitle", aBarTitle)
@@ -89,6 +91,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         txtViewSelection1.text = type
         txtViewSelection2.text = type
         actionBar.title = aBarTitle
+        currentCat = actionBar.title.toString()
+        currentType = txtViewSelection1.text.toString()
+
 
         sharedPreferences =
             getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
@@ -110,15 +115,14 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     override fun onStop() {
         super.onStop()
         Log.d("onStop", "Stop")
-       with(sharedPreferences.edit()) {
-            putString("aBarTitle", intent.getStringExtra("aBarTitle")).apply()
-            putString("type", intent.getStringExtra("type")).apply()
+        with(sharedPreferences.edit()) {
+            putString("aBarTitle", currentCat).apply()
+            putString("type", txtViewSelection1.text.toString()).apply()
 
         }
 
 
     }
-
 
 
     override fun onRestart() {
@@ -161,7 +165,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     override fun onPause() {
         super.onPause()
         Log.d("onPause", "onPause")
-      with(sharedPreferences.edit()) {
+        with(sharedPreferences.edit()) {
             putString("aBarTitle", intent.getStringExtra("aBarTitle")).apply()
             putString("type", intent.getStringExtra("type")).apply()
 
@@ -190,7 +194,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         type = sharedPreferences.getString("type", type)*/
 
     }
-
 
 
     //clicking button/card functions of the activities
@@ -253,7 +256,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private fun checkForSlotSize(timeSlot: MutableMap<String, Any>): Boolean {
 
         var slotAvailability: Boolean = false
-         Log.d("size", timeSlot.size.toString())
+        Log.d("size", timeSlot.size.toString())
         if (timeSlot.size != 12) {
             slotAvailability = checkForCurrent()
 
@@ -296,16 +299,16 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     //check for midnight book or morning and afternoon booking
     private fun assignFakeData(timeSlot: MutableMap<String, Any>) {
         //selected date is not current date
-        if (savedHour < 9 || day < savedDay) {
+        if ((savedHour < 9 && day == savedDay) || day < savedDay) {
 
-      /*      val timeSlot: MutableMap<String, Any> = HashMap()
-            for (timeSlotArrayList in arrayListSlotBooked.indices) {
-                timeSlot.put(
-                    arrayListSlotBooked[timeSlotArrayList].timerID,
-                    arrayListSlotBooked[timeSlotArrayList].timer
-                )
+            /*      val timeSlot: MutableMap<String, Any> = HashMap()
+                  for (timeSlotArrayList in arrayListSlotBooked.indices) {
+                      timeSlot.put(
+                          arrayListSlotBooked[timeSlotArrayList].timerID,
+                          arrayListSlotBooked[timeSlotArrayList].timer
+                      )
 
-            }*/
+                  }*/
             showCustomDialogAvailable(timeSlot)
             //return true
 
@@ -313,7 +316,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         // this is current date from 10:00 AM to 10:00 PM booking, as the time will passed even it is not booked
         else {
 
-           // val timeSlot: MutableMap<String, Any> = HashMap()
+            // val timeSlot: MutableMap<String, Any> = HashMap()
             // var addNewTime: String? = null
             var hourForID = savedHour - 10
             Log.d("hourForID", hourForID.toString())
@@ -331,10 +334,12 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             }*/
 
             // var counterTime=0
+            Log.d("startTimeSlot", startTimeSlot.toString())
             var currentHour = savedHour
             var currentTimer = cvtTo12Hours(currentHour)
             //   Log.d("currentTime2", currentTimer)
-            while (startTimeSlot != 0) {
+            while (startTimeSlot >= 0) {
+
                 if (timeSlot.containsKey(addNewTime)) {
                     // Log.d("exists", "true")
                 } else {
@@ -435,17 +440,23 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         arrayList = ArrayList()
         arrayList = setDataList(timeSlot)
-        timerAdapter = TimerAvailableRecycleAdapter(arrayList!!, applicationContext)
-        gridView?.adapter = timerAdapter
-        gridView?.onItemClickListener = this
+        if (arrayList!!.size > 0) {
+            timerAdapter = TimerAvailableRecycleAdapter(arrayList!!, applicationContext)
+            gridView?.adapter = timerAdapter
+            gridView?.onItemClickListener = this
 
 
-        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-        dialogBuilder.setView(dialogView)
+            val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+            dialogBuilder.setView(dialogView)
 
-        alertDialog = dialogBuilder.create()
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
-        alertDialog.show()
+            alertDialog = dialogBuilder.create()
+            alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
+            alertDialog.show()
+        } else {
+
+            alertDialog.dismiss()
+            showCustomDialogFull()
+        }
 
 
     }
@@ -714,22 +725,107 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 arrayList.add(TimeSlot("timeID09", "7:00 PM"))
             }
         }
-        for (arrayListTem in arrayList.indices) {
-            if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
-                arrayListResult.add(
-                    TimeSlot(
-                        arrayList[arrayListTem].timerID,
-                        arrayList[arrayListTem].timer
-                    )
-                )
+
+        when {
+            selectedDuration.equals("60") -> {
+                for (arrayListTem in arrayList.indices) {
+                    if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                        arrayListResult.add(
+                            TimeSlot(
+                                arrayList[arrayListTem].timerID,
+                                arrayList[arrayListTem].timer
+                            )
+                        )
+                    }
+                }
+            }
+
+
+            selectedDuration.equals("120") -> {
+                for (arrayListTem in arrayList.indices) {
+                    if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                        if (arrayListTem + 1 < arrayList.size) {
+                            if (!timeSlot.containsKey(arrayList[arrayListTem + 1].timerID)) {
+                                arrayListResult.add(
+                                    TimeSlot(
+                                        arrayList[arrayListTem].timerID,
+                                        arrayList[arrayListTem].timer
+                                    )
+                                )
+                            }
+
+                        } else {
+                            if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                                arrayListResult.add(
+                                    TimeSlot(
+                                        arrayList[arrayListTem].timerID,
+                                        arrayList[arrayListTem].timer
+                                    )
+                                )
+                            }
+
+                        }
+
+
+                    }
+                }
+
+            }
+
+
+            else -> {
+                for (arrayListTem in arrayList.indices) {
+                    if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                        if (arrayListTem + 1 < arrayList.size) {
+                            if (!timeSlot.containsKey(arrayList[arrayListTem + 1].timerID)) {
+                                if (arrayListTem + 2 < arrayList.size) {
+                                    if (!timeSlot.containsKey(arrayList[arrayListTem + 2].timerID)) {
+                                        arrayListResult.add(
+                                            TimeSlot(
+                                                arrayList[arrayListTem].timerID,
+                                                arrayList[arrayListTem].timer
+                                            )
+                                        )
+                                    }
+                                } else {
+                                    if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                                        arrayListResult.add(
+                                            TimeSlot(
+                                                arrayList[arrayListTem].timerID,
+                                                arrayList[arrayListTem].timer
+                                            )
+                                        )
+                                    }
+
+                                }
+                            }
+
+                        } else {
+                            if (!timeSlot.containsKey(arrayList[arrayListTem].timerID)) {
+                                arrayListResult.add(
+                                    TimeSlot(
+                                        arrayList[arrayListTem].timerID,
+                                        arrayList[arrayListTem].timer
+                                    )
+                                )
+                            }
+
+                        }
+                    }
+
+                }
             }
         }
+
+
         for (arrayListTem in arrayListResult.indices) {
             Log.d("timerID", arrayListResult[arrayListTem].timerID)
             //Log.d("time", timeSlot[key].toString())
         }
 
         return arrayListResult
+
+
     }
 
     //click on the time slots available
@@ -747,6 +843,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         previousPosition = position
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
+        Log.d("selectedTime", selectedTime)
         selectedTimeSlot = convertIDtoLong(selectedTime!!)
         Log.d("selected ID", selectedTimeSlot.toString())
         previousParent = parent
@@ -788,6 +885,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             .setBackgroundResource(R.drawable.default_time_border_outline)
         v.findViewById<TextView>(R.id.txtViewTime).setTextColor(Color.parseColor("#FF000000"))
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
+        Log.d("selectedTime", selectedTime)
     }
 
     //format id eg 1 --> 01
@@ -809,33 +907,101 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     private fun saveBookData() {
         var cvtToHours = selectedDuration?.toInt()
         cvtToHours = cvtToHours?.div(60)
-        if (cvtToHours!! > 1) {
+        if (cvtToHours!! > 0) {
             var counter = 0
             while (counter < cvtToHours) {
                 FirestoreClass().saveBookedData(
                     selectedTimeSlot, selectedTime,
-                    selectedDate, selectedRoomCourt, aBarTitle, type
+                    selectedDate, selectedRoomCourt, currentCat, currentType
                 )
+                Log.d("currentCat", currentCat)
+                Log.d("currentType", currentType)
                 counter++
                 selectedTimeSlot = selectedTimeSlot?.plus(1)
                 selectedTime = SummaryBookDetails().sumHours(1, selectedTime.toString())
+                //selectedTime = sumHours(selectedTime.toString())
             }
         } else {
+            Log.d("currentCat", currentCat)
+            Log.d("currentType", currentType)
             FirestoreClass().saveBookedData(
                 selectedTimeSlot, selectedTime,
-                selectedDate, selectedRoomCourt, aBarTitle, type
+                selectedDate, selectedRoomCourt, currentCat, currentType
             )
+
+
         }
     }
 
     //read booked data
     private fun retrieveBookedData() {
+        Log.d("currentCat", currentCat)
         FirestoreClass().retrieveBookedData(
             this, selectedDate,
             selectedRoomCourt,
-            aBarTitle,
-            type
+            currentCat,
+            currentType
         )
+
         //showProgressDialog(resources.getString(R.string.please_wait))
     }
+
+/*    private fun sumHours(startTime1: String): String {
+        //get hours of startTime
+       // Log.d("startTime",startTime)
+        val startTime=startTime1
+        Log.d("startTime",startTime)
+        var i = 0
+        val hours=1
+        val startTimeLength = startTime.length
+        var startHours=""
+        var totalSum: String? = null
+        while (i < startTimeLength) {
+            val currentChar: Char = startTime.get(i)
+            if (currentChar.compareTo(':') != 0) {
+                startHours += currentChar
+                Log.d("startHoursPlus",startHours)
+                i++
+
+            } else {
+
+                break
+            }
+        }
+        if(startHours.equals(" 1")){
+            startHours= 11.toString()
+        }
+        Log.d("startHours",startHours)
+        var endHours = startHours?.toInt()
+        endHours = endHours?.plus(hours)
+        when {
+            endHours!! == 12 -> {
+                totalSum = "$endHours:00 PM"
+
+            }
+            endHours == 11 -> {
+
+
+                totalSum = "$endHours:00 AM"
+
+            }
+            endHours > 12 -> {
+
+                endHours -= 12
+                totalSum = " $endHours:00 PM"
+            }
+            else -> {
+                totalSum = "$endHours:00 PM"
+            }
+        }
+
+
+        Log.d("startHours", startHours.toString())
+        Log.d("endHours", endHours.toString())
+        Log.d("endTime", totalSum.toString())
+
+        return totalSum.toString()
+
+
+    }*/
 }

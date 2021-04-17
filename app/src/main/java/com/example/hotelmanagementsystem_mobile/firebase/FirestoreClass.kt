@@ -91,8 +91,11 @@ class FirestoreClass {
 
         val court = "$type $selectedRoomCourt"
 
+
+
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate").document().set(timeSlot)
+
 
             .addOnSuccessListener {
                 Log.d("status", "successful added")
@@ -118,6 +121,7 @@ class FirestoreClass {
         val court = "$type $selectedRoomCourt"
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
+
 
             .get()
             .addOnSuccessListener {
