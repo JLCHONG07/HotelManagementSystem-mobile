@@ -12,12 +12,13 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.activity_summary_book_details.*
 
-class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
+class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
     private lateinit var alertDialog: AlertDialog
 
@@ -29,42 +30,57 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
     private var currentCat: String? = null
     private var currentType: String? = null
 
+    private var savedDay = 0;
+    private var savedMonth = 0;
+    private var savedYear = 0;
+    private var cvtMonth: String? = null
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_summary_book_details)
 
 
-        val selectedDate = intent. getStringExtra("selectedDate")
-        val selectedStartTime = intent.getStringExtra("startTime")
-        val selectDuration = intent.getStringExtra("selectedDuration")
-        val selectedRoomCourt =intent.getStringExtra("selectedRoomCourt")
-        val selectedTimeSlot =intent.getStringExtra("selectedTimeSlot")
-        val currentCat = intent.getStringExtra("currentCat")
-        val currentType = intent.getStringExtra("currentType")
+        selectedDate = intent.getStringExtra("selectedDate")
+        selectedTime = intent.getStringExtra("startTime") //start Time
+        selectedDuration = intent.getStringExtra("selectedDuration")
+        selectedRoomCourt = intent.getStringExtra("selectedRoomCourt")
+        selectedTimeSlot = intent.getLongExtra("selectedTimeSlot",0)
+        currentCat = intent.getStringExtra("currentCat")
+        currentType = intent.getStringExtra("currentType")
 
+        savedDay=intent.getIntExtra("savedDay",0)
+        savedMonth=intent.getIntExtra("savedMonth",0)
+        savedYear=intent.getIntExtra("savedYear",0)
+        cvtMonth=intent.getStringExtra("cvtMonth")
+
+/*
         if (selectedTime != null) {
 
             val intent = Intent(this, SummaryBookDetails::class.java)
             intent.putExtra("selectedDate", btnDate.text)
-            intent.putExtra("selectedStartTime",selectedStartTime)
-            intent.putExtra("selectedRoomCourt",selectedRoomCourt)
+            intent.putExtra("selectedStartTime", selectedStartTime)
+            intent.putExtra("selectedRoomCourt", selectedRoomCourt)
             intent.putExtra("startTime", selectedTime)
             intent.putExtra("selectedDuration", selectedDuration)
-            intent.putExtra("selectedTimeSlot",selectedTimeSlot)
-            intent.putExtra("currentCat",currentCat)
+            intent.putExtra("selectedTimeSlot", selectedTimeSlot)
+            intent.putExtra("currentCat", currentCat)
             intent.putExtra("currentType", currentType)
             //idk actually about this
         }
+*/
 
-        var cvtToHours = selectDuration.toInt()
+        val selectedHours = selectedDuration
+        var cvtToHours=selectedHours!!.toInt()
         cvtToHours /= 60
         Log.d("cvtToHours", cvtToHours.toString())
-        val calEndTime = sumHours(cvtToHours, selectedStartTime)
+        val calEndTime = sumHours(cvtToHours, selectedTime)
 
-        BookingDate.text = selectedDate
-        startTime.text = selectedStartTime
-        bookDrtMin.text = selectDuration + " " + getString(R.string.sc_minutes)
+
+
+        BookingDate.text = "$savedDay $cvtMonth $savedYear"
+        startTime.text = selectedTime
+        bookDrtMin.text = selectedDuration + " " + getString(R.string.sc_minutes)
         endTime.text = calEndTime
         btnConfirm.setOnClickListener(this)
         textViewTAndC.setOnClickListener(this)
@@ -82,6 +98,8 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
                 }
                 if (validVoucher() && checkBoxChecked.isChecked) {
+                    //history()
+                    saveBookData()
                     showSuccessfulAlertBox()
                 } else {
                     txtViewCheckErrorMsg.visibility = View.VISIBLE
@@ -158,10 +176,10 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun sumHours(hours: Int, startTime: String): String {
+    fun sumHours(hours: Int, startTime: String?): String {
         //get hours of startTime
         var i = 0
-        val startTimeLength = startTime.length
+        val startTimeLength = startTime!!.length
         var startHours: String? = ""
         var totalSum: String? = null
         while (i < startTimeLength) {
@@ -176,9 +194,9 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-         if(startHours.equals(" 1")){
-             startHours= 11.toString()
-         }
+        if (startHours.equals(" 1")) {
+            startHours = 11.toString()
+        }
 
         var endHours = startHours?.toInt()
         endHours = endHours?.plus(hours)
@@ -211,7 +229,7 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
         return totalSum.toString()
     }
 
-    private fun history() {
+    private fun saveBookData() {
         var cvtToHours = selectedDuration?.toInt()
         cvtToHours = cvtToHours?.div(60)
         if (cvtToHours!! > 1) {
@@ -238,5 +256,6 @@ class SummaryBookDetails : AppCompatActivity(), View.OnClickListener {
 
         }
     }
+
 
 }

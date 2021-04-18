@@ -26,6 +26,7 @@ class BookFacilitiesHistory(val imageCat: Int, val catAndDuration: String, val t
         parcel.writeString(weekOfDay)
         parcel.writeString(monthOfDate)
         parcel.writeString(month)
+
     }
 
     override fun describeContents(): Int {
