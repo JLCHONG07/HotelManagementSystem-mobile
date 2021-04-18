@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SplashScreen"
+        <activity
+            android:name=".activities.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,10 @@
             android:name=".activities.facilities_booking.SportsCat"
             android:parentActivityName=".activities.facilities_booking.Categories" />
         <activity
+            android:name=".activities.facilities_booking.BookingHistory"
+            android:label="Booking History"
+            android:parentActivityName=".activities.Homepage" />
+        <activity
             android:name=".activities.Account"
             android:theme="@style/homeTheme" />
         <activity
@@ -35,7 +40,7 @@
             android:theme="@style/signupTheme" />
         <activity
             android:name=".activities.Login"
-            android:theme="@style/loginTheme"/>
+            android:theme="@style/loginTheme" />
         <activity
             android:name=".activities.EVouchers"
             android:parentActivityName=".activities.Homepage" />
@@ -49,10 +54,10 @@
             android:label="@string/recently_check_in_title"
             android:parentActivityName=".activities.Homepage"
             android:screenOrientation="sensorPortrait"
-            tools:replace="screenOrientation"/>
+            tools:replace="screenOrientation" />
         <activity
             android:name=".activities.Homepage"
-            android:theme="@style/homeTheme"/>
+            android:theme="@style/homeTheme" />
 
         <meta-data
             android:name="preloaded_fonts"
