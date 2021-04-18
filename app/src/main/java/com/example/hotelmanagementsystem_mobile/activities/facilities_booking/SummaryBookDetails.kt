@@ -17,6 +17,7 @@ import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.activity_summary_book_details.*
+import java.util.*
 
 class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
@@ -35,6 +36,15 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
     private var savedYear = 0;
     private var cvtMonth: String? = null
 
+    private var weekOfDay: String?=null
+
+    private var date: String? = null
+
+    //private var imageCatURL:String?=null
+    // private var color:String?=null
+    private var time:String?=null
+    private var catAndDuration:String?=null
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +55,14 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         selectedTime = intent.getStringExtra("startTime") //start Time
         selectedDuration = intent.getStringExtra("selectedDuration")
         selectedRoomCourt = intent.getStringExtra("selectedRoomCourt")
-        selectedTimeSlot = intent.getLongExtra("selectedTimeSlot",0)
+        selectedTimeSlot = intent.getLongExtra("selectedTimeSlot", 0)
         currentCat = intent.getStringExtra("currentCat")
         currentType = intent.getStringExtra("currentType")
 
-        savedDay=intent.getIntExtra("savedDay",0)
-        savedMonth=intent.getIntExtra("savedMonth",0)
-        savedYear=intent.getIntExtra("savedYear",0)
-        cvtMonth=intent.getStringExtra("cvtMonth")
+        savedDay = intent.getIntExtra("savedDay", 0)
+        savedMonth = intent.getIntExtra("savedMonth", 0)
+        savedYear = intent.getIntExtra("savedYear", 0)
+        cvtMonth = intent.getStringExtra("cvtMonth")
 
 /*
         if (selectedTime != null) {
@@ -71,13 +81,15 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 */
 
         val selectedHours = selectedDuration
-        var cvtToHours=selectedHours!!.toInt()
+        var cvtToHours = selectedHours!!.toInt()
         cvtToHours /= 60
         Log.d("cvtToHours", cvtToHours.toString())
         val calEndTime = sumHours(cvtToHours, selectedTime)
-
-
-
+        weekOfDay= getWeekOfday()
+        cvtMonth=getMonth()
+        time="$selectedTime - ${calEndTime}"
+        date="${savedDay}_${cvtMonth}_${savedYear}"
+        catAndDuration="$currentCat (${selectedDuration} minutes)"
         BookingDate.text = "$savedDay $cvtMonth $savedYear"
         startTime.text = selectedTime
         bookDrtMin.text = selectedDuration + " " + getString(R.string.sc_minutes)
@@ -98,7 +110,7 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
                 }
                 if (validVoucher() && checkBoxChecked.isChecked) {
-                    //history()
+                    history()
                     saveBookData()
                     showSuccessfulAlertBox()
                 } else {
@@ -119,6 +131,102 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
 
         }
+    }
+
+    //convert month in Integer form to String MMM
+    fun getMonth(): String {
+
+        when (savedMonth) {
+            1 -> {
+                return "January"
+            }
+            2 -> {
+                return "February"
+
+            }
+            3 -> {
+                return "March"
+
+            }
+            4 -> {
+                return "April"
+
+            }
+            5 -> {
+                return "May"
+
+            }
+            6 -> {
+                return "June"
+
+            }
+            7 -> {
+                return "July"
+
+            }
+            8 -> {
+                return "August"
+
+            }
+            9 -> {
+                return "September"
+
+
+            }
+            10 -> {
+                return "October"
+
+            }
+            11 -> {
+                return "November"
+
+            }
+            12 -> {
+                return "December"
+
+            }
+        }
+        return "null"
+    }
+
+
+
+    private fun getWeekOfday(): String {
+        val gregorianCalendar = GregorianCalendar(savedYear, savedMonth, savedDay - 1)
+        val weekOfDay = gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK)
+
+        when (weekOfDay) {
+
+            1 -> {
+                return "MON"
+
+            }
+            2 -> {
+                return "TUE"
+
+            }
+            3 -> {
+                return "WED"
+
+            }
+            4 -> {
+                return "THU"
+
+            }
+            5 -> {
+                return "FRI"
+
+            }
+            6 -> {
+                return "SAT"
+
+            }
+            7 -> {
+                return "SUN"
+
+            }
+        }
+        return "null"
     }
 
     private fun showTAndCAlertBox() {
@@ -152,11 +260,34 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
             startActivity(intent)
         }
         alertDialog = dialogBuilder.create()
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         alertDialog.show()
-
+        alertDialog.setCanceledOnTouchOutside(false);
 
     }
+/*
+    private fun assignImgURL(){
+
+        if(currentCat.equals("Badminton")){
+            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/history_badminton.jpeg?alt=media&token=f22c0028-159a-40f3-a259-0d2e97d4b82c"
+
+        }
+        else if(currentCat.equals("Table Tennis")){
+            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/history_table_tennis.jpeg?alt=media&token=7fd2a446-9929-47d0-b163-2487f9cdbcdf"
+        }
+        else if(currentCat.equals("Snooker")){
+            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/history_snooker.jpeg?alt=media&token=22f4f9e3-38e4-4a80-808b-86c050b09fe2"
+        }
+        else if(currentCat.equals("Gaming Room")){
+            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/categories_gaming_rooms.jpg?alt=media&token=5127f173-d4ad-4151-b43c-3d7b517e596f"
+        }
+        else{
+            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/categories_board_game.jpg?alt=media&token=1515dec8-a093-4b4c-bbbc-d85fb7366ae3"
+        }
+
+    }*/
+
+
 
     private fun validVoucher(): Boolean {
 
@@ -257,5 +388,27 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         }
     }
 
+
+
+
+
+    private fun history() {
+
+        val userID = FirestoreClass().getCurrentUserId()
+        val courtRoom = "$currentType $selectedRoomCourt"
+        FirestoreClass().history(
+            userID,
+            time.toString(),
+            courtRoom,
+            weekOfDay.toString(),
+            date.toString(),
+            currentCat.toString(),
+            catAndDuration.toString(),
+            cvtMonth.toString(),
+            savedDay.toString()
+        )
+
+
+    }
 
 }

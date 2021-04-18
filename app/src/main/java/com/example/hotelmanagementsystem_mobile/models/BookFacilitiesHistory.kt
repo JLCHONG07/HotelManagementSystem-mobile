@@ -3,14 +3,16 @@ package com.example.hotelmanagementsystem_mobile.models
 import android.os.Parcel
 import android.os.Parcelable
 
-class BookFacilitiesHistory(val imageCat: Int, val catAndDuration: String, val time: String, val courtRoom: String, val color: Int, val weekOfDay: String, val monthOfDate:String,val month:String ) :
-    Parcelable {
+data class BookFacilitiesHistory(
+    val imageCat: Int, val catAndDuration: String, val time: String, val courtRoom: String, val color: Int, val weekOfDay: String, val monthOfDate:String,
+    val month:String,val cat:String ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
@@ -26,7 +28,7 @@ class BookFacilitiesHistory(val imageCat: Int, val catAndDuration: String, val t
         parcel.writeString(weekOfDay)
         parcel.writeString(monthOfDate)
         parcel.writeString(month)
-
+        parcel.writeString(cat)
     }
 
     override fun describeContents(): Int {
