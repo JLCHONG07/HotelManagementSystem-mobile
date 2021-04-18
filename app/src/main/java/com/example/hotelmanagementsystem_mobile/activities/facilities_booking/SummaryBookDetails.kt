@@ -137,51 +137,51 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
     fun getMonth(): String {
 
         when (savedMonth) {
-            1 -> {
+            0 -> {
                 return "January"
             }
-            2 -> {
+            1 -> {
                 return "February"
 
             }
-            3 -> {
+            2 -> {
                 return "March"
 
             }
-            4 -> {
+            3 -> {
                 return "April"
 
             }
-            5 -> {
+            4 -> {
                 return "May"
 
             }
-            6 -> {
+            5 -> {
                 return "June"
 
             }
-            7 -> {
+            6 -> {
                 return "July"
 
             }
-            8 -> {
+            7 -> {
                 return "August"
 
             }
-            9 -> {
+            8 -> {
                 return "September"
 
 
             }
-            10 -> {
+            9 -> {
                 return "October"
 
             }
-            11 -> {
+            10 -> {
                 return "November"
 
             }
-            12 -> {
+            11 -> {
                 return "December"
 
             }
