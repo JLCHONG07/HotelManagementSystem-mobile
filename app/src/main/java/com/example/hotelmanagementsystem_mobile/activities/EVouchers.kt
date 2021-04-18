@@ -2,12 +2,10 @@ package com.example.hotelmanagementsystem_mobile.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.hotelmanagementsystem_mobile.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotelmanagementsystem_mobile.adapters.VoucherRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.models.ModelVoucher
-import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.activity_e_vouchers.*

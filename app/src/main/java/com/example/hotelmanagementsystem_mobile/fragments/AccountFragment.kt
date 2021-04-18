@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.SplashScreen
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_account.*
 
@@ -33,6 +35,8 @@ class AccountFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -54,6 +58,13 @@ class AccountFragment : Fragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 it.finish()
+            }
+        }
+
+        book.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, BookingHistory::class.java)
+                it.startActivity(intent)
             }
         }
     }

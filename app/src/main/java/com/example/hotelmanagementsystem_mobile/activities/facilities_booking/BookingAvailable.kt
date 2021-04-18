@@ -395,12 +395,22 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 dialogView.findViewById<TextView>(R.id.txtViewTimeSlotErrorMsg).visibility =
                     View.INVISIBLE
                 val intent = Intent(this, SummaryBookDetails::class.java)
-                intent.putExtra("selectedDate", btnDate.text)
+                intent.putExtra("selectedDate", selectedDate)
                 intent.putExtra("startTime", selectedTime)
                 intent.putExtra("selectedDuration", selectedDuration)
+                intent.putExtra("selectedTimeSlot",selectedTimeSlot)
+                intent.putExtra("selectedRoomCourt",selectedRoomCourt)
+                intent.putExtra("currentCat",currentCat)
+                intent.putExtra("currentType",currentType)
+
+                /* history*/
+                intent.putExtra("savedDay",savedDay)
+                intent.putExtra("savedMonth",savedMonth)
+                intent.putExtra("savedYear",savedYear)
+                intent.putExtra("cvtMonth",cvtMonth)
                 alertDialog.dismiss()
 
-                saveBookData()
+                //saveBookData()
 
                 startActivity(intent)
             } else {
@@ -593,7 +603,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     }
 
     //convert month in Integer form to String MMM
-    private fun converter(month: Int?): String {
+    fun converter(month: Int?): String {
 
         when (month) {
             0 -> {

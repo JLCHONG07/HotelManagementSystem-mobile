@@ -4,7 +4,6 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.Login
@@ -104,12 +103,11 @@ class FirestoreClass {
     }
 
     fun updateBookingDetails(activity: CheckInActivity, collection_path: String, bookingDetailHashMap: HashMap<String, Any>, booking_details_id : String) {
-        Log.i("Update Booking Details", collection_path)
         mFirestore.collection(collection_path)
             .document(booking_details_id)
             .update(bookingDetailHashMap)
             .addOnSuccessListener {
-                Log.i(activity.javaClass.simpleName, "Booking details update successfully")
+                Log.e(activity.javaClass.simpleName, "Booking details update successfully")
                 activity.successfulUpdateBookingDetails()
             }.addOnFailureListener {
                     exception ->
@@ -123,7 +121,7 @@ class FirestoreClass {
             .whereArrayContains(Constants.CHECKED_IN_USER, getCurrentUserId())
             .get()
             .addOnSuccessListener {
-                document ->
+                    document ->
                 Log.i("FirestoreClass", "Successful get checked in details")
                 val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
 
@@ -216,6 +214,83 @@ class FirestoreClass {
             .addOnFailureListener { exception ->
                 Log.d("Error", exception.toString())
             }
+
+
+    }
+
+    fun history(
+        userID: String,
+        time:String,
+        courtRoom: String,
+        weekOfDay: String,
+        date: String,
+        categories:String,
+        catAndDuration:String,
+        cvtMonth:String,
+        savedDate:String
+    ) {
+
+
+        val historyData: MutableMap<String, Any> = HashMap()
+
+        historyData["userID"] = userID
+        historyData["time"] = time
+        historyData["courtRoom"] = courtRoom
+        historyData["weekOfDay"] = weekOfDay
+        historyData["date"] = date
+        historyData["categories"]=categories
+        historyData["catAndDuration"]=catAndDuration
+        historyData["cvtMonth"]=cvtMonth
+        historyData["savedDate"]=savedDate
+
+        mFirestore.collection("booking_history").document(userID).collection("bookingID").document()
+            .set(historyData)
+            .addOnSuccessListener {
+                Log.d("status", "successful added History")
+            }
+            .addOnFailureListener {
+                Log.d("status", "fail added History")
+            }
+
+    }
+
+    fun retriveBookedHistory(activity:BookingHistory,userID: String) {
+
+        val bookFacilitiesHistory: ArrayList<BookFacilitiesHistory> = ArrayList()
+        mFirestore.collection("booking_history").document(userID).collection("bookingID")
+            .get()
+            .addOnSuccessListener {
+
+
+                for (document in it.documents.indices) {
+
+                    bookFacilitiesHistory.add(
+                        BookFacilitiesHistory(
+                            0,
+                            it.documents[document].data!!.get("catAndDuration") as String,
+                            it.documents[document].data!!.get("time") as String,
+                            it.documents[document].data!!.get("courtRoom") as String,
+                            0,
+                            it.documents[document].data!!.get("weekOfDay") as String,
+                            it.documents[document].data!!.get("savedDate") as String,
+                            it.documents[document].data!!.get("cvtMonth") as String,
+                            it.documents[document].data!!.get("categories") as String
+                        )
+                    )
+
+                }
+            }
+            .addOnCompleteListener{
+                activity.retrievedBookedHistory(bookFacilitiesHistory)
+            }
+
+        //activity.checkSlotAvailable(alSlotAvailable)
+
+        //for (document in alSlotAvailable.indices) {
+        //   Log.d("timerID", alSlotAvailable[document].timerID)
+        //   Log.d("timer", alSlotAvailable[document].timer)
+
+        // }
 
 
     }

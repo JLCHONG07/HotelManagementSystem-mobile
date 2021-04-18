@@ -21,5 +21,11 @@
 
     <color name="progress_dialog_text_color">#363A43</color>
     <color name="snackbar_error_color">#F72400</color>
+    <color name="history_yellow">#FFBA5C</color>
+    <color name="history_blue">#00A6FF</color>
+    <color name="history_dark_gray">#5A6978</color>
+    <color name="history_dark_brown">#6A5240</color>
+    <color name="history_dark_green">#235111</color>
+
 
 </resources>
