@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.Login
@@ -89,10 +90,10 @@ class FirestoreClass {
                     val bookingDetails =
                         document.documents[0].toObject(BookingDetails::class.java)!!
                     bookingDetails.bookingID = document.documents[0].id
+                    Log.i(javaClass.simpleName, bookingDetails.toString())
                     activity.successfulGetBookingDetails(bookingDetails)
-                    Log.i("FirestoreClass", bookingDetails.toString())
                 } else {
-                    //TODO: Create and call with separate method
+                    activity.hideProgressDialog()
                     Toast.makeText(activity, "No records found.", Toast.LENGTH_LONG).show()
                 }
             }.addOnFailureListener {
@@ -103,11 +104,12 @@ class FirestoreClass {
     }
 
     fun updateBookingDetails(activity: CheckInActivity, collection_path: String, bookingDetailHashMap: HashMap<String, Any>, booking_details_id : String) {
+        Log.i("Update Booking Details", collection_path)
         mFirestore.collection(collection_path)
             .document(booking_details_id)
             .update(bookingDetailHashMap)
             .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "Booking details update successfully")
+                Log.i(activity.javaClass.simpleName, "Booking details update successfully")
                 activity.successfulUpdateBookingDetails()
             }.addOnFailureListener {
                     exception ->
@@ -117,7 +119,23 @@ class FirestoreClass {
     }
 
     fun getCheckedInDetails(activity: CheckInActivity, collection_path: String) {
+        mFirestore.collection(collection_path)
+            .whereArrayContains(Constants.CHECKED_IN_USER, getCurrentUserId())
+            .get()
+            .addOnSuccessListener {
+                document ->
+                Log.i("FirestoreClass", "Successful get checked in details")
+                val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
 
+                for(result in document.documents) {
+                    val details = result.toObject(BookingDetails::class.java)!!
+                    checkedInDetails.add(details)
+                }
+                activity.successfulGetCheckedInDetails(checkedInDetails)
+            }.addOnFailureListener {exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+            }
     }
 
     //below here is facilities_booking

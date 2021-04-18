@@ -6,14 +6,15 @@ import android.os.Parcelable
 data class BookingDetails(
     var bookingID : String = "",
     val reservationID : String = "",
+    var checkedInUser : ArrayList<String> = ArrayList(),
     val room_reservation_details: ArrayList<RoomReservationDetails> = ArrayList(),
     var check_in_details : ArrayList<CheckInDetails> = ArrayList(),
-    //TODO: add facilities booking
 
     ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.createStringArrayList()!!,
         parcel.createTypedArrayList(RoomReservationDetails.CREATOR)!!,
         parcel.createTypedArrayList(CheckInDetails.CREATOR)!!
     ) {
@@ -26,6 +27,7 @@ data class BookingDetails(
     override fun writeToParcel(dest: Parcel, p1: Int) = with(dest) {
         writeString(bookingID)
         writeString(reservationID)
+        writeStringList(checkedInUser)
         writeTypedList(room_reservation_details)
         writeTypedList(check_in_details)
     }
