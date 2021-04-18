@@ -9,7 +9,9 @@ import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.Login
 import com.example.hotelmanagementsystem_mobile.activities.Signup
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
+import com.example.hotelmanagementsystem_mobile.models.BookFacilitiesHistory
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
@@ -254,7 +256,7 @@ class FirestoreClass {
 
     }
 
-    fun retriveBookedHistory(activity:BookingHistory,userID: String) {
+    fun retriveBookedHistory(activity: BookingHistory, userID: String) {
 
         val bookFacilitiesHistory: ArrayList<BookFacilitiesHistory> = ArrayList()
         mFirestore.collection("booking_history").document(userID).collection("bookingID")
