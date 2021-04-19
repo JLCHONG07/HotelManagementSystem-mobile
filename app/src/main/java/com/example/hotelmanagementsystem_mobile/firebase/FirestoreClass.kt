@@ -4,10 +4,7 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
-import com.example.hotelmanagementsystem_mobile.activities.Homepage
-import com.example.hotelmanagementsystem_mobile.activities.Login
-import com.example.hotelmanagementsystem_mobile.activities.Signup
+import com.example.hotelmanagementsystem_mobile.activities.*
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
 import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
@@ -23,7 +20,6 @@ import com.example.hotelmanagementsystem_mobile.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -153,23 +149,48 @@ class FirestoreClass {
             }
     }
 
-    fun getCheckedInDetails(activity: CheckInActivity, collection_path: String) {
+    fun getCheckedInDetails(activity: Activity, collection_path: String) {
         mFirestore.collection(collection_path)
             .whereArrayContains(Constants.CHECKED_IN_USER, getCurrentUserId())
             .get()
             .addOnSuccessListener {
                     document ->
-                Log.i("FirestoreClass", "Successful get checked in details")
-                val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
 
-                for(result in document.documents) {
-                    val details = result.toObject(BookingDetails::class.java)!!
-                    checkedInDetails.add(details)
+                when(activity) {
+                    is CheckInActivity -> {
+                        Log.i("FirestoreClass", "Successful get checked in details")
+                        val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
+
+                        for(result in document.documents) {
+                            val details = result.toObject(BookingDetails::class.java)!!
+                            checkedInDetails.add(details)
+                        }
+                        activity.successfulGetCheckedInDetails(checkedInDetails)
+                    }
+
+                    is CheckOutActivity -> {
+                        val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
+
+                        for(result in document.documents) {
+                            val details = result.toObject(BookingDetails::class.java)!!
+                            checkedInDetails.add(details)
+                        }
+                        activity.successfulGetCheckedInDetails(checkedInDetails)
+                    }
                 }
-                activity.successfulGetCheckedInDetails(checkedInDetails)
+
             }.addOnFailureListener {exception ->
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+                when(activity) {
+                    is CheckInActivity -> {
+                        activity.hideProgressDialog()
+                        Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+                    }
+
+                    is CheckOutActivity -> {
+                        activity.hideProgressDialog()
+                        Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+                    }
+                }
             }
     }
 

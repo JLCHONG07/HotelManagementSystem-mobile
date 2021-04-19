@@ -8,7 +8,7 @@ data class RoomReservationDetails(
     val numberOfDays : Int = 0,
     val numberOfNights : Int = 0,
     val numberOfRooms : Int = 0,
-    val numberOfQuests : Int = 0,
+    val numberOfGuests : Int = 0,
     val roomTypes : String = "",
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -26,7 +26,7 @@ data class RoomReservationDetails(
         parcel.writeInt(numberOfDays)
         parcel.writeInt(numberOfNights)
         parcel.writeInt(numberOfRooms)
-        parcel.writeInt(numberOfQuests)
+        parcel.writeInt(numberOfGuests)
         parcel.writeString(roomTypes)
     }
 

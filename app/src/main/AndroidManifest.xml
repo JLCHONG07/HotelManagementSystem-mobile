@@ -60,7 +60,9 @@
             android:name=".activities.facilities_booking.Categories"
             android:label="@string/bar_categories"
             android:parentActivityName=".activities.Homepage" />
-        <activity android:name=".activities.CheckOut" />
+        <activity android:name=".activities.CheckOutActivity"
+            android:label="@string/check_out_title"
+            android:parentActivityName=".activities.Homepage"/>
         <activity
             android:name=".activities.CheckInActivity"
             android:label="@string/recently_check_in_title"

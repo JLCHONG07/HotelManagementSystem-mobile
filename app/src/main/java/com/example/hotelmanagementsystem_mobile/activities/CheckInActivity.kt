@@ -129,7 +129,14 @@ class CheckInActivity : BaseActivity() {
 
     fun successfulGetBookingDetails(bookingDetails : BookingDetails) {
         hideProgressDialog()
-        updateBookingDetails(bookingDetails)
+        if(bookingDetails.check_in_details[0].checkInStatus != "checkedin" ||
+            bookingDetails.check_in_details[0].checkInStatus != "checkedout" ||
+                !bookingDetails.checkedInUser.contains(mUserDetail.id)) {
+            updateBookingDetails(bookingDetails)
+        } else {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            getCheckedInDetails()
+        }
     }
 
     fun successfulUpdateBookingDetails() {
@@ -279,11 +286,11 @@ class CheckInActivity : BaseActivity() {
 
     fun showCheckInDetailsDialog(position: Int) {
         val inflater: LayoutInflater = this.layoutInflater
-        val dialogView: View = inflater.inflate(R.layout.check_in_out_details_dialog_view, null)
+        val dialogView: View = inflater.inflate(R.layout.check_in_details_dialog_view, null)
         var textNights =
             "${bookingDetails[position].room_reservation_details[0].numberOfDays} Days, ${bookingDetails[position].room_reservation_details[0].numberOfNights} Nights"
         var textReservationDetails =
-            "${bookingDetails[position].room_reservation_details[0].numberOfRooms} Rooms, ${bookingDetails[position].room_reservation_details[0].numberOfQuests} Guests"
+            "${bookingDetails[position].room_reservation_details[0].numberOfRooms} Rooms, ${bookingDetails[position].room_reservation_details[0].numberOfGuests} Guests"
 
         val textViewReservationNumber =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_reservation_number)
@@ -308,6 +315,10 @@ class CheckInActivity : BaseActivity() {
         val textViewCheckInId =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_check_in_id)
         textViewCheckInId?.text = bookingDetails[position].check_in_details[0].checkInID
+
+        val textViewReservationDateRange =
+            dialogView.findViewById<TextView>(R.id.check_in_details_dialog_date_range)
+        textViewReservationDateRange.text = bookingDetails[position].room_reservation_details[0].reservationDateTime
 
         val checkInDetailsDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 

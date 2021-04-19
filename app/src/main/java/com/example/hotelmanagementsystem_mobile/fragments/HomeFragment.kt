@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
+import com.example.hotelmanagementsystem_mobile.activities.CheckOutActivity
 import com.example.hotelmanagementsystem_mobile.activities.EVouchers
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
@@ -74,6 +75,14 @@ class HomeFragment() : Fragment() {
         btnCheckin.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, CheckInActivity::class.java)
+                intent.putExtra(Constants.USERS, mUserDetail)
+                startActivity(intent)
+            }
+        }
+
+        btnCheckout.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, CheckOutActivity::class.java)
                 intent.putExtra(Constants.USERS, mUserDetail)
                 startActivity(intent)
             }

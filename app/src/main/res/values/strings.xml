@@ -143,6 +143,13 @@
     <string name="check_in_details_title">Check In Details</string>
     <string name="booking_details_preference_file">com.example.hotelmanagementsystem_mobile.activities.preferenceFile</string>
 
+    <!-- Check in Activity String -->
+    <string name="check_out_title">Check Out</string>
+    <string name="tv_check_out_deposits">Deposit</string>
+    <string name="tv_check_out_ask_user">Are you sure want to check out now ?</string>
+    <string name="tiet_confirm_check_out_hint">Enter "Confirm" to check out</string>
+    <string name="btn_check_out_confirm">CHECK OUT</string>
+
 
     <string name="username">Username</string>
     <string name="password">Password</string>
