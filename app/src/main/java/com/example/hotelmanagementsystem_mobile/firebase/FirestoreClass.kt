@@ -163,7 +163,9 @@ class FirestoreClass {
 
                         for(result in document.documents) {
                             val details = result.toObject(BookingDetails::class.java)!!
-                            checkedInDetails.add(details)
+                            if(details.status == "checkedin") {
+                                checkedInDetails.add(details)
+                            }
                         }
                         activity.successfulGetCheckedInDetails(checkedInDetails)
                     }
@@ -173,7 +175,9 @@ class FirestoreClass {
 
                         for(result in document.documents) {
                             val details = result.toObject(BookingDetails::class.java)!!
-                            checkedInDetails.add(details)
+                            if(details.status == "checkedin") {
+                                checkedInDetails.add(details)
+                            }
                         }
                         activity.successfulGetCheckedInDetails(checkedInDetails)
                     }
@@ -191,6 +195,20 @@ class FirestoreClass {
                         Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
                     }
                 }
+            }
+    }
+
+    fun updateCheckOutDetails(activity: CheckOutActivity, reservation_id : String, new_booking_details : HashMap<String, Any>) {
+        mFirestore.collection(Constants.BOOKING_DETAILS)
+            .document(reservation_id)
+            .update(new_booking_details)
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "Checkout details update successfully")
+                activity.successfulUpdateCheckedOutDetails()
+            }.addOnFailureListener {
+                    exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while updating booking details", exception)
             }
     }
 

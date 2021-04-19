@@ -1,9 +1,13 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotelmanagementsystem_mobile.R
@@ -11,9 +15,14 @@ import com.example.hotelmanagementsystem_mobile.adapters.CheckOutDetailsAdapter
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
+import com.example.hotelmanagementsystem_mobile.models.booking_details.CheckOutDetails
 import com.example.hotelmanagementsystem_mobile.utils.Constants
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_check_out.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class CheckOutActivity : BaseActivity() {
 
@@ -37,6 +46,13 @@ class CheckOutActivity : BaseActivity() {
     fun successfulGetCheckedInDetails(checkInDetailsList: ArrayList<BookingDetails>) {
         hideProgressDialog()
         updateBookingDetailsUI(checkInDetailsList)
+    }
+
+    fun successfulUpdateCheckedOutDetails() {
+        getCheckedInDetails()
+        if(this::checkOutDetailsAlertDialog.isInitialized) {
+            checkOutDetailsAlertDialog.dismiss()
+        }
     }
 
     private fun getCheckedInDetails() {
@@ -93,10 +109,76 @@ class CheckOutActivity : BaseActivity() {
             }
         }
 
+        val checkBoXTermsAndCondition = dialogView.findViewById<CheckBox>(R.id.cb_check_out_dialog_terms_and_condition)
+        val buttonCheckOut = dialogView.findViewById<Button>(R.id.btn_check_out_confirm)
+        buttonCheckOut.setOnClickListener {
+            val confirmText = textViewCheckOutConfirm.text.toString()
+            if(validateForm(confirmText) && checkBoXTermsAndCondition.isChecked) {
+                val checkOutDetails = updateCheckOutInfo(position)
+                showProgressDialog(resources.getString(R.string.please_wait))
+                FirestoreClass().updateCheckOutDetails(this, bookingDetails[position].bookingID, checkOutDetails)
+            } else {
+                if(!validateForm(confirmText)) {
+                    Toast.makeText(this, "Please enter 'CONFIRM' or 'confirm'.", Toast.LENGTH_LONG).show()
+                } else if(!checkBoXTermsAndCondition.isChecked) {
+                    Toast.makeText(this, "Please comply to our terms and conditions", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
         val checkInDetailsDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         checkInDetailsDialogBuilder.setView(dialogView)
         checkOutDetailsAlertDialog = checkInDetailsDialogBuilder.create()
         checkOutDetailsAlertDialog.show()
+    }
+
+    private fun validateForm(confirm: String) : Boolean {
+        return when {
+            TextUtils.equals(confirm, "confirm") -> {
+                true
+            }
+            TextUtils.equals(confirm, "CONFIRM") -> {
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    private fun updateCheckOutInfo(position: Int) : HashMap<String, Any> {
+        val newBookingDetails = bookingDetails[position]
+        val checkOutText = "checkedout"
+        var checkOutDetailsList : ArrayList<CheckOutDetails> = ArrayList()
+        val newBookingDetailsHashMap = HashMap<String, Any>()
+
+        //Check out details
+        val checkOutDateTime = SimpleDateFormat("yyyy:MM:dd HH.mm.ss", Locale.ENGLISH)
+        val formattedCheckOut = checkOutDateTime.format(Date())
+
+        val checkOutDateTimeID = SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH)
+        val formattedCheckOutDateTimeID = checkOutDateTimeID.format(Date())
+        val generatedCheckOutID = "co${formattedCheckOutDateTimeID}${mUserDetail.passportNumber.takeLast(4)}"
+        var checkOutDetails = CheckOutDetails(
+            formattedCheckOut.toString(),
+            generatedCheckOutID
+        )
+
+        checkOutDetailsList.add(checkOutDetails)
+
+        newBookingDetails.check_out_details = checkOutDetailsList
+
+        newBookingDetails.status = checkOutText
+
+        newBookingDetailsHashMap[Constants.BOOKING_ID] = newBookingDetails.bookingID
+        newBookingDetailsHashMap[Constants.RESERVATION_ID] = newBookingDetails.reservationID
+        newBookingDetailsHashMap[Constants.STATUS] = newBookingDetails.status
+        newBookingDetailsHashMap[Constants.CHECKED_IN_USER] = newBookingDetails.checkedInUser
+        newBookingDetailsHashMap[Constants.CHECK_IN_DETAILS_PATH] = newBookingDetails.check_in_details
+        newBookingDetailsHashMap[Constants.ROOM_RESERVATION_DETAILS_PATH] = newBookingDetails.room_reservation_details
+        newBookingDetailsHashMap[Constants.CHECK_OUT_DETAILS_PATH] = newBookingDetails.check_out_details
+
+        return newBookingDetailsHashMap
     }
 }

@@ -27,6 +27,9 @@ object Constants {
     //check in details
     const val CHECK_IN_DETAILS_PATH : String = "check_in_details"
     const val CHECKED_IN_USER : String = "checkedInUser"
+    const val STATUS : String = "status"
+    //Check out details
+    const val CHECK_OUT_DETAILS_PATH : String = "check_out_details"
 
     //facilities_booking
     const val FACILITIES_BOOKING:String="facilities_booking"

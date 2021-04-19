@@ -129,8 +129,8 @@ class CheckInActivity : BaseActivity() {
 
     fun successfulGetBookingDetails(bookingDetails : BookingDetails) {
         hideProgressDialog()
-        if(bookingDetails.check_in_details[0].checkInStatus != "checkedin" ||
-            bookingDetails.check_in_details[0].checkInStatus != "checkedout" ||
+        if(bookingDetails.status != "checkedin" ||
+            bookingDetails.status != "checkedout" ||
                 !bookingDetails.checkedInUser.contains(mUserDetail.id)) {
             updateBookingDetails(bookingDetails)
         } else {
@@ -188,19 +188,21 @@ class CheckInActivity : BaseActivity() {
             checkInUser.add(mUserDetail.id)
         }
 
-        val oldCheckInDetails = bookingDetails.check_in_details
+        val oldCheckInDetails = bookingDetails
         val newCheckInDetails = CheckInDetails(
             generateCheckInID,
-            datetimeFormatted.toString(), status
+            datetimeFormatted.toString()
         )
 
         val newCheckInDetailsArray: ArrayList<CheckInDetails> = ArrayList()
-        if(oldCheckInDetails[0].checkInStatus != "checkedin") {
+        if(oldCheckInDetails.status != "checkedin") {
+            bookingDetails.status = status
             newCheckInDetailsArray.add(newCheckInDetails)
             bookingDetails.check_in_details = newCheckInDetailsArray
         }
         else {
-            bookingDetails.check_in_details = oldCheckInDetails
+            bookingDetails.status = oldCheckInDetails.status
+            bookingDetails.check_in_details = oldCheckInDetails.check_in_details
         }
 
         bookingDetails.checkedInUser = checkInUser
@@ -212,6 +214,7 @@ class CheckInActivity : BaseActivity() {
         //Set new booking detail to the hash map
         bookingDetailsHashMap[Constants.RESERVATION_ID] = bookingDetails.reservationID
         bookingDetailsHashMap[Constants.BOOKING_ID] = bookingDetails.bookingID
+        bookingDetailsHashMap[Constants.STATUS] = bookingDetails.status
         bookingDetailsHashMap[Constants.CHECKED_IN_USER] = bookingDetails.checkedInUser
         bookingDetailsHashMap[Constants.CHECK_IN_DETAILS_PATH] = bookingDetails.check_in_details
         bookingDetailsHashMap[Constants.ROOM_RESERVATION_DETAILS_PATH] = bookingDetails.room_reservation_details

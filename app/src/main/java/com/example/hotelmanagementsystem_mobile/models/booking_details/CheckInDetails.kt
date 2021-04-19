@@ -6,19 +6,16 @@ import android.os.Parcelable
 data class CheckInDetails(
     val checkInID : String = "",
     val checkInDateAndTime : String = "",
-    val checkInStatus : String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(checkInID)
         parcel.writeString(checkInDateAndTime)
-        parcel.writeString(checkInStatus)
     }
 
     override fun describeContents(): Int {
