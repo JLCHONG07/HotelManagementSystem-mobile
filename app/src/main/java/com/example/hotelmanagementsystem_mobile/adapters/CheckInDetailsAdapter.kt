@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
+import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
 import kotlinx.android.synthetic.main.item_check_in_details.view.*
 
-open class CheckInDetailsAdapter(private val context: CheckInActivity, private var list: ArrayList<BookingDetails>)
+open class CheckInDetailsAdapter(private val context: CheckInActivity, private var list: ArrayList<BookingDetails>
+                                , private val mUserDetails : User)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_check_in_details, parent, false))
@@ -21,12 +23,14 @@ open class CheckInDetailsAdapter(private val context: CheckInActivity, private v
         val model = list[position]
         Log.i("Position", position.toString())
         if(holder is MyViewHolder) {
+            holder.itemView.tv_check_in_user_name.text = mUserDetails.name
             holder.itemView.tv_check_in_id.text = model.check_in_details[0].checkInID
             holder.itemView.tv_check_in_number_of_room.text = model.room_reservation_details[0].numberOfRooms.toString()
             holder.itemView.tv_check_in_number_of_customer.text = model.room_reservation_details[0].numberOfQuests.toString()
+            holder.itemView.tv_check_in__date_range.text = model.room_reservation_details[0].reservationDateTime
 
             holder.itemView.cv_check_in_details.setOnClickListener {
-//                context.showCheckInDetailsDialog(position)
+                context.showCheckInDetailsDialog(position)
             }
         }
     }

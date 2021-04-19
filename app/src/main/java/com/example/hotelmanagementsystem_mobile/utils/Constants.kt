@@ -18,6 +18,7 @@ object Constants {
     const val PICK_IMAGE_REQUEST_CODE = 2
 
     //Check In Activity constants
+    const val BOOKING_DETAILS = "booking_details"
     //booking_details
     const val BOOKING_ID : String = "bookingID"
     //room reservation details
@@ -25,7 +26,7 @@ object Constants {
     const val ROOM_RESERVATION_DETAILS_PATH : String = "room_reservation_details"
     //check in details
     const val CHECK_IN_DETAILS_PATH : String = "check_in_details"
-
+    const val CHECKED_IN_USER : String = "checkedInUser"
 
     //facilities_booking
     const val FACILITIES_BOOKING:String="facilities_booking"

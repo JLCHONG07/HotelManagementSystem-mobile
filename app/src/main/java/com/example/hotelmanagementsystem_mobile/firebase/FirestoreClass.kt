@@ -10,32 +10,19 @@ import com.example.hotelmanagementsystem_mobile.activities.Login
 import com.example.hotelmanagementsystem_mobile.activities.Signup
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
-import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
-import com.example.hotelmanagementsystem_mobile.fragments.AccountFragment
-import com.example.hotelmanagementsystem_mobile.fragments.AdminAccountFragment
-import com.example.hotelmanagementsystem_mobile.fragments.AdminHomeFragment
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.example.hotelmanagementsystem_mobile.models.BookFacilitiesHistory
+import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
 import com.example.hotelmanagementsystem_mobile.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.toObject
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
-
-    fun getCurrentUserId(): String {
-        var currentUser = FirebaseAuth.getInstance().currentUser
-        var currentUserID = ""
-
-        if (currentUser != null) {
-            currentUserID = currentUser.uid
-        }
-
-        return currentUserID
-    }
 
     fun registerUser(activity: Signup, userInfo: User) {
         mFirestore.collection(Constants.USERS)
@@ -43,7 +30,8 @@ class FirestoreClass {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisterSuccess()
-            }.addOnFailureListener { e ->
+            }.addOnFailureListener{
+                    e ->
                 Log.e(activity.javaClass.simpleName, "Error register user !")
             }
     }
@@ -54,38 +42,26 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener { document ->
                 val loggedInUser = document.toObject(User::class.java)!!
-                when (activity) {
+
+                when(activity) {
                     is Login -> {
-                        if (loggedInUser != null) {
-                            activity.signInSuccess(loggedInUser)
+                        if(loggedInUser != null) {
+                            activity.signInSuccess()
                         }
                     }
-                    is Homepage -> {
-                    }
-                    is EditUserProfile -> {
-                        activity.getUserDetails(loggedInUser)
-                    }
                 }
-                when (fragment) {
+
+                when(fragment) {
                     is HomeFragment -> {
-                        fragment.updateUserDetails(loggedInUser)
-                    }
-                    is AdminHomeFragment -> {
-                        fragment.updateUserDetails(loggedInUser)
-                    }
-                    is AccountFragment -> {
-                        fragment.getUserDetails(loggedInUser)
-                    }
-                    is AdminAccountFragment -> {
-                        fragment.getUserDetails(loggedInUser)
+                        if(loggedInUser != null) {
+                            fragment.updateUserDetails(loggedInUser)
+                        }
                     }
                 }
-            }.addOnFailureListener { e ->
-                when (activity) {
+            }.addOnFailureListener{
+                    e ->
+                when(activity) {
                     is Login -> {
-                        activity.hideProgressDialog()
-                    }
-                    is EditUserProfile -> {
                         activity.hideProgressDialog()
                     }
                 }
@@ -93,96 +69,91 @@ class FirestoreClass {
             }
     }
 
-    fun updateUserProfileData(activity: EditUserProfile, userHashMap: HashMap<String, Any>) {
-        mFirestore.collection(Constants.USERS)
-            .document(getCurrentUserId())
-            .update(userHashMap)
-            .addOnSuccessListener {
-                Log.i(activity.javaClass.simpleName, "Profile Data updated successfully")
-                Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_LONG)
-                    .show()
-                activity.profileUpdateSuccess()
-            }.addOnFailureListener { exception ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while creating a board",
-                    exception
-                )
-                Toast.makeText(activity, "Error when updating the profile!", Toast.LENGTH_LONG)
-                    .show()
-            }
+    fun getCurrentUserId() : String {
+        var currentUser = FirebaseAuth.getInstance().currentUser
+        var currentUserID = ""
+
+        if(currentUser != null) {
+            currentUserID = currentUser.uid
+        }
+
+        return currentUserID
     }
 
-
     //get, update booking details
-    fun getBookingDetails(
-        activity: CheckInActivity,
-        collection_path: String,
-        reservation_id: String
-    ) {
+    fun getBookingDetails(activity: CheckInActivity, collection_path: String, reservation_id : String) {
         mFirestore.collection(collection_path)
             .whereEqualTo(Constants.RESERVATION_ID, reservation_id)
             .get()
-            .addOnSuccessListener { document ->
-                if (document.documents.isNotEmpty()) {
+            .addOnSuccessListener {
+                    document ->
+                if(document.documents.isNotEmpty()) {
                     val bookingDetails =
                         document.documents[0].toObject(BookingDetails::class.java)!!
                     bookingDetails.bookingID = document.documents[0].id
+                    Log.i(javaClass.simpleName, bookingDetails.toString())
                     activity.successfulGetBookingDetails(bookingDetails)
-                    Log.i("FirestoreClass", bookingDetails.toString())
                 } else {
-                    //TODO: Create and call with separate method
+                    activity.hideProgressDialog()
                     Toast.makeText(activity, "No records found.", Toast.LENGTH_LONG).show()
                 }
-            }.addOnFailureListener { e ->
+            }.addOnFailureListener {
+                    e ->
                 activity.hideProgressDialog()
                 Log.e(e.javaClass.simpleName, "Error while retrieve booking details!", e)
             }
     }
 
-    fun updateBookingDetails(
-        activity: CheckInActivity,
-        collection_path: String,
-        bookingDetailHashMap: HashMap<String, Any>,
-        booking_details_id: String
-    ) {
+    fun updateBookingDetails(activity: CheckInActivity, collection_path: String, bookingDetailHashMap: HashMap<String, Any>, booking_details_id : String) {
         mFirestore.collection(collection_path)
             .document(booking_details_id)
             .update(bookingDetailHashMap)
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "Booking details update successfully")
                 activity.successfulUpdateBookingDetails()
-            }.addOnFailureListener { exception ->
+            }.addOnFailureListener {
+                    exception ->
                 activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while updating booking details",
-                    exception
-                )
+                Log.e(activity.javaClass.simpleName, "Error while updating booking details", exception)
             }
     }
 
     fun getCheckedInDetails(activity: CheckInActivity, collection_path: String) {
+        mFirestore.collection(collection_path)
+            .whereArrayContains(Constants.CHECKED_IN_USER, getCurrentUserId())
+            .get()
+            .addOnSuccessListener {
+                    document ->
+                Log.i("FirestoreClass", "Successful get checked in details")
+                val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
 
+                for(result in document.documents) {
+                    val details = result.toObject(BookingDetails::class.java)!!
+                    checkedInDetails.add(details)
+                }
+                activity.successfulGetCheckedInDetails(checkedInDetails)
+            }.addOnFailureListener {exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+            }
     }
 
     //below here is facilities_booking
     //add booked data to database
     fun saveBookedData(
         selectedTimeSlot: Long?, selectedTime: String?, selectedDate: String?,
-        selectedRoomCourt: String?,
-        categories: String?,
-        type: String?,
+        selectedRoomCourt:String?,
+        categories:String?,
+        type:String?,
     ) {
 
         val timeSlot: MutableMap<String, Any> = HashMap()
 
-        val selectedTimeSlotID = BookingAvailable().formatID(selectedTimeSlot)
+        val selectedTimeSlotID= BookingAvailable().formatID(selectedTimeSlot)
         timeSlot["timerID"] = "timeID$selectedTimeSlotID"
         timeSlot["timer"] = "$selectedTime"
 
-        val court = "$type $selectedRoomCourt"
+        val court= "$type $selectedRoomCourt"
 
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate").document().set(timeSlot)
@@ -238,7 +209,7 @@ class FirestoreClass {
                 // }
 
             }
-            .addOnCompleteListener {
+            .addOnCompleteListener{
                 activity.checkSlotAvailable(timeSlot)
 
             }
@@ -251,14 +222,14 @@ class FirestoreClass {
 
     fun history(
         userID: String,
-        time: String,
+        time:String,
         courtRoom: String,
         weekOfDay: String,
         date: String,
-        categories: String,
-        catAndDuration: String,
-        cvtMonth: String,
-        savedDate: String
+        categories:String,
+        catAndDuration:String,
+        cvtMonth:String,
+        savedDate:String
     ) {
 
 
@@ -269,13 +240,12 @@ class FirestoreClass {
         historyData["courtRoom"] = courtRoom
         historyData["weekOfDay"] = weekOfDay
         historyData["date"] = date
-        historyData["categories"] = categories
-        historyData["catAndDuration"] = catAndDuration
-        historyData["cvtMonth"] = cvtMonth
-        historyData["savedDate"] = savedDate
+        historyData["categories"]=categories
+        historyData["catAndDuration"]=catAndDuration
+        historyData["cvtMonth"]=cvtMonth
+        historyData["savedDate"]=savedDate
 
-        mFirestore.collection("booking_history").document(userID).collection("bookingID")
-            .document()
+        mFirestore.collection("booking_history").document(userID).collection("bookingID").document()
             .set(historyData)
             .addOnSuccessListener {
                 Log.d("status", "successful added History")
@@ -312,7 +282,7 @@ class FirestoreClass {
 
                 }
             }
-            .addOnCompleteListener {
+            .addOnCompleteListener{
                 activity.retrievedBookedHistory(bookFacilitiesHistory)
             }
 

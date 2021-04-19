@@ -4,13 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class CheckInDetails(
-    val checkedInUser : ArrayList<String> = ArrayList(),
     val checkInID : String = "",
     val checkInDateAndTime : String = "",
     val checkInStatus : String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.createStringArrayList()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
@@ -18,7 +16,6 @@ data class CheckInDetails(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeStringList(checkedInUser)
         parcel.writeString(checkInID)
         parcel.writeString(checkInDateAndTime)
         parcel.writeString(checkInStatus)

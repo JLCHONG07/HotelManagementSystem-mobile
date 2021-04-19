@@ -126,6 +126,7 @@
     <string name="recently_check_in_title">Recently Check in</string>
     <string name="check_in_title">Check in</string>
     <string name="tv_check_in_hint">Enter Your Check in ID</string>
+    <string name="tv_reservation_id_add_hint">Please enter your reservation id</string>
     <string name="btn_check_in_add">ADD</string>
     <string name="check_in_username">Username</string>
     <string name="check_in_ic_no_or_passport">IC NO/PASSPORT</string>
@@ -140,6 +141,8 @@
     <string name="btn_check_in_confirm">CONFIRM</string>
     <string name="check_in_term_and_condition"><u>I agree with terms and conditions</u></string>
     <string name="check_in_details_title">Check In Details</string>
+    <string name="booking_details_preference_file">com.example.hotelmanagementsystem_mobile.activities.preferenceFile</string>
+
 
     <string name="username">Username</string>
     <string name="password">Password</string>

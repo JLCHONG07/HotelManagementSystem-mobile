@@ -39,7 +39,7 @@
                 android:id="@+id/tv_check_in_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Foong Gah Seng"
+                android:text="Anything"
                 android:textSize="18sp"
                 />
 
