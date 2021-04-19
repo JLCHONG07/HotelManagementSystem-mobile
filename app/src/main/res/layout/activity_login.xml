@@ -89,11 +89,11 @@
         android:layout_marginBottom="16dp"
         android:background="#C4FFFFFF"
         android:ems="10"
-        android:hint="@string/password_hint"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="@dimen/edit_padding"
         android:paddingRight="@dimen/edit_padding"
-        app:layout_constraintBottom_toTopOf="@+id/textViewSignUp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewForgotPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -105,40 +105,39 @@
         android:layout_marginLeft="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="24dp"
         android:background="#00A6FF"
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewForgotPasswort"
+        android:id="@+id/textViewForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/forgot_password"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewSignUp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewSignUp"
-        app:layout_constraintTop_toTopOf="@+id/textViewSignUp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textViewSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginBottom="50dp"
-        android:text="@string/signup"
-        android:textColor="#F31010"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginBottom="8dp"
+        android:text="@string/noAccount"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- XML file for the shape (saved in res/drawable) -->
 

@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AccountFragment">
+    tools:context=".fragments.AdminAccountFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 tools:layout_editor_absoluteY="115dp" />
 
             <TextView
-                android:id="@+id/textViewUserName"
+                android:id="@+id/textViewAdminUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -82,7 +82,7 @@
                 tools:layout_editor_absoluteY="115dp" />
 
             <TextView
-                android:id="@+id/textViewID"
+                android:id="@+id/textViewAdminID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -105,7 +105,7 @@
                 tools:layout_editor_absoluteY="115dp" />
 
             <TextView
-                android:id="@+id/textViewEmail"
+                android:id="@+id/textViewAdminEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -156,80 +156,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/book"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/account_line_border"
-        android:paddingLeft="20dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditProfile">
-        <!-- TODO: Update blank fragment layout -->
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:paddingTop="8dp"
-            android:src="@drawable/icon_facilities_booking" />
-
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:gravity="top|center_vertical"
-
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:text="@string/booking_history"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:baselineAlignBottom="false"
-            android:src="@drawable/go" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/account_line_border"
-        android:paddingLeft="20dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book">
-        <!-- TODO: Update blank fragment layout -->
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:paddingTop="8dp"
-            android:src="@drawable/checkin" />
-
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:gravity="top|center_vertical"
-
-            android:paddingLeft="8dp"
-            android:paddingTop="5dp"
-            android:text="@string/checkin_history"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:baselineAlignBottom="false"
-            android:src="@drawable/go" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/ChangePassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -241,7 +167,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/EditProfile">
         <!-- TODO: Update blank fragment layout -->
         <ImageView
             android:layout_width="30dp"
@@ -283,7 +209,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,16 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.user_profile.ForgotPassword
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
+import com.example.hotelmanagementsystem_mobile.models.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -34,11 +35,20 @@ class Login : BaseActivity() {
         login.setOnClickListener {
             signInRegisteredUser()
         }
+
+        textViewForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPassword::class.java))
+        }
     }
 
-    fun signInSuccess() {
+    fun signInSuccess(user: User) {
         hideProgressDialog()
-        startActivity(Intent(this, Homepage::class.java))
+        if(user.accountType.equals("A")) {
+            startActivity(Intent(this, AdminHomepage::class.java))
+        }
+        else{
+            startActivity(Intent(this, Homepage::class.java))
+        }
         finish()
     }
 
@@ -63,13 +73,14 @@ class Login : BaseActivity() {
     private fun validateForm(email: String, password: String) : Boolean {
         return when {
             TextUtils.isEmpty(email) -> {
-                showErrorSnackBar("Please enter an email")
+                et_log_in_email.setError("Email is Required")
                 false
             }
             TextUtils.isEmpty(password) -> {
-                showErrorSnackBar("Please enter a password")
+                et_log_in_password.setError("Password is Required")
                 false
-            } else -> {
+            }
+            else -> {
                 true
             }
         }

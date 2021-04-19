@@ -44,6 +44,7 @@ class Signup : BaseActivity() {
         val passportNumber : String = et_sign_up_ic_passport.text.toString().trim { it <= ' ' }
         val email : String = et_sign_up_email.text.toString().trim { it <= ' ' }
         val password : String = et_sign_up_password.text.toString().trim { it <= ' ' }
+        val accountType : String = "C"
 
         if(validateForm(name, passportNumber, email, password)) {
             showProgressDialog(resources.getString(R.string.please_wait))
@@ -54,7 +55,7 @@ class Signup : BaseActivity() {
                     if(task.isSuccessful) {
                         val firebaseUser : FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
-                        val user = User(firebaseUser.uid, name, registeredEmail, passportNumber)
+                        val user = User(firebaseUser.uid, accountType, name, registeredEmail, passportNumber)
                         FirestoreClass().registerUser(this, user)
                     } else {
                         Toast.makeText(this, "Registration failed !", Toast.LENGTH_SHORT).show()
@@ -66,21 +67,26 @@ class Signup : BaseActivity() {
     private fun validateForm(name: String, passportNumber: String, email: String, password: String) : Boolean {
         return when {
             TextUtils.isEmpty(name) -> {
-                showErrorSnackBar("Please enter your name")
+                et_sign_up_username.setError("Please enter your name")
                 false
             }
             TextUtils.isEmpty(passportNumber) -> {
-                showErrorSnackBar("Please enter your IC/passport number")
+                et_sign_up_ic_passport.setError("Please enter your IC/passport number")
                 false
             }
             TextUtils.isEmpty(email) -> {
-                showErrorSnackBar("Please enter your email")
+                et_sign_up_email.setError("Please enter your email")
                 false
             }
             TextUtils.isEmpty(password) -> {
-                showErrorSnackBar("Please enter your password")
+                et_sign_up_password.setError("Please enter your password")
                 false
-            } else -> {
+            }
+            password.length <= 8 -> {
+                et_sign_up_password.setError("Password must be 8 characters or more")
+                false
+            }
+            else -> {
                 true
             }
         }
