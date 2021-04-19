@@ -45,7 +45,7 @@
         <activity
             android:name=".activities.facilities_booking.BookingHistory"
             android:label="Booking History"
-            android:parentActivityName=".activities.Homepage" />
+            android:parentActivityName=".activities.Account" />
         <activity
             android:name=".activities.Account"
             android:theme="@style/homeTheme" />
