@@ -10,6 +10,10 @@ import com.example.hotelmanagementsystem_mobile.activities.Login
 import com.example.hotelmanagementsystem_mobile.activities.Signup
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
+import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
+import com.example.hotelmanagementsystem_mobile.fragments.AccountFragment
+import com.example.hotelmanagementsystem_mobile.fragments.AdminAccountFragment
+import com.example.hotelmanagementsystem_mobile.fragments.AdminHomeFragment
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.example.hotelmanagementsystem_mobile.models.BookFacilitiesHistory
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
@@ -42,30 +46,61 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener { document ->
                 val loggedInUser = document.toObject(User::class.java)!!
-
-                when(activity) {
+                when (activity) {
                     is Login -> {
-                        if(loggedInUser != null) {
-                            activity.signInSuccess()
+                        if (loggedInUser != null) {
+                            activity.signInSuccess(loggedInUser)
                         }
                     }
+                    is EditUserProfile -> {
+                        activity.getUserDetails(loggedInUser)
+                    }
                 }
-
-                when(fragment) {
+                when (fragment) {
                     is HomeFragment -> {
-                        if(loggedInUser != null) {
-                            fragment.updateUserDetails(loggedInUser)
-                        }
+                        fragment.updateUserDetails(loggedInUser)
+                    }
+                    is AdminHomeFragment -> {
+                        fragment.updateUserDetails(loggedInUser)
+                    }
+                    is AccountFragment -> {
+                        fragment.getUserDetails(loggedInUser)
+                    }
+                    is AdminAccountFragment -> {
+                        fragment.getUserDetails(loggedInUser)
                     }
                 }
-            }.addOnFailureListener{
-                    e ->
-                when(activity) {
+            }.addOnFailureListener { e ->
+                when (activity) {
                     is Login -> {
+                        activity.hideProgressDialog()
+                    }
+                    is EditUserProfile -> {
                         activity.hideProgressDialog()
                     }
                 }
                 Log.e(activity.javaClass.simpleName, "Error register user !")
+            }
+    }
+
+    fun updateUserProfileData(activity: EditUserProfile, userHashMap: HashMap<String, Any>) {
+        mFirestore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName, "Profile Data updated successfully")
+                Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_LONG)
+                    .show()
+                activity.profileUpdateSuccess()
+            }.addOnFailureListener { exception ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board",
+                    exception
+                )
+                Toast.makeText(activity, "Error when updating the profile!", Toast.LENGTH_LONG)
+                    .show()
             }
     }
 

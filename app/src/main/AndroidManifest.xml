@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.user_profile.ForgotPassword"></activity>
+        <activity android:name=".activities.user_profile.ForgotPassword"
+            android:label="Reset Password"
+            android:parentActivityName=".activities.Login" />
         <activity
             android:name=".activities.AdminHomepage"
             android:theme="@style/homeTheme" />
