@@ -99,9 +99,10 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         pickDate()
     }
 
-    override fun onStop() {
+    override fun onStop()
+    {
         super.onStop()
-        // Log.d("onStop", "Stop")
+       // Log.d("onStop", "Stop")
         with(sharedPreferences.edit()) {
             putString("aBarTitle", currentCat).apply()
             putString("type", txtViewSelection1.text.toString()).apply()
@@ -178,7 +179,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             }
         }
     }
-
     //change design of card for time duration after card selection
     private fun selectedTimeDrtCard(cv: CardView, tvNum: TextView) {
         cardDefaultView()
@@ -285,7 +285,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         // if it is empty after get from setDataList(timeSlot) which mean it is full and no more slots
         if (arrayList!!.size > 0) {
 
-            timerAdapter = TimerAvailableRecycleAdapter(arrayList!!, applicationContext)
+            timerAdapter = TimerAvailableRecycleAdapter(arrayList!!, this@BookingAvailable)
             gridView?.adapter = timerAdapter
             gridView?.onItemClickListener = this
             val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -300,6 +300,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
         }
     }
+
 
     //click on the time slots available
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -333,6 +334,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         selectedTime = v.findViewById<TextView>(R.id.txtViewTime).text.toString()
         //Log.d("selectedTime", selectedTime)
     }
+
 
 
     //trigger when click on dd MMM yyyy
@@ -538,20 +540,20 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         else {
 
             var hourForID = savedHour - 10
-            // Log.d("hourForID", hourForID.toString())
+           // Log.d("hourForID", hourForID.toString())
             var currentTimeSlot = formatID(hourForID.toLong())
             var addNewTime = "timeID$currentTimeSlot"
             //currentHour - 10 to get the range from start to current end time booking
             var startTimeSlot = savedHour - 10
-            // Log.d("addNewTime", addNewTime)
-            // Log.d("startTimeSlot", startTimeSlot.toString())
+           // Log.d("addNewTime", addNewTime)
+           // Log.d("startTimeSlot", startTimeSlot.toString())
             var currentHour = savedHour
             var currentTimer = cvtTo12Hours(currentHour)
             // Log.d("currentTime2", currentTimer)
             while (startTimeSlot >= 0) {
 
                 //if this slot didnot booked and the time alrdy pass eg current time is 4:00PM but 11:00AM to 13:00PM slot is empty,
-                // required add to timeSlot hashmap for comparing later
+                    // required add to timeSlot hashmap for comparing later
                 if (!timeSlot.containsKey(addNewTime)) {
 
                     timeSlot.put(addNewTime, currentTimer)
@@ -745,7 +747,6 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         return arrayListResult
 
     }
-
     //-------------Converter/Formatter--------------------//
     //24 hours format to 12 hours format eg 13:00 to 1:00 PM
     private fun cvtTo12Hours(currentHour: Int): String {

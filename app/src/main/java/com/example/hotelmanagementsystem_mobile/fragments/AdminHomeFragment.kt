@@ -9,10 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.activities.AdminHomepage
-import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
-import com.example.hotelmanagementsystem_mobile.activities.EVouchers
-import com.example.hotelmanagementsystem_mobile.activities.Homepage
+import com.example.hotelmanagementsystem_mobile.activities.*
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
@@ -81,7 +78,7 @@ class AdminHomeFragment : Fragment() {
 
         btnFacilities.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, Categories::class.java)
+                val intent = Intent(it, AdminFacilitiesBooking::class.java)
                 it.startActivity(intent)
             }
         }

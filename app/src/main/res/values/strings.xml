@@ -116,6 +116,10 @@
     <string name="voucher_require">* Please enter a voucher code</string>
     <string name="check_TAC">* Please tick the T&amp;C above</string>
 
+    <!--Admin facilities Booking String-->
+    <string name="facilities_booking">Facilities Booking</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
 
     <!-- Base Activity String -->
     <string name="please_wait">Please Wait&#8230;</string>

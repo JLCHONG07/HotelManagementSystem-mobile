@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.AdminFacilitiesBooking
+import com.example.hotelmanagementsystem_mobile.activities.AdminViewTimeSlots
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.SportsCat
 import com.example.hotelmanagementsystem_mobile.models.categories
 import kotlinx.android.synthetic.main.row_categories.view.*
@@ -49,43 +52,67 @@ class CategoriesRecycleAdapter(private val arrayList:ArrayList<categories>, val 
 
             val actionBarTitle:String=cardPos.cat_name
 
-            when (position) {
-                0 -> {
-                    val type:String="Court"
-                    Log.d("position",position.toString())
-                    val intent=Intent(context, SportsCat::class.java)
-                    intent.putExtra("aBarTitle",actionBarTitle)
-                    intent.putExtra("type", type)
-                    Log.d("court", type.toString())
-                    context.startActivities(arrayOf(intent))
+            when(context){
+                is Categories ->{
+                    when (position) {
+                        0 -> {
+                            val type:String="Court"
+                            //Log.d("position",position.toString())
+                            val intent=Intent(context, SportsCat::class.java)
+                            intent.putExtra("aBarTitle",actionBarTitle)
+                            intent.putExtra("type", type)
+                            //Log.d("court", type.toString())
+                            context.startActivities(arrayOf(intent))
+                        }
+                        1 -> {
+                            val type:String=holder.itemView.context.getString(R.string.select_room)
+                           // Log.d("position",position.toString())
+                            val intent=Intent(context,BookingAvailable::class.java)
+                            intent.putExtra("aBarTitle",actionBarTitle)
+                            intent.putExtra("type", type)
+                            context.startActivities(arrayOf(intent))
+                        }
+                        2 -> {
+                            val type:String=holder.itemView.context.getString(R.string.select_room)
+                           // Log.d("position",position.toString())
+                            val intent=Intent(context,BookingAvailable::class.java)
+                            intent.putExtra("aBarTitle",actionBarTitle)
+                            intent.putExtra("type", type)
+                            //Log.d("room", type.toString())
+                            context.startActivities(arrayOf(intent))
+                        }
+                    }
                 }
-                1 -> {
-                    val type:String=holder.itemView.context.getString(R.string.select_room)
-                    Log.d("position",position.toString())
-                    val intent=Intent(context,BookingAvailable::class.java)
-                    intent.putExtra("aBarTitle",actionBarTitle)
-                    intent.putExtra("type", type)
-                    context.startActivities(arrayOf(intent))
-                }
-                2 -> {
-                    val type:String=holder.itemView.context.getString(R.string.select_room)
-                    Log.d("position",position.toString())
-                    val intent=Intent(context,BookingAvailable::class.java)
-                    intent.putExtra("aBarTitle",actionBarTitle)
-                    intent.putExtra("type", type)
-                    Log.d("room", type.toString())
-                    context.startActivities(arrayOf(intent))
-                }
+               is AdminFacilitiesBooking->{
+                   val dateSelected=context.validationRequiredField()
+                   if(dateSelected) {
+                       when (position) {
+                           0 -> {
+                               val type: String = "Court"
+                               context.selectedView(actionBarTitle,type)
+
+                           }
+                           1 -> {
+                               val type: String = "Court"
+                               context.selectedView(actionBarTitle,type)
+
+                           }
+                           2 -> {
+                               val type: String = "Court"
+                               context.selectedView(actionBarTitle,type)
+                           }
+                           3 -> {
+                               val type: String = "Room"
+                               context.selectedView(actionBarTitle,type)
+                           }
+                           4 -> {
+                               val type: String = "Room"
+                               context.selectedView(actionBarTitle,type)
+                           }
+                       }
+                   }
+               }
             }
-
-
-
-
-
-
-
-
-
 
         }
 

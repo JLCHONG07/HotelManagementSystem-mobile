@@ -30,8 +30,7 @@ class FirestoreClass {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisterSuccess()
-            }.addOnFailureListener{
-                    e ->
+            }.addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error register user !")
             }
     }
@@ -100,11 +99,11 @@ class FirestoreClass {
             }
     }
 
-    fun getCurrentUserId() : String {
+    fun getCurrentUserId(): String {
         var currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
 
-        if(currentUser != null) {
+        if (currentUser != null) {
             currentUserID = currentUser.uid
         }
 
@@ -112,13 +111,16 @@ class FirestoreClass {
     }
 
     //get, update booking details
-    fun getBookingDetails(activity: CheckInActivity, collection_path: String, reservation_id : String) {
+    fun getBookingDetails(
+        activity: CheckInActivity,
+        collection_path: String,
+        reservation_id: String
+    ) {
         mFirestore.collection(collection_path)
             .whereEqualTo(Constants.RESERVATION_ID, reservation_id)
             .get()
-            .addOnSuccessListener {
-                    document ->
-                if(document.documents.isNotEmpty()) {
+            .addOnSuccessListener { document ->
+                if (document.documents.isNotEmpty()) {
                     val bookingDetails =
                         document.documents[0].toObject(BookingDetails::class.java)!!
                     bookingDetails.bookingID = document.documents[0].id
@@ -128,24 +130,31 @@ class FirestoreClass {
                     activity.hideProgressDialog()
                     Toast.makeText(activity, "No records found.", Toast.LENGTH_LONG).show()
                 }
-            }.addOnFailureListener {
-                    e ->
+            }.addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(e.javaClass.simpleName, "Error while retrieve booking details!", e)
             }
     }
 
-    fun updateBookingDetails(activity: CheckInActivity, collection_path: String, bookingDetailHashMap: HashMap<String, Any>, booking_details_id : String) {
+    fun updateBookingDetails(
+        activity: CheckInActivity,
+        collection_path: String,
+        bookingDetailHashMap: HashMap<String, Any>,
+        booking_details_id: String
+    ) {
         mFirestore.collection(collection_path)
             .document(booking_details_id)
             .update(bookingDetailHashMap)
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "Booking details update successfully")
                 activity.successfulUpdateBookingDetails()
-            }.addOnFailureListener {
-                    exception ->
+            }.addOnFailureListener { exception ->
                 activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while updating booking details", exception)
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating booking details",
+                    exception
+                )
             }
     }
 
@@ -153,17 +162,16 @@ class FirestoreClass {
         mFirestore.collection(collection_path)
             .whereArrayContains(Constants.CHECKED_IN_USER, getCurrentUserId())
             .get()
-            .addOnSuccessListener {
-                    document ->
+            .addOnSuccessListener { document ->
 
-                when(activity) {
+                when (activity) {
                     is CheckInActivity -> {
                         Log.i("FirestoreClass", "Successful get checked in details")
-                        val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
+                        val checkedInDetails: ArrayList<BookingDetails> = ArrayList()
 
-                        for(result in document.documents) {
+                        for (result in document.documents) {
                             val details = result.toObject(BookingDetails::class.java)!!
-                            if(details.status == "checkedin") {
+                            if (details.status == "checkedin") {
                                 checkedInDetails.add(details)
                             }
                         }
@@ -171,11 +179,11 @@ class FirestoreClass {
                     }
 
                     is CheckOutActivity -> {
-                        val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
+                        val checkedInDetails: ArrayList<BookingDetails> = ArrayList()
 
-                        for(result in document.documents) {
+                        for (result in document.documents) {
                             val details = result.toObject(BookingDetails::class.java)!!
-                            if(details.status == "checkedin") {
+                            if (details.status == "checkedin") {
                                 checkedInDetails.add(details)
                             }
                         }
@@ -183,32 +191,47 @@ class FirestoreClass {
                     }
                 }
 
-            }.addOnFailureListener {exception ->
-                when(activity) {
+            }.addOnFailureListener { exception ->
+                when (activity) {
                     is CheckInActivity -> {
                         activity.hideProgressDialog()
-                        Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+                        Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while get check in details",
+                            exception
+                        )
                     }
 
                     is CheckOutActivity -> {
                         activity.hideProgressDialog()
-                        Log.e(activity.javaClass.simpleName, "Error while get check in details", exception)
+                        Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while get check in details",
+                            exception
+                        )
                     }
                 }
             }
     }
 
-    fun updateCheckOutDetails(activity: CheckOutActivity, reservation_id : String, new_booking_details : HashMap<String, Any>) {
+    fun updateCheckOutDetails(
+        activity: CheckOutActivity,
+        reservation_id: String,
+        new_booking_details: HashMap<String, Any>
+    ) {
         mFirestore.collection(Constants.BOOKING_DETAILS)
             .document(reservation_id)
             .update(new_booking_details)
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "Checkout details update successfully")
                 activity.successfulUpdateCheckedOutDetails()
-            }.addOnFailureListener {
-                    exception ->
+            }.addOnFailureListener { exception ->
                 activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while updating booking details", exception)
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating booking details",
+                    exception
+                )
             }
     }
 
@@ -216,22 +239,18 @@ class FirestoreClass {
     //add booked data to database
     fun saveBookedData(
         selectedTimeSlot: Long?, selectedTime: String?, selectedDate: String?,
-        selectedRoomCourt:String?,
-        categories:String?,
-        type:String?,
+        selectedRoomCourt: String?,
+        categories: String?,
+        type: String?,
     ) {
 
         val timeSlot: MutableMap<String, Any> = HashMap()
-
-        val selectedTimeSlotID= BookingAvailable().formatID(selectedTimeSlot)
+        val selectedTimeSlotID = BookingAvailable().formatID(selectedTimeSlot)
         timeSlot["timerID"] = "timeID$selectedTimeSlotID"
         timeSlot["timer"] = "$selectedTime"
-
-        val court= "$type $selectedRoomCourt"
-
-        mFirestore.collection("facilities_booking").document("$categories").collection("$type")
+        val court = "$type $selectedRoomCourt"
+        mFirestore.collection(Constants.FACILITIES_BOOKING).document("$categories").collection("$type")
             .document(court).collection("$selectedDate").document().set(timeSlot)
-
             .addOnSuccessListener {
                 Log.d("status", "successful added")
             }
@@ -250,40 +269,25 @@ class FirestoreClass {
         categories: String?,
         type: String?
     ) {
-        //val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
-        // alSlotAvailable.clear()
+
         val timeSlot: MutableMap<String, Any> = HashMap()
         val court = "$type $selectedRoomCourt"
-        mFirestore.collection("facilities_booking").document("$categories").collection("$type")
+        mFirestore.collection(Constants.FACILITIES_BOOKING).document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
-
-
             .get()
             .addOnSuccessListener {
 
-
                 for (document in it.documents.indices) {
-
 
                     timeSlot.put(
                         it.documents[document].data!!["timerID"] as String,
                         it.documents[document].data!!["timer"] as String
                     )
 
-
                 }
 
-
-                //activity.checkSlotAvailable(alSlotAvailable)
-
-                //for (document in alSlotAvailable.indices) {
-                //   Log.d("timerID", alSlotAvailable[document].timerID)
-                //   Log.d("timer", alSlotAvailable[document].timer)
-
-                // }
-
             }
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 activity.checkSlotAvailable(timeSlot)
 
             }
@@ -291,35 +295,101 @@ class FirestoreClass {
                 Log.d("Error", exception.toString())
             }
 
+    }
+
+    fun retrieveViewBookedData1(
+        activity: AdminViewTimeSlots,
+        selectedDate: String?,
+        categories: String?,
+        type: String?
+    ) {
+
+        val timeSlot: MutableMap<String, Any> = HashMap()
+        val courtRoom1 = "$type 1"
+        mFirestore.collection(Constants.FACILITIES_BOOKING).document("$categories").collection("$type")
+            .document(courtRoom1).collection("$selectedDate")
+            .get()
+            .addOnSuccessListener {
+
+                for (document in it.documents.indices) {
+
+                    timeSlot.put(
+
+                        it.documents[document].data!!["timerID"] as String,
+                        it.documents[document].data!!["timer"] as String
+                    )
+                }
+            }
+
+            .addOnCompleteListener {
+
+                activity.getDataList1(timeSlot)
+            }
+
+            .addOnFailureListener { exception ->
+
+                Log.d("Error", exception.toString())
+
+            }
+
+    }
+
+    fun retrieveViewBookedData2(
+        activity: AdminViewTimeSlots,
+        selectedDate: String?,
+        categories: String?,
+        type: String?
+    ) {
+
+        val timeSlot: MutableMap<String, Any> = HashMap()
+        val courtRoom2 = "$type 2"
+        mFirestore.collection(Constants.FACILITIES_BOOKING).document("$categories").collection("$type")
+            .document(courtRoom2).collection("$selectedDate")
+            .get()
+            .addOnSuccessListener {
+
+                for (document in it.documents.indices) {
+
+                    timeSlot.put(
+
+                        it.documents[document].data!!["timerID"] as String,
+                        it.documents[document].data!!["timer"] as String
+                    )
+                }
+            }
+            .addOnCompleteListener {
+                activity.setDataList2(timeSlot)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Error", exception.toString())
+            }
 
     }
 
     fun history(
         userID: String,
-        time:String,
+        time: String,
         courtRoom: String,
         weekOfDay: String,
         date: String,
-        categories:String,
-        catAndDuration:String,
-        cvtMonth:String,
-        savedDate:String
+        categories: String,
+        catAndDuration: String,
+        cvtMonth: String,
+        savedDate: String
     ) {
 
-
         val historyData: MutableMap<String, Any> = HashMap()
-
         historyData["userID"] = userID
         historyData["time"] = time
         historyData["courtRoom"] = courtRoom
         historyData["weekOfDay"] = weekOfDay
         historyData["date"] = date
-        historyData["categories"]=categories
-        historyData["catAndDuration"]=catAndDuration
-        historyData["cvtMonth"]=cvtMonth
-        historyData["savedDate"]=savedDate
+        historyData["categories"] = categories
+        historyData["catAndDuration"] = catAndDuration
+        historyData["cvtMonth"] = cvtMonth
+        historyData["savedDate"] = savedDate
 
-        mFirestore.collection("booking_history").document(userID).collection("bookingID").document()
+        mFirestore.collection(Constants.BOOKING_HISTORY).document(userID).collection(Constants.BOOKING_ID).document()
             .set(historyData)
             .addOnSuccessListener {
                 Log.d("status", "successful added History")
@@ -333,10 +403,9 @@ class FirestoreClass {
     fun retriveBookedHistory(activity: BookingHistory, userID: String) {
 
         val bookFacilitiesHistory: ArrayList<BookFacilitiesHistory> = ArrayList()
-        mFirestore.collection("booking_history").document(userID).collection("bookingID")
+        mFirestore.collection(Constants.BOOKING_HISTORY).document(userID).collection(Constants.BOOKING_ID)
             .get()
             .addOnSuccessListener {
-
 
                 for (document in it.documents.indices) {
 
@@ -356,18 +425,9 @@ class FirestoreClass {
 
                 }
             }
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 activity.retrievedBookedHistory(bookFacilitiesHistory)
             }
-
-        //activity.checkSlotAvailable(alSlotAvailable)
-
-        //for (document in alSlotAvailable.indices) {
-        //   Log.d("timerID", alSlotAvailable[document].timerID)
-        //   Log.d("timer", alSlotAvailable[document].timer)
-
-        // }
-
 
     }
 }
