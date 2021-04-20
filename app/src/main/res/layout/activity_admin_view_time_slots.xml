@@ -107,7 +107,7 @@
                     <GridView
                         android:id="@+id/slot_available_time1"
                         android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_height="205dp"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
@@ -151,7 +151,7 @@
                     <GridView
                         android:id="@+id/slot_available_time2"
                         android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_height="205dp"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"

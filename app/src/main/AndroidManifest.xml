@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.AdminViewTimeSlots"
-            android:parentActivityName=".activities.AdminFacilitiesBooking"/>
+            android:parentActivityName=".activities.AdminFacilitiesBooking" />
         <activity
             android:name=".activities.AdminFacilitiesBooking"
             android:label="@string/facilities_booking"
