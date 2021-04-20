@@ -37,8 +37,7 @@ class FirestoreClass {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisterSuccess()
-            }.addOnFailureListener{
-                    e ->
+            }.addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error register user !")
             }
     }
@@ -130,8 +129,7 @@ class FirestoreClass {
         mFirestore.collection(collection_path)
             .whereEqualTo(Constants.RESERVATION_ID, reservation_id)
             .get()
-            .addOnSuccessListener {
-                    document ->
+            .addOnSuccessListener { document ->
                 if(document.documents.isNotEmpty()) {
                     val bookingDetails =
                         document.documents[0].toObject(BookingDetails::class.java)!!
@@ -187,7 +185,6 @@ class FirestoreClass {
                                 checkedInDetails.add(details)
                             }
                         }
-                        Log.i(javaClass.simpleName, checkedInDetails.toString())
                         activity.successfulGetCheckedInDetails(checkedInDetails)
                     }
 
@@ -245,13 +242,12 @@ class FirestoreClass {
             }
     }
 
-    //Admin get Check in and Check out Details
     fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity) {
         mFirestore.collection(Constants.BOOKING_DETAILS)
             .whereEqualTo(Constants.STATUS, "checkedin")
             .get()
             .addOnSuccessListener {
-                document ->
+                    document ->
                 val todayBookingDetails = ArrayList<BookingDetails>()
                 val otherDayBookingDetails = ArrayList<BookingDetails>()
 
@@ -314,37 +310,22 @@ class FirestoreClass {
         categories: String?,
         type: String?
     ) {
-        //val alSlotAvailable: ArrayList<TimeSlot> = ArrayList()
-        // alSlotAvailable.clear()
+
         val timeSlot: MutableMap<String, Any> = HashMap()
         val court = "$type $selectedRoomCourt"
         mFirestore.collection("facilities_booking").document("$categories").collection("$type")
             .document(court).collection("$selectedDate")
-
-
             .get()
             .addOnSuccessListener {
 
-
                 for (document in it.documents.indices) {
-
 
                     timeSlot.put(
                         it.documents[document].data!!["timerID"] as String,
                         it.documents[document].data!!["timer"] as String
                     )
 
-
                 }
-
-
-                //activity.checkSlotAvailable(alSlotAvailable)
-
-                //for (document in alSlotAvailable.indices) {
-                //   Log.d("timerID", alSlotAvailable[document].timerID)
-                //   Log.d("timer", alSlotAvailable[document].timer)
-
-                // }
 
             }
             .addOnCompleteListener{
@@ -355,6 +336,43 @@ class FirestoreClass {
                 Log.d("Error", exception.toString())
             }
 
+
+    }
+
+    fun retrieveViewBookedData1(
+        activity: AdminViewTimeSlots,
+        selectedDate: String?,
+        categories: String?,
+        type: String?
+    ) {
+
+        val timeSlot: MutableMap<String, Any> = HashMap()
+        val courtRoom1 = "$type 1"
+        mFirestore.collection(Constants.FACILITIES_BOOKING).document("$categories").collection("$type")
+            .document(courtRoom1).collection("$selectedDate")
+            .get()
+            .addOnSuccessListener {
+
+                for (document in it.documents.indices) {
+
+                    timeSlot.put(
+
+                        it.documents[document].data!!["timerID"] as String,
+                        it.documents[document].data!!["timer"] as String
+                    )
+                }
+            }
+
+            .addOnCompleteListener {
+
+                activity.getDataList1(timeSlot)
+            }
+
+            .addOnFailureListener { exception ->
+
+                Log.d("Error", exception.toString())
+
+            }
 
     }
 
@@ -370,20 +388,18 @@ class FirestoreClass {
         savedDate:String
     ) {
 
-
         val historyData: MutableMap<String, Any> = HashMap()
-
         historyData["userID"] = userID
         historyData["time"] = time
         historyData["courtRoom"] = courtRoom
         historyData["weekOfDay"] = weekOfDay
         historyData["date"] = date
-        historyData["categories"]=categories
-        historyData["catAndDuration"]=catAndDuration
-        historyData["cvtMonth"]=cvtMonth
-        historyData["savedDate"]=savedDate
+        historyData["categories"] = categories
+        historyData["catAndDuration"] = catAndDuration
+        historyData["cvtMonth"] = cvtMonth
+        historyData["savedDate"] = savedDate
 
-        mFirestore.collection("booking_history").document(userID).collection("bookingID").document()
+        mFirestore.collection(Constants.BOOKING_HISTORY).document(userID).collection("bookingID").document()
             .set(historyData)
             .addOnSuccessListener {
                 Log.d("status", "successful added History")
@@ -397,7 +413,7 @@ class FirestoreClass {
     fun retriveBookedHistory(activity: BookingHistory, userID: String) {
 
         val bookFacilitiesHistory: ArrayList<BookFacilitiesHistory> = ArrayList()
-        mFirestore.collection("booking_history").document(userID).collection("bookingID")
+        mFirestore.collection(Constants.BOOKING_HISTORY).document(userID).collection("bookingID")
             .get()
             .addOnSuccessListener {
 
@@ -423,15 +439,6 @@ class FirestoreClass {
             .addOnCompleteListener{
                 activity.retrievedBookedHistory(bookFacilitiesHistory)
             }
-
-        //activity.checkSlotAvailable(alSlotAvailable)
-
-        //for (document in alSlotAvailable.indices) {
-        //   Log.d("timerID", alSlotAvailable[document].timerID)
-        //   Log.d("timer", alSlotAvailable[document].timer)
-
-        // }
-
 
     }
 }

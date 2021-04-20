@@ -33,7 +33,10 @@ object Constants {
 
     //facilities_booking
     const val FACILITIES_BOOKING:String="facilities_booking"
-    const val BADMINTON:String="badminton"
+
+    //booking history
+    const val BOOKING_HISTORY:String="booking_history"
+
 
     fun showImageChooser(activity: Activity) {
         var galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

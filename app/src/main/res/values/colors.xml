@@ -26,6 +26,7 @@
     <color name="history_dark_gray">#5A6978</color>
     <color name="history_dark_brown">#6A5240</color>
     <color name="history_dark_green">#235111</color>
+    <color name="grey_color">#FF343F4B</color>
 
 
 </resources>

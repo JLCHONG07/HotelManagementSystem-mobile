@@ -3,22 +3,19 @@ package com.example.hotelmanagementsystem_mobile.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.hotelmanagementsystem_mobile.R
-import com.example.hotelmanagementsystem_mobile.activities.AdminViewTimeSlots
-import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
-import org.w3c.dom.Text
 
-class TimerAvailableRecycleAdapter(
+
+class AdminViewTimerAdapter(
     private val arrayList: ArrayList<TimeSlot>,
-    val context: Context
+    val context: Context,
+    val slotsBooked: MutableMap<String, Any>
 ) : BaseAdapter() {
     override fun getCount(): Int {
         return arrayList.size
@@ -32,17 +29,25 @@ class TimerAvailableRecycleAdapter(
         return position.toLong()
     }
 
+
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        /*Hold the sports card item*/
+        /*Hold the time card item*/
         val v: View = View.inflate(context, R.layout.slot_available_card, null)
-        /*get Image and TextView by the position of array*/
+        /*get TextView by the position of array*/
         val timerTextView: TextView = v.findViewById(R.id.txtViewTime)
         val listItem: TimeSlot = arrayList[position]
         timerTextView.text = listItem.timer
+        //if booked then set the gray
+        if (slotsBooked.containsKey(arrayList[position].timerID)) {
+
+            v.findViewById<LinearLayout>(R.id.linearLayout_slots_available_time)
+                .setBackgroundResource(R.drawable.clicked_time_border_outline)
+            v.findViewById<TextView>(R.id.txtViewTime)
+                .setTextColor(Color.parseColor("#FFFFFFFF"))
+
+        }
         return v
-
     }
-
 }

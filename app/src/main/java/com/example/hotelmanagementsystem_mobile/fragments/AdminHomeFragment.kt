@@ -13,7 +13,6 @@ import com.example.hotelmanagementsystem_mobile.activities.AdminHomepage
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
 import com.example.hotelmanagementsystem_mobile.activities.EVouchers
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
-import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
@@ -36,12 +35,6 @@ class AdminHomeFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var mUserDetail : User
-
-    var sampleImages = intArrayOf(
-        R.drawable.hotel1,
-        R.drawable.hotel2,
-        R.drawable.hotel3
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,26 +60,20 @@ class AdminHomeFragment : Fragment() {
         Log.i("AdminHomeFragment", "OnViewCreated")
         (activity as AppCompatActivity).supportActionBar?.title = "Home"
 
-        carouselView.setImageListener { position, imageView ->
-            imageView.setImageResource(sampleImages[position])
-        }
-        carouselView.pageCount = sampleImages.size
-
-        //TODO: change to admin check in activity
-        btnCheckin.setOnClickListener {
+        btnAdminCheckin.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, AdminCheckInDetailsActivity::class.java)
+                val intent = Intent(it, CheckInActivity::class.java)
                 startActivity(intent)
             }
         }
 
-        btnFacilities.setOnClickListener {
+        btnAdminFacilities.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, Categories::class.java)
                 it.startActivity(intent)
             }
         }
-        btnVoucher.setOnClickListener{
+        btnAdminVoucher.setOnClickListener{
             activity?.let {
                 val intent = Intent(it, EVouchers::class.java)
                 it.startActivity(intent)
