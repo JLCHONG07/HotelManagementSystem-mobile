@@ -1,5 +1,7 @@
 package com.example.hotelmanagementsystem_mobile.activities
 
+import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.adapters.CheckOutDetailsAdapter
@@ -98,32 +101,65 @@ class CheckOutActivity : BaseActivity() {
             dialogView.findViewById<TextView>(R.id.check_out_details_dialog_date_range)
         textViewReservationDateRange.text = bookingDetails[position].room_reservation_details[0].reservationDateTime
 
-        val textViewCheckOutConfirm = dialogView.findViewById<TextInputEditText>(R.id.tiet_check_out_dialog_confirm)
+        val textViewCheckOutConfirm =
+            dialogView.findViewById<TextInputEditText>(R.id.tiet_check_out_dialog_confirm)
 
-        textViewCheckOutConfirm.hint = resources.getString(R.string.tiet_confirm_check_out_hint)
-        textViewCheckOutConfirm.setOnFocusChangeListener { _, hasFocus ->
-            if(!hasFocus) {
-                textViewCheckOutConfirm.hint = resources.getString(R.string.tiet_confirm_check_out_hint)
-            } else {
-                textViewCheckOutConfirm.hint = ""
-            }
-        }
-
-        val checkBoXTermsAndCondition = dialogView.findViewById<CheckBox>(R.id.cb_check_out_dialog_terms_and_condition)
+        val checkBoXTermsAndCondition =
+            dialogView.findViewById<CheckBox>(R.id.cb_check_out_dialog_terms_and_condition)
         val buttonCheckOut = dialogView.findViewById<Button>(R.id.btn_check_out_confirm)
-        buttonCheckOut.setOnClickListener {
-            val confirmText = textViewCheckOutConfirm.text.toString()
-            if(validateForm(confirmText) && checkBoXTermsAndCondition.isChecked) {
-                val checkOutDetails = updateCheckOutInfo(position)
-                showProgressDialog(resources.getString(R.string.please_wait))
-                FirestoreClass().updateCheckOutDetails(this, bookingDetails[position].bookingID, checkOutDetails)
-            } else {
-                if(!validateForm(confirmText)) {
-                    Toast.makeText(this, "Please enter 'CONFIRM' or 'confirm'.", Toast.LENGTH_LONG).show()
-                } else if(!checkBoXTermsAndCondition.isChecked) {
-                    Toast.makeText(this, "Please comply to our terms and conditions", Toast.LENGTH_LONG).show()
+        val noneFirstCheckInUser = dialogView.findViewById<TextView>(R.id.tv_none_first_check_in_user)
+
+        if(bookingDetails[position].checkedInUser[0] == mUserDetail.id) {
+            textViewCheckOutConfirm.hint = resources.getString(R.string.tiet_confirm_check_out_hint)
+            textViewCheckOutConfirm.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    textViewCheckOutConfirm.hint =
+                        resources.getString(R.string.tiet_confirm_check_out_hint)
+                } else {
+                    textViewCheckOutConfirm.hint = ""
                 }
             }
+
+            buttonCheckOut.setOnClickListener {
+                val confirmText = textViewCheckOutConfirm.text.toString()
+                if (validateForm(confirmText) && checkBoXTermsAndCondition.isChecked) {
+                    val checkOutDetails = updateCheckOutInfo(position)
+
+                    noneFirstCheckInUser.text = ""
+
+                    showProgressDialog(resources.getString(R.string.please_wait))
+                    FirestoreClass().updateCheckOutDetails(
+                        this,
+                        bookingDetails[position].bookingID,
+                        checkOutDetails
+                    )
+                } else {
+                    if (!validateForm(confirmText)) {
+                        Toast.makeText(
+                            this,
+                            "Please enter 'CONFIRM' or 'confirm'.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else if (!checkBoXTermsAndCondition.isChecked) {
+                        Toast.makeText(
+                            this,
+                            "Please comply to our terms and conditions",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+        } else {
+            textViewCheckOutConfirm.isEnabled = false
+            textViewCheckOutConfirm.setBackgroundResource(R.color.dialog_text_view_background_color)
+            checkBoXTermsAndCondition.isEnabled = false
+            buttonCheckOut.isEnabled = false
+            buttonCheckOut.setBackgroundResource(R.color.dialog_text_view_background_color)
+            buttonCheckOut.setTextColor(Color.BLACK)
+            buttonCheckOut.isClickable = false
+            noneFirstCheckInUser.isEnabled = true
+            noneFirstCheckInUser.text = resources.getString(R.string.only_first_user)
+            noneFirstCheckInUser.setTextColor(Color.RED)
         }
 
         val checkInDetailsDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -160,9 +196,9 @@ class CheckOutActivity : BaseActivity() {
         val checkOutDateTimeID = SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH)
         val formattedCheckOutDateTimeID = checkOutDateTimeID.format(Date())
         val generatedCheckOutID = "co${formattedCheckOutDateTimeID}${mUserDetail.passportNumber.takeLast(4)}"
-        var checkOutDetails = CheckOutDetails(
-            formattedCheckOut.toString(),
-            generatedCheckOutID
+        val checkOutDetails = CheckOutDetails(
+            checkOutID = generatedCheckOutID,
+            checkOutDateTime = formattedCheckOut.toString()
         )
 
         checkOutDetailsList.add(checkOutDetails)

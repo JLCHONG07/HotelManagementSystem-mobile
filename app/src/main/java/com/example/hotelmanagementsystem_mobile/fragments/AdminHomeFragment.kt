@@ -13,6 +13,7 @@ import com.example.hotelmanagementsystem_mobile.activities.AdminHomepage
 import com.example.hotelmanagementsystem_mobile.activities.CheckInActivity
 import com.example.hotelmanagementsystem_mobile.activities.EVouchers
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
+import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
@@ -71,10 +72,10 @@ class AdminHomeFragment : Fragment() {
         }
         carouselView.pageCount = sampleImages.size
 
+        //TODO: change to admin check in activity
         btnCheckin.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, CheckInActivity::class.java)
-                intent.putExtra(Constants.USERS, mUserDetail)
+                val intent = Intent(it, AdminCheckInDetailsActivity::class.java)
                 startActivity(intent)
             }
         }

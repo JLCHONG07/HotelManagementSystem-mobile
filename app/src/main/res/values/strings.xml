@@ -143,14 +143,24 @@
     <string name="check_in_details_title">Check In Details</string>
     <string name="booking_details_preference_file">com.example.hotelmanagementsystem_mobile.activities.preferenceFile</string>
 
-    <!-- Check in Activity String -->
+    <!-- Check Out Activity String -->
     <string name="check_out_title">Check Out</string>
     <string name="tv_check_out_deposits">Deposit</string>
     <string name="tv_check_out_ask_user">Are you sure want to check out now ?</string>
     <string name="tiet_confirm_check_out_hint">Enter "Confirm" to check out</string>
     <string name="btn_check_out_confirm">CHECK OUT</string>
+    <string name="check_out_details_dialog_id">Check Out ID</string>
+    <string name="check_out_details_dialog_date_and_time">Check Out Date and Time</string>
+    <string name="only_first_user">Only check in user can check out.</string>
 
+    <!-- Admin -->
+    <string name="admin_check_in_details_title">Check In Details</string>
+    <string name="tv_admin_search_hint">Search by Check in ID</string>
+    <string name="btn_admin_search_text">Search</string>
+    <string name="tv_total_text_check_in_today">Today\'s Check In :</string>
+    <string name="tv_total_text_check_in_other_day">Other\'s Day Check In</string>
 
+    <!-- User -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -177,5 +187,5 @@
     <string name="previous">Previous</string>
 
     <string name="booking_history">Booking History</string>
-    <string name="checkin_history">Check In History</string>
+    <string name="checkout_history">Check Out History</string>
 </resources>

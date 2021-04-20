@@ -2,6 +2,7 @@ package com.example.hotelmanagementsystem_mobile.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.CheckOutHistoryActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.activities.SplashScreen
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
@@ -19,6 +21,7 @@ import com.example.hotelmanagementsystem_mobile.activities.user_profile.ChangeUs
 import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
+import com.example.hotelmanagementsystem_mobile.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_account.*
 
@@ -80,6 +83,14 @@ class AccountFragment : Fragment() {
             activity?.let {
                 val intent = Intent(it, BookingHistory::class.java)
                 it.startActivity(intent)
+            }
+        }
+
+        check_out_history.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, CheckOutHistoryActivity::class.java)
+                intent.putExtra(Constants.USERS, mUserDetail)
+                startActivity(intent)
             }
         }
 

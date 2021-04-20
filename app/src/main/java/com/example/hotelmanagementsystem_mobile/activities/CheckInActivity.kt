@@ -51,7 +51,11 @@ class CheckInActivity : BaseActivity() {
         if(bookingDetailsPath.isEmpty() && !sharedPreferences.getString("booking_details_path", "").isNullOrEmpty()) {
             showProgressDialog(resources.getString(R.string.please_wait))
             bookingDetailsPath = sharedPreferences.getString("booking_details_path", "").toString()
+            Log.i(javaClass.simpleName, bookingDetailsPath)
             FirestoreClass().getCheckedInDetails(this, bookingDetailsPath)
+        } else {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            FirestoreClass().getCheckedInDetails(this, Constants.BOOKING_DETAILS)
         }
 
         if(intent.hasExtra(Constants.USERS)) {
@@ -104,7 +108,7 @@ class CheckInActivity : BaseActivity() {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if(result != null) {
                 if(result.contents != null) {
-                    Toast.makeText(this, "Scanned successfully " + result.contents, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Scanned successfully.", Toast.LENGTH_SHORT).show()
                     bookingDetailsPath = result.contents
                     if(bookingDetailsPath.isNotEmpty()) {
                         showProgressDialog(resources.getString(R.string.please_wait))
@@ -129,13 +133,23 @@ class CheckInActivity : BaseActivity() {
 
     fun successfulGetBookingDetails(bookingDetails : BookingDetails) {
         hideProgressDialog()
-        if(bookingDetails.status != "checkedin" ||
+        if((bookingDetails.status != "checkedin" ||
             bookingDetails.status != "checkedout" ||
-                !bookingDetails.checkedInUser.contains(mUserDetail.id)) {
+                !bookingDetails.checkedInUser.contains(mUserDetail.id))) {
             updateBookingDetails(bookingDetails)
         } else {
             showProgressDialog(resources.getString(R.string.please_wait))
             getCheckedInDetails()
+        }
+    }
+
+    fun userCheckedIn() {
+        hideProgressDialog()
+        if(this::checkInAlertDialog.isInitialized) {
+            checkInAlertDialog.dismiss()
+        }
+        if(this::checkInDetailsAlertDialog.isInitialized) {
+            checkInDetailsAlertDialog.dismiss()
         }
     }
 

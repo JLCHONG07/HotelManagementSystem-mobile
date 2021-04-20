@@ -1,10 +1,12 @@
 package com.example.hotelmanagementsystem_mobile.firebase
 
 import android.app.Activity
+import android.text.format.DateUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.activities.*
+import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
 import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
@@ -13,13 +15,18 @@ import com.example.hotelmanagementsystem_mobile.fragments.AdminAccountFragment
 import com.example.hotelmanagementsystem_mobile.fragments.AdminHomeFragment
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.example.hotelmanagementsystem_mobile.models.BookFacilitiesHistory
-import com.example.hotelmanagementsystem_mobile.models.TimeSlot
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
 import com.example.hotelmanagementsystem_mobile.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -100,6 +107,13 @@ class FirestoreClass {
             }
     }
 
+    suspend fun getUserDetailsInAdmin(user_id : String) : DocumentSnapshot{
+        return mFirestore.collection(Constants.USERS)
+            .document(user_id)
+            .get()
+            .await()
+    }
+
     fun getCurrentUserId() : String {
         var currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
@@ -121,9 +135,15 @@ class FirestoreClass {
                 if(document.documents.isNotEmpty()) {
                     val bookingDetails =
                         document.documents[0].toObject(BookingDetails::class.java)!!
-                    bookingDetails.bookingID = document.documents[0].id
-                    Log.i(javaClass.simpleName, bookingDetails.toString())
-                    activity.successfulGetBookingDetails(bookingDetails)
+                    //Check if user checked in
+                    if(bookingDetails.status == "checkedin" && bookingDetails.checkedInUser.contains(getCurrentUserId())) {
+                        Toast.makeText(activity, "You already checked in!", Toast.LENGTH_SHORT).show()
+                        activity.userCheckedIn()
+                    } else {
+                        bookingDetails.bookingID = document.documents[0].id
+                        Log.i(javaClass.simpleName, bookingDetails.toString())
+                        activity.successfulGetBookingDetails(bookingDetails)
+                    }
                 } else {
                     activity.hideProgressDialog()
                     Toast.makeText(activity, "No records found.", Toast.LENGTH_LONG).show()
@@ -167,6 +187,7 @@ class FirestoreClass {
                                 checkedInDetails.add(details)
                             }
                         }
+                        Log.i(javaClass.simpleName, checkedInDetails.toString())
                         activity.successfulGetCheckedInDetails(checkedInDetails)
                     }
 
@@ -180,6 +201,18 @@ class FirestoreClass {
                             }
                         }
                         activity.successfulGetCheckedInDetails(checkedInDetails)
+                    }
+
+                    is CheckOutHistoryActivity -> {
+                        val checkedInDetails : ArrayList<BookingDetails> = ArrayList()
+
+                        for(result in document.documents) {
+                            val details = result.toObject(BookingDetails::class.java)!!
+                            if(details.status == "checkedout" && details.checkedInUser[0] == getCurrentUserId()) {
+                                checkedInDetails.add(details)
+                            }
+                        }
+                        activity.successfulGetCheckedOutDetails(checkedInDetails)
                     }
                 }
 
@@ -209,6 +242,37 @@ class FirestoreClass {
                     exception ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while updating booking details", exception)
+            }
+    }
+
+    //Admin get Check in and Check out Details
+    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity) {
+        mFirestore.collection(Constants.BOOKING_DETAILS)
+            .whereEqualTo(Constants.STATUS, "checkedin")
+            .get()
+            .addOnSuccessListener {
+                document ->
+                val todayBookingDetails = ArrayList<BookingDetails>()
+                val otherDayBookingDetails = ArrayList<BookingDetails>()
+
+                for(result in document.documents) {
+                    val bookingDetails = result.toObject(BookingDetails::class.java)!!
+                    var datetime = bookingDetails.check_in_details[0].checkInDateAndTime
+                    var format = DateTimeFormatter.ofPattern("yyyy:MM:dd HH.mm.ss")
+                    var convertedDateTime = LocalDateTime.parse(datetime, format)
+
+                    if (DateUtils.isToday(convertedDateTime.dayOfMonth.toLong())) {
+                        todayBookingDetails.add(bookingDetails)
+                    }
+                    else {
+                        otherDayBookingDetails.add(bookingDetails)
+                    }
+                }
+
+                activity.successfulGetCheckInDetails(todayBookingDetails, otherDayBookingDetails)
+            }
+            .addOnFailureListener {exception ->
+                Log.e(activity.javaClass.simpleName, "Error while get all booking details !", exception)
             }
     }
 

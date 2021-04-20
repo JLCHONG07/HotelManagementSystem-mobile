@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="10dp"
     android:background="@color/card_background_color">
 
     <TextView
-        android:id="@+id/check_out_details_dialog_date_range"
+        android:id="@+id/check_out_history_details_dialog_date_range"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Feb 2 > Feb 5"
@@ -15,7 +16,7 @@
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/check_out_details_dialog_user_name"
+        android:id="@+id/check_out_history_details_dialog_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Foong Gah Seng"
@@ -26,14 +27,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/check_out_title"
+        android:text="Check Out"
         android:textSize="30sp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="20dp"/>
 
     <LinearLayout
-        android:id="@+id/check_in_details_dialog_first_row"
+        android:id="@+id/check_out_history_details_dialog_first_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -52,7 +53,7 @@
                 android:text="@string/check_in_details_reservation_number"/>
 
             <TextView
-                android:id="@+id/check_out_details_dialog_reservation_number"
+                android:id="@+id/check_out_history_details_dialog_reservation_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
@@ -63,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="40dp">
+            android:layout_marginLeft="50dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,7 +73,7 @@
                 android:text="@string/check_in_details_night"/>
 
             <TextView
-                android:id="@+id/check_out_details_dialog_nights"
+                android:id="@+id/check_out_history_details_dialog_nights"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
@@ -109,7 +110,7 @@
                 android:text="@string/check_in_details_reservation_details"/>
 
             <TextView
-                android:id="@+id/check_out_details_dialog_reservation_details"
+                android:id="@+id/check_out_history_details_dialog_reservation_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
@@ -131,7 +132,7 @@
                 android:text="@string/check_in_details_check_in_id"/>
 
             <TextView
-                android:id="@+id/check_out_details_dialog_check_in_id"
+                android:id="@+id/check_out_history_details_dialog_check_in_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
@@ -159,20 +160,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_check_out_deposits"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="@string/check_in_details_room_types"/>
 
         <TextView
+            android:id="@+id/check_out_history_details_dialog_room_types"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RM 100.00"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="*Please calm at counter after done check out"
-            android:textColor="@color/red"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -196,62 +190,45 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_check_out_ask_user"
-            android:textSize="16sp" />
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="5dp"
-                android:theme="@style/Theme.MaterialComponents.Light">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tiet_check_out_dialog_confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="start"
-                    android:textSize="15sp"
-                    android:typeface="normal"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <CheckBox
-                android:id="@+id/cb_check_out_dialog_terms_and_condition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:buttonTint="@android:color/white"
-                android:text="@string/check_in_term_and_condition"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_check_out_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/text_color"
-                android:text="@string/btn_check_out_confirm"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="20dp"/>
-
-        </LinearLayout>
+            android:textSize="16sp"
+            android:text="@string/check_out_details_dialog_date_and_time"/>
 
         <TextView
-            android:id="@+id/tv_none_first_check_in_user"
+            android:id="@+id/check_out_history_details_dialog_date_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/check_out_details_dialog_id"/>
+
+        <TextView
+            android:id="@+id/check_out_history_details_dialog_check_out_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
     <View

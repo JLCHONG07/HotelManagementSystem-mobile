@@ -8,22 +8,40 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:largeHeap="true"
-        android:hardwareAccelerated="false"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.user_profile.ForgotPassword"
+
+        <!-- Admin -->
+        <activity android:name=".activities.admin.AdminCheckInDetailsActivity"
+            android:label="@string/admin_check_in_details_title"
+            android:parentActivityName=".activities.AdminHomepage"
+            />
+
+        <!-- Customer -->
+        <activity
+            android:name=".activities.CheckOutHistoryActivity"
+            android:label="@string/checkout_history"
+            android:parentActivityName=".activities.Account" />
+        <activity
+            android:name=".activities.user_profile.ForgotPassword"
             android:label="Reset Password"
-            android:parentActivityName=".activities.Login" />
+            android:parentActivityName=".activities.Login"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.AdminHomepage"
             android:theme="@style/homeTheme" />
-        <activity android:name=".activities.user_profile.ChangeUserPassword" />
-        <activity android:name=".activities.user_profile.EditUserProfile" />
+        <activity
+            android:name=".activities.user_profile.ChangeUserPassword"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.user_profile.EditUserProfile"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
@@ -51,25 +69,31 @@
             android:theme="@style/homeTheme" />
         <activity
             android:name=".activities.Signup"
-            android:theme="@style/signupTheme" />
+            android:theme="@style/signupTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.Login"
-            android:theme="@style/loginTheme" />
+            android:theme="@style/loginTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.EVouchers"
-            android:parentActivityName=".activities.Homepage" />
+            android:parentActivityName=".activities.Homepage"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.facilities_booking.Categories"
             android:label="@string/bar_categories"
             android:parentActivityName=".activities.Homepage" />
-        <activity android:name=".activities.CheckOutActivity"
+        <activity
+            android:name=".activities.CheckOutActivity"
             android:label="@string/check_out_title"
-            android:parentActivityName=".activities.Homepage"/>
+            android:parentActivityName=".activities.Homepage"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.CheckInActivity"
             android:label="@string/recently_check_in_title"
             android:parentActivityName=".activities.Homepage"
             android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustResize"
             tools:replace="screenOrientation" />
         <activity
             android:name=".activities.Homepage"
