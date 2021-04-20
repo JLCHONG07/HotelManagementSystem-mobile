@@ -376,6 +376,38 @@ class FirestoreClass {
 
     }
 
+    fun retrieveViewBookedData2(
+        activity: AdminViewTimeSlots,
+        selectedDate: String?,
+        categories: String?,
+        type: String?
+    ) {
+
+        val timeSlot: MutableMap<String, Any> = HashMap()
+        val courtRoom2 = "$type 2"
+        mFirestore.collection(Constants.FACILITIES_BOOKING).document("$categories").collection("$type")
+            .document(courtRoom2).collection("$selectedDate")
+            .get()
+            .addOnSuccessListener {
+
+                for (document in it.documents.indices) {
+
+                    timeSlot.put(
+
+                        it.documents[document].data!!["timerID"] as String,
+                        it.documents[document].data!!["timer"] as String
+                    )
+                }
+            }
+            .addOnCompleteListener {
+                activity.setDataList2(timeSlot)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Error", exception.toString())
+            }
+
+    }
+
     fun history(
         userID: String,
         time:String,
@@ -413,7 +445,7 @@ class FirestoreClass {
     fun retriveBookedHistory(activity: BookingHistory, userID: String) {
 
         val bookFacilitiesHistory: ArrayList<BookFacilitiesHistory> = ArrayList()
-        mFirestore.collection(Constants.BOOKING_HISTORY).document(userID).collection("bookingID")
+        mFirestore.collection(Constants.BOOKING_HISTORY).document(userID).collection(Constants.BOOKING_ID)
             .get()
             .addOnSuccessListener {
 
@@ -430,7 +462,8 @@ class FirestoreClass {
                             it.documents[document].data!!.get("weekOfDay") as String,
                             it.documents[document].data!!.get("savedDate") as String,
                             it.documents[document].data!!.get("cvtMonth") as String,
-                            it.documents[document].data!!.get("categories") as String
+                            it.documents[document].data!!.get("categories") as String,
+                            ""
                         )
                     )
 

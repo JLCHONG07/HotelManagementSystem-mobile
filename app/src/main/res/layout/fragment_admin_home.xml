@@ -16,7 +16,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/border"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/btnCheckin"
+        app:layout_constraintEnd_toEndOf="@+id/btnAdminCheckin"
         app:layout_constraintStart_toStartOf="@+id/btnAdminCheckin"
         app:layout_constraintTop_toBottomOf="@+id/btnAdminCheckin">
 

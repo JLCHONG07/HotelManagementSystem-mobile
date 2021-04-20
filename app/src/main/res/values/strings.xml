@@ -153,6 +153,9 @@
     <string name="tv_check_out_ask_user">Are you sure want to check out now ?</string>
     <string name="tiet_confirm_check_out_hint">Enter "Confirm" to check out</string>
     <string name="btn_check_out_confirm">CHECK OUT</string>
+    <string name="check_out_details_dialog_id">Check Out ID</string>
+    <string name="check_out_details_dialog_date_and_time">Check Out Date and Time</string>
+    <string name="only_first_user">Only check in user can check out.</string>
 
     <!-- Admin -->
     <string name="admin_check_in_details_title">Check In Details</string>
