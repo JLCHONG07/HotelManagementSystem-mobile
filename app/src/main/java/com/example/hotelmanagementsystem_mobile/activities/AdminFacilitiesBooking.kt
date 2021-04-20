@@ -33,7 +33,11 @@ class AdminFacilitiesBooking : BaseActivity(), DatePickerDialog.OnDateSetListene
     private var selectedDate: String? = null
     private var cvtMonth: String? = null
     private lateinit var sharedPreferences: SharedPreferences
-    private var firstCome: Boolean = true
+    private var first: Boolean = true
+    private var fromHomePage: Boolean = true
+
+    // private var temDate: String? = null
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_facilities_booking)
@@ -50,51 +54,51 @@ class AdminFacilitiesBooking : BaseActivity(), DatePickerDialog.OnDateSetListene
         rvAdminCheckFB.layoutManager = LinearLayoutManager(this)
         rvAdminCheckFB.adapter = adminCheckFBAdapter
 
-        if (!firstCome) {
-            sharedPreferences =
-                getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
-            btnDate.text = sharedPreferences.getString("btnDate.text", btnDate.text.toString())
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
+        btnDate.text = sharedPreferences.getString("btnDate", btnDate.text.toString())
+        selectedDate = sharedPreferences.getString("selectedDate", selectedDate)
+        savedDay = sharedPreferences.getInt("savedDay", savedDay)
+        fromHomePage = sharedPreferences.getBoolean("fromHomePage", fromHomePage)
+
+        val intent = intent
+        fromHomePage = intent.getBooleanExtra("fromHomePage", fromHomePage)
+
+
+        if (fromHomePage) {
+
+            btnDate.text = getString(R.string.date_picker)
+            savedDay = 0
 
         }
 
-        pickDate()
 
-        sharedPreferences =
-            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
-        btnDate.text = sharedPreferences.getString("btnDate.text", btnDate.text.toString())
+        pickDate()
 
 
     }
 
     @SuppressLint("CommitPrefEdits")
     override fun onStop() {
+
         super.onStop()
-         Log.d("onStop", "Stop")
+
+        fromHomePage = false
+
+        Log.d("firstTime", first.toString())
+
         with(sharedPreferences.edit()) {
-            putString("btnDate.text", btnDate.text.toString())
-            firstCome = false
+            putString("btnDate", btnDate.text.toString()).apply()
+            putString("selectedDate", selectedDate).apply()
+            putInt("savedDay", savedDay).apply()
+            putBoolean("fromHomePage", fromHomePage).apply()
+
+
         }
-    }
 
-    @SuppressLint("CommitPrefEdits")
-    override fun onPause() {
-
-        super.onPause()
-
-        Log.d("onStop", "Stop")
-        sharedPreferences =
-            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
-        btnDate.text = sharedPreferences.getString("btnDate.text", btnDate.text.toString())
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("onStart", "onStart")
-        sharedPreferences =
-            getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
-        btnDate.text = sharedPreferences.getString("btnDate.text", btnDate.text.toString())
-    }
 
     fun validationRequiredField(): Boolean {
 
@@ -149,6 +153,8 @@ class AdminFacilitiesBooking : BaseActivity(), DatePickerDialog.OnDateSetListene
         // Log.d("selectedDate", selectedDate)
         cvtMonth = BookingAvailable().converter(savedMonth)
         btnDate.text = "$savedDay $cvtMonth $savedYear"
+        //temDate = btnDate.text.toString()
+
     }
 
     fun selectedView(categories: String, type: String) {

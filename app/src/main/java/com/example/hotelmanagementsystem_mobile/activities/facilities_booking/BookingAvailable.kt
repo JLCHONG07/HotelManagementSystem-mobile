@@ -118,7 +118,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
 
     }
 
-    override fun onPause() {
+/*    override fun onPause() {
 
         super.onPause()
         Log.d("onPause", "onPause")
@@ -126,9 +126,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             putString("aBarTitle", intent.getStringExtra("aBarTitle")).apply()
             putString("type", intent.getStringExtra("type")).apply()
         }
-    }
+    }*/
 
-    override fun onStart() {
+/*    override fun onStart() {
 
         super.onStart()
         Log.d("onStart", "onStart")
@@ -137,7 +137,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             putString("aBarTitle1", intent.getStringExtra("aBarTitle")).apply()
             putString("type1", intent.getStringExtra("type")).apply()
         }
-    }
+    }*/
 
     //---------------------UI---------------------------//
     //clicking button/card functions of the activities
