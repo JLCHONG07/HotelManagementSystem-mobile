@@ -182,4 +182,5 @@
 
     <string name="booking_history">Booking History</string>
     <string name="checkin_history">Check In History</string>
+    <string name="dashboard">Dashboards</string>
 </resources>

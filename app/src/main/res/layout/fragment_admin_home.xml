@@ -7,33 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AdminHomeFragment">
 
-    <com.synnapps.carouselview.CarouselView
-        android:id="@+id/carouselView"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:autoPlay="true"
-        app:fillColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:pageColor="@color/black"
-        app:radius="6dp"
-        app:slideInterval="4000"
-        app:strokeColor="#FF777777"
-        app:strokeWidth="1dp" />
-
     <RelativeLayout
-        android:id="@+id/btnCheckin"
-        android:layout_width="108dp"
-        android:layout_height="93dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
+        android:id="@+id/btnAdminCheckin"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/border"
         android:foregroundGravity="center"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/carouselView"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -65,19 +50,16 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/btnCheckout"
+        android:id="@+id/btnAdminCheckout"
 
-        android:layout_width="108dp"
-        android:layout_height="93dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
         android:background="@drawable/border"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/btnCheckin"
-        app:layout_constraintEnd_toStartOf="@+id/btnVoucher"
-        app:layout_constraintStart_toEndOf="@+id/btnCheckin"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnCheckin"
         tools:ignore="MissingConstraints">
 
@@ -110,11 +92,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/btnFacilities"
+        android:id="@+id/btnAdminFacilities"
 
-        android:layout_width="108dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
 
         android:background="@drawable/border"
         android:gravity="center"
@@ -150,43 +132,17 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/btnVoucher"
-
-        android:layout_width="108dp"
-        android:layout_height="93dp"
-
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/border"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/btnCheckout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnCheckout"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/imageVoucher"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:paddingTop="10dp"
-            android:src="@drawable/image" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageVoucher"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="E-Voucher"></TextView>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/dashboard"
+        android:textColor="@color/grey_color"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

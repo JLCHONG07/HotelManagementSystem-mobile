@@ -14,7 +14,10 @@ import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Ca
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.utils.Constants
+import kotlinx.android.synthetic.main.fragment_admin_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.btnCheckin
+import kotlinx.android.synthetic.main.fragment_home.btnFacilities
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,12 +35,6 @@ class AdminHomeFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var mUserDetail : User
-
-    var sampleImages = intArrayOf(
-        R.drawable.hotel1,
-        R.drawable.hotel2,
-        R.drawable.hotel3
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,32 +60,18 @@ class AdminHomeFragment : Fragment() {
         Log.i("AdminHomeFragment", "OnViewCreated")
         (activity as AppCompatActivity).supportActionBar?.title = "Home"
 
-        carouselView.setImageListener { position, imageView ->
-            imageView.setImageResource(sampleImages[position])
-        }
-        carouselView.pageCount = sampleImages.size
 
-        btnCheckin.setOnClickListener {
-            activity?.let {
-                val intent = Intent(it, CheckInActivity::class.java)
-                intent.putExtra(Constants.USERS, mUserDetail)
-                startActivity(intent)
-            }
-        }
-
-        btnFacilities.setOnClickListener {
-            activity?.let {
-                val intent = Intent(it, AdminFacilitiesBooking::class.java)
-                it.startActivity(intent)
-            }
-        }
-        btnVoucher.setOnClickListener{
-            activity?.let {
-                val intent = Intent(it, EVouchers::class.java)
-                it.startActivity(intent)
-            }
+        btnAdminCheckin.setOnClickListener {
 
         }
+
+        btnAdminFacilities.setOnClickListener {
+        }
+
+        btnAdminCheckout.setOnClickListener{
+
+        }
+
     }
 
     fun updateUserDetails(user: User) {
