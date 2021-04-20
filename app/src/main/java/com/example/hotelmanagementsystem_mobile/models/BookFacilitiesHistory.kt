@@ -5,13 +5,14 @@ import android.os.Parcelable
 
 data class BookFacilitiesHistory(
     val imageCat: Int, val catAndDuration: String, val time: String, val courtRoom: String, val color: Int, val weekOfDay: String, val monthOfDate:String,
-    val month:String,val cat:String ) : Parcelable {
+    val month:String,val cat:String,val date:String ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -29,6 +30,7 @@ data class BookFacilitiesHistory(
         parcel.writeString(monthOfDate)
         parcel.writeString(month)
         parcel.writeString(cat)
+        parcel.writeString(date)
     }
 
     override fun describeContents(): Int {
@@ -44,4 +46,5 @@ data class BookFacilitiesHistory(
             return arrayOfNulls(size)
         }
     }
+
 }

@@ -88,7 +88,7 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         weekOfDay= getWeekOfday()
         cvtMonth=getMonth()
         time="$selectedTime - ${calEndTime}"
-        date="${savedDay}_${cvtMonth}_${savedYear}"
+        date="${savedDay}_${savedMonth+1}_${savedYear}"
         catAndDuration="$currentCat (${selectedDuration} minutes)"
         BookingDate.text = "$savedDay $cvtMonth $savedYear"
         startTime.text = selectedTime
