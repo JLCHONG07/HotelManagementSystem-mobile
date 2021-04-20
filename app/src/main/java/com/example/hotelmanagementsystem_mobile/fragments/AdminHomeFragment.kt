@@ -15,9 +15,6 @@ import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.utils.Constants
 import kotlinx.android.synthetic.main.fragment_admin_home.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.btnCheckin
-import kotlinx.android.synthetic.main.fragment_home.btnFacilities
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +32,7 @@ class AdminHomeFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var mUserDetail : User
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,16 +60,27 @@ class AdminHomeFragment : Fragment() {
 
 
         btnAdminCheckin.setOnClickListener {
-
+            activity?.let {
+                val intent = Intent(it, CheckInActivity::class.java)
+                intent.putExtra(Constants.USERS, mUserDetail)
+                startActivity(intent)
+            }
         }
 
         btnAdminFacilities.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, AdminFacilitiesBooking::class.java)
+                it.startActivity(intent)
+            }
         }
-
-        btnAdminCheckout.setOnClickListener{
+        btnAdminVoucher.setOnClickListener{
+            activity?.let {
+                val intent = Intent(it, EVouchers::class.java)
+                intent.putExtra("fromHomePage",true)
+                it.startActivity(intent)
+            }
 
         }
-
     }
 
     fun updateUserDetails(user: User) {
