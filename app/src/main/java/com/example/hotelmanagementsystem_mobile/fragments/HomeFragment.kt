@@ -97,7 +97,8 @@ class HomeFragment() : Fragment() {
         btnVoucher.setOnClickListener{
             activity?.let {
                 val intent = Intent(it, EVouchers::class.java)
-                it.startActivity(intent)
+                intent.putExtra(Constants.USERS, mUserDetail)
+               startActivity(intent)
             }
 
         }

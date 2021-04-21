@@ -15,7 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize">
 
         <!-- Admin -->
         <activity android:name=".activities.AdminViewTimeSlots"
@@ -71,15 +72,17 @@
         <activity
             android:name=".activities.Signup"
             android:theme="@style/signupTheme"
-            android:windowSoftInputMode="adjustResize"/>
+            />
         <activity
             android:name=".activities.Login"
-            android:theme="@style/loginTheme"
-            android:windowSoftInputMode="adjustResize"/>
+            android:theme="@style/loginTheme"/>
+
+
         <activity
             android:name=".activities.EVouchers"
             android:parentActivityName=".activities.Homepage"
-            android:windowSoftInputMode="adjustResize"/>
+            android:label="@string/e_voucher"
+           />
         <activity
             android:name=".activities.facilities_booking.Categories"
             android:label="@string/bar_categories"
@@ -92,7 +95,7 @@
             android:name=".activities.CheckInActivity"
             android:label="@string/recently_check_in_title"
             android:parentActivityName=".activities.Homepage"
-            android:windowSoftInputMode="adjustResize"
+
             android:screenOrientation="sensorPortrait"
             tools:replace="screenOrientation" />
         <activity

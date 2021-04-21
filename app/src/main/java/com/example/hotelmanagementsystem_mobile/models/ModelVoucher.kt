@@ -9,8 +9,9 @@ data class ModelVoucher(
     val _image:Int,
     val timeDuration: String="", val vouchType: String="", val vouchCode: String="",
     val vouchCat: String="",
-    val available: Boolean,
-    val userID:String
+
+    val userID:String,
+    val voucherID:String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -18,7 +19,7 @@ data class ModelVoucher(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readByte() != 0.toByte(),
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
@@ -29,8 +30,8 @@ data class ModelVoucher(
         parcel.writeString(vouchType)
         parcel.writeString(vouchCode)
         parcel.writeString(vouchCat)
-        parcel.writeByte(if (available) 1 else 0)
         parcel.writeString(userID)
+        parcel.writeString(voucherID)
     }
 
     override fun describeContents(): Int {
@@ -46,5 +47,4 @@ data class ModelVoucher(
             return arrayOfNulls(size)
         }
     }
-
 }

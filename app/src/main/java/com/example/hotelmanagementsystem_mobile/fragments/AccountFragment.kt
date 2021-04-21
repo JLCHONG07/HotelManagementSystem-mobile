@@ -82,6 +82,7 @@ class AccountFragment : Fragment() {
         book.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, BookingHistory::class.java)
+                intent.putExtra(Constants.USERS, mUserDetail)
                 it.startActivity(intent)
             }
         }
