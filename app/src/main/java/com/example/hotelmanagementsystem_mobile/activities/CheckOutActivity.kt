@@ -190,7 +190,7 @@ class CheckOutActivity : BaseActivity() {
         val newBookingDetailsHashMap = HashMap<String, Any>()
 
         //Check out details
-        val checkOutDateTime = SimpleDateFormat("yyyy:MM:dd HH.mm.ss", Locale.ENGLISH)
+        val checkOutDateTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         val formattedCheckOut = checkOutDateTime.format(Date())
 
         val checkOutDateTimeID = SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH)

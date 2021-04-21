@@ -185,7 +185,7 @@ class CheckInActivity : BaseActivity() {
         val status = "checkedin"
 
         //get current datetime
-        val checkInCurrentDate = SimpleDateFormat("yyyy:MM:dd HH.mm.ss", Locale.ENGLISH)
+        val checkInCurrentDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         val checkInGenerateIDDateTime = SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH)
         val datetimeFormatted = checkInCurrentDate.format(Date())
         val generateDateTimeCheckInID = checkInGenerateIDDateTime.format(Date())

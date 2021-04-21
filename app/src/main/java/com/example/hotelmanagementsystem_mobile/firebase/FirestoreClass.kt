@@ -1,9 +1,11 @@
 package com.example.hotelmanagementsystem_mobile.firebase
 
 import android.app.Activity
+import android.os.Build
 import android.text.format.DateUtils
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.activities.*
 import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
@@ -23,10 +25,12 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
-import java.time.LocalDateTime
+import java.time.*
 import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.time.milliseconds
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -106,6 +110,7 @@ class FirestoreClass {
             }
     }
 
+    //Get user details, return with snapshot
     suspend fun getUserDetailsInAdmin(user_id : String) : DocumentSnapshot{
         return mFirestore.collection(Constants.USERS)
             .document(user_id)
@@ -242,6 +247,7 @@ class FirestoreClass {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity) {
         mFirestore.collection(Constants.BOOKING_DETAILS)
             .whereEqualTo(Constants.STATUS, "checkedin")
@@ -253,11 +259,17 @@ class FirestoreClass {
 
                 for(result in document.documents) {
                     val bookingDetails = result.toObject(BookingDetails::class.java)!!
-                    var datetime = bookingDetails.check_in_details[0].checkInDateAndTime
-                    var format = DateTimeFormatter.ofPattern("yyyy:MM:dd HH.mm.ss")
-                    var convertedDateTime = LocalDateTime.parse(datetime, format)
+                    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    val c = Calendar.getInstance()
+                    val datetime = LocalDateTime.parse(bookingDetails.check_in_details[0].checkInDateAndTime, format)
+                    Log.i("Date", datetime.toString())
+                    Log.i("Date", c.get(Calendar.DATE).toString())
+                    Log.i("Date", c.time.month.toString())
+                    Log.i("Date", c.get(Calendar.YEAR).toString())
 
-                    if (DateUtils.isToday(convertedDateTime.dayOfMonth.toLong())) {
+                    if (c.get(Calendar.DAY_OF_MONTH) == datetime.dayOfMonth
+                        && c.time.month == datetime.monthValue - 1
+                        && c.get(Calendar.YEAR) == datetime.year) {
                         todayBookingDetails.add(bookingDetails)
                     }
                     else {

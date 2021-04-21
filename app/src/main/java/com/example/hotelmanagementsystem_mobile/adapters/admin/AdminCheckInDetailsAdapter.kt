@@ -52,7 +52,7 @@ open class AdminCheckInDetailsAdapter(private val context : AdminCheckInDetailsA
             holder.itemView.tv_check_in__date_range.text = bookingDetailsModel.room_reservation_details[0].reservationDateTime
 
             holder.itemView.cv_check_in_details.setOnClickListener {
-
+                context.showCheckInDetailsDialog(bookingDetailsModel, userDetailsModel)
             }
         } else {
             Glide
@@ -69,7 +69,7 @@ open class AdminCheckInDetailsAdapter(private val context : AdminCheckInDetailsA
             holder.itemView.tv_check_in__date_range.text = bookingDetailsModel.room_reservation_details[0].reservationDateTime
 
             holder.itemView.cv_check_in_details.setOnClickListener {
-
+                context.showCheckInDetailsDialog(bookingDetailsModel, userDetailsModel)
             }
         }
     }

@@ -1,8 +1,11 @@
 package com.example.hotelmanagementsystem_mobile.activities.admin
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
@@ -22,6 +25,8 @@ class AdminCheckInDetailsActivity : BaseActivity(), CoroutineScope {
     private var job: Job = Job()
     private lateinit var userDetails: User
     override val coroutineContext: CoroutineContext get() = Dispatchers.Main + job
+
+    private lateinit var checkInDetailsAlertDialog : AlertDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,17 +75,17 @@ class AdminCheckInDetailsActivity : BaseActivity(), CoroutineScope {
         }
     }
 
-    /*fun showCheckInDetailsDialog(position: Int) {
+    fun showCheckInDetailsDialog(bookingDetails : BookingDetails, userDetails : User) {
         val inflater: LayoutInflater = this.layoutInflater
         val dialogView: View = inflater.inflate(R.layout.check_in_details_dialog_view, null)
         var textNights =
-            "${bookingDetails[position].room_reservation_details[0].numberOfDays} Days, ${bookingDetails[position].room_reservation_details[0].numberOfNights} Nights"
+            "${bookingDetails.room_reservation_details[0].numberOfDays} Days, ${bookingDetails.room_reservation_details[0].numberOfNights} Nights"
         var textReservationDetails =
-            "${bookingDetails[position].room_reservation_details[0].numberOfRooms} Rooms, ${bookingDetails[position].room_reservation_details[0].numberOfGuests} Guests"
+            "${bookingDetails.room_reservation_details[0].numberOfRooms} Rooms, ${bookingDetails.room_reservation_details[0].numberOfGuests} Guests"
 
         val textViewReservationNumber =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_reservation_number)
-        textViewReservationNumber?.text = bookingDetails[position].reservationID
+        textViewReservationNumber?.text = bookingDetails.reservationID
 
         val textViewNights =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_nights)
@@ -92,26 +97,26 @@ class AdminCheckInDetailsActivity : BaseActivity(), CoroutineScope {
 
         val textViewRoomTypes =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_room_types)
-        textViewRoomTypes?.text = bookingDetails[position].room_reservation_details[0].roomTypes
+        textViewRoomTypes?.text = bookingDetails.room_reservation_details[0].roomTypes
 
         val textViewDateAndTime =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_date_time)
-        textViewDateAndTime?.text = bookingDetails[position].check_in_details[0].checkInDateAndTime
+        textViewDateAndTime?.text = bookingDetails.check_in_details[0].checkInDateAndTime
 
         val textViewCheckInId =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_check_in_id)
-        textViewCheckInId?.text = bookingDetails[position].check_in_details[0].checkInID
+        textViewCheckInId?.text = bookingDetails.check_in_details[0].checkInID
 
         val textViewReservationDateRange =
             dialogView.findViewById<TextView>(R.id.check_in_details_dialog_date_range)
-        textViewReservationDateRange.text = bookingDetails[position].room_reservation_details[0].reservationDateTime
+        textViewReservationDateRange.text = bookingDetails.room_reservation_details[0].reservationDateTime
 
         val checkInDetailsDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         checkInDetailsDialogBuilder.setView(dialogView)
         checkInDetailsAlertDialog = checkInDetailsDialogBuilder.create()
         checkInDetailsAlertDialog.show()
-    }*/
+    }
 
     private fun updateAdminCheckInDetailsToday(
         UpdatedBookingDetailsList: ArrayList<BookingDetails>,
