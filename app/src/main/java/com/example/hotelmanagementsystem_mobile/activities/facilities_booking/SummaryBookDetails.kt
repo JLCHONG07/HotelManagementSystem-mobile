@@ -15,6 +15,7 @@ import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
+import com.example.hotelmanagementsystem_mobile.models.ModelVoucher
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.activity_summary_book_details.*
 import java.util.*
@@ -96,7 +97,9 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         endTime.text = calEndTime
         btnConfirm.setOnClickListener(this)
         textViewTAndC.setOnClickListener(this)
-        btnApply.setOnClickListener(this)
+        //btnApply.setOnClickListener(this)
+
+
 
     }
 
@@ -109,29 +112,27 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
                     txtViewCheckErrorMsg.visibility = View.INVISIBLE
 
                 }
+                else{
+                    txtViewCheckErrorMsg.visibility = View.VISIBLE
+                }
+                validVoucher()
                 if (validVoucher() && checkBoxChecked.isChecked) {
                     history()
                     saveBookData()
                     showSuccessfulAlertBox()
                 } else {
-                    txtViewCheckErrorMsg.visibility = View.VISIBLE
+                    if(!checkBoxChecked.isChecked) {
+                        txtViewCheckErrorMsg.visibility = View.VISIBLE
+                    }
                 }
             }
             R.id.textViewTAndC -> {
                 showTAndCAlertBox()
             }
-            R.id.btnApply -> {
-                val checkBoxChecked = findViewById<CheckBox>(R.id.CheckBoxPayment)
-                if (checkBoxChecked.isChecked) {
-                    txtViewCheckErrorMsg.visibility = View.INVISIBLE
-
-                }
-                validVoucher()
-            }
-
 
         }
     }
+
 
     //convert month in Integer form to String MMM
     fun getMonth(): String {
@@ -299,6 +300,7 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
             return false
 
         } else {
+            // if(editTextVoucher.text.toString()==)
             txtViewVoucherErrorMsg.visibility = View.INVISIBLE
             return true
             //any validation here
@@ -311,8 +313,8 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         //get hours of startTime
         var i = 0
         val startTimeLength = startTime!!.length
-        var startHours: String? = ""
-        var totalSum: String? = null
+        var startHours=String()
+        var totalSum=String()
         while (i < startTimeLength) {
             val currentChar: Char = startTime.get(i)
             if (currentChar.compareTo(':') != 0) {
@@ -329,10 +331,10 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
             startHours = 11.toString()
         }
 
-        var endHours = startHours?.toInt()
-        endHours = endHours?.plus(hours)
+        var endHours = startHours.toInt()
+        endHours = endHours.plus(hours)
         when {
-            endHours!! == 12 -> {
+            endHours == 12 -> {
                 totalSum = "$endHours:00 PM"
 
             }

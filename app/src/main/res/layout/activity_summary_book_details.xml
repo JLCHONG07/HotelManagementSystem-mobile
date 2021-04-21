@@ -312,20 +312,6 @@
                     android:textSize="15sp"
                     android:visibility="invisible" />
 
-                <Button
-                    android:id="@+id/btnApply"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:backgroundTint="@color/red"
-                    android:text="APPLY"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    tools:targetApi="lollipop">
-
-                </Button>
 
 
             </LinearLayout>

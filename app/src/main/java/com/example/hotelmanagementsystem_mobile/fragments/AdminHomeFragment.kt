@@ -69,6 +69,7 @@ class AdminHomeFragment : Fragment() {
         btnAdminFacilities.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, AdminFacilitiesBooking::class.java)
+                intent.putExtra("fromHomePage",true)
                 it.startActivity(intent)
             }
         }
