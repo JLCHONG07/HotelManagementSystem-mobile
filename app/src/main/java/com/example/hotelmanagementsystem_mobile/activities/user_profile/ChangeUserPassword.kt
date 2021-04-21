@@ -37,6 +37,7 @@ class ChangeUserPassword : BaseActivity() {
         }
     }
 
+    //when user click on back button on title, go to previous page
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -51,13 +52,14 @@ class ChangeUserPassword : BaseActivity() {
             showProgressDialog(resources.getString(R.string.please_wait))
             val user = auth.currentUser
             if(user != null && user.email != null){
-                val credential = EmailAuthProvider
-                    .getCredential(user.email!!, current_password)
+                //get the credential of current user
+                val credential = EmailAuthProvider.getCredential(user.email!!, current_password)
 
-                //prompt user to re-provide their sign-in credentials
+                //prompt user to re-provide their sign-in credentials to reauthenticate the current password
                 user?.reauthenticate(credential)
                     ?.addOnCompleteListener {
                         if(it.isSuccessful){
+                            //update password
                             user?.updatePassword(new_password)
                                 ?.addOnCompleteListener { task ->
                                     if(task.isSuccessful){
@@ -78,6 +80,7 @@ class ChangeUserPassword : BaseActivity() {
 
     }
 
+    //validate the form field
     private fun validateForm(current_password: String, new_password: String, confirm_new_password: String): Boolean {
         return when {
             TextUtils.isEmpty(current_password) -> {

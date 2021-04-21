@@ -41,23 +41,27 @@ class Login : BaseActivity() {
         }
     }
 
+    //if user login successfully
     fun signInSuccess(user: User) {
-        hideProgressDialog()
+        //check account type of user and redirect to their homepage
         if(user.accountType.equals("A")) {
             startActivity(Intent(this, AdminHomepage::class.java))
         }
         else{
             startActivity(Intent(this, Homepage::class.java))
         }
+        hideProgressDialog()
         finish()
     }
 
+    //when user login
     private fun signInRegisteredUser() {
         val email : String = et_log_in_email.text.toString().trim { it <= ' ' }
         val password : String = et_log_in_password.text.toString().trim { it <= ' ' }
 
         if(validateForm(email, password)) {
             showProgressDialog(resources.getString(R.string.please_wait))
+            //check the credentials of user
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {task ->
                     hideProgressDialog()

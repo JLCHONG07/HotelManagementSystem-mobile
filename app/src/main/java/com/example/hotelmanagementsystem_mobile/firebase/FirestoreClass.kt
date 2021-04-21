@@ -35,6 +35,7 @@ import kotlin.time.milliseconds
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
 
+    //write a new user into firebase
     fun registerUser(activity: Signup, userInfo: User) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -46,6 +47,7 @@ class FirestoreClass {
             }
     }
 
+    //get user information from firebase
     fun loadUserData(activity: Activity, fragment: Fragment) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -89,6 +91,7 @@ class FirestoreClass {
             }
     }
 
+    //update the user information in database
     fun updateUserProfileData(activity: EditUserProfile, userHashMap: HashMap<String, Any>) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
