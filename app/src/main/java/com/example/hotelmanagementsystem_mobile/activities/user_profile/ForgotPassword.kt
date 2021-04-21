@@ -36,8 +36,10 @@ class ForgotPassword : BaseActivity() {
     private fun resetUserPassword() {
         val email : String = et_forgot_email.text.toString().trim { it <= ' ' }
 
+        //validate the form fiels
         if(validateForm(email)) {
             showProgressDialog(resources.getString(R.string.please_wait))
+            //send reset password link to user email
             auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener {task ->
                     hideProgressDialog()

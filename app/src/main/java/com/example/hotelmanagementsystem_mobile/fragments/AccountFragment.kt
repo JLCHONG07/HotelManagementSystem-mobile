@@ -110,6 +110,7 @@ class AccountFragment : Fragment() {
         }
     }
 
+    //write the user information getting from firebase to related field
     fun getUserDetails(user: User) {
         mUserDetail = user
         //TODO: Remove later
@@ -126,6 +127,7 @@ class AccountFragment : Fragment() {
         Log.i("AccountFragment", mUserDetail.toString())
     }
 
+    //when user navigate back from the edit profile page, update the information in the account page
     override fun onStart(){
         super.onStart()
         Log.i("Account Fragment", "onStart")

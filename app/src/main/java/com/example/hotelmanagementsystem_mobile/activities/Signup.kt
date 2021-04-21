@@ -31,6 +31,7 @@ class Signup : BaseActivity() {
         }
     }
 
+    //when user register successfully
     fun userRegisterSuccess() {
         Toast.makeText(this, "You have successfully registered an account", Toast.LENGTH_LONG).show()
         hideProgressDialog()
@@ -53,12 +54,14 @@ class Signup : BaseActivity() {
                 .addOnCompleteListener {
                     task ->
                     if(task.isSuccessful) {
+                        //register user to firebase
                         val firebaseUser : FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
                         val user = User(firebaseUser.uid, accountType, name, registeredEmail, passportNumber)
                         FirestoreClass().registerUser(this, user)
                     } else {
                         Toast.makeText(this, "Registration failed !", Toast.LENGTH_SHORT).show()
+                        hideProgressDialog()
                     }
                 }
         }

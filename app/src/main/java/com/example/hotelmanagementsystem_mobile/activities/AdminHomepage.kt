@@ -17,7 +17,7 @@ class AdminHomepage : BaseActivity() {
 
         FirestoreClass().loadUserData(this, AdminHomeFragment())
 
-        //Pass user details to the fragment
+        //set the page to home fragment when admin first open/login to the app
         setCurrentFragment(AdminHomeFragment())
 
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
