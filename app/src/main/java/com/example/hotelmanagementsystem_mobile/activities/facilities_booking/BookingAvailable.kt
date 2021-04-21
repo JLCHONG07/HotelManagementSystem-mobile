@@ -20,7 +20,9 @@ import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.adapters.TimerAvailableRecycleAdapter
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.TimeSlot
+import kotlinx.android.synthetic.main.activity_admin_facilities_booking.*
 import kotlinx.android.synthetic.main.activity_booking_available.*
+import kotlinx.android.synthetic.main.activity_booking_available.btnDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -74,6 +76,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
                 getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE)
             aBarTitle = sharedPreferences.getString("aBarTitle", aBarTitle)
             type = sharedPreferences.getString("type", type)
+            btnDate.text = sharedPreferences.getString("btnDate", btnDate.text.toString())
+            selectedDate = sharedPreferences.getString("selectedDate", selectedDate)
+            savedDay = sharedPreferences.getInt("savedDay", savedDay)
 
         }
 
@@ -106,6 +111,9 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
         with(sharedPreferences.edit()) {
             putString("aBarTitle", currentCat).apply()
             putString("type", txtViewSelection1.text.toString()).apply()
+            putString("btnDate", btnDate.text.toString()).apply()
+            putString("selectedDate", selectedDate).apply()
+            putInt("savedDay", savedDay).apply()
         }
     }
 

@@ -135,9 +135,9 @@ class BookingHistory : BaseActivity() {
         var counter = 0
         //get total length of date
         val dateLength = date.length
-        var savedDay: String? = ""
-        var savedMonth: String? = ""
-        var savedYear: String? = ""
+        var savedDay=String()
+        var savedMonth=String()
+        var savedYear=String()
         var currentDateChar: Char
         var i = 0
         while (i < dateLength) {
@@ -165,14 +165,18 @@ class BookingHistory : BaseActivity() {
         Log.d("savedMonth", savedMonth.toString())
         Log.d("savedYear", savedYear.toString())
 
+       // val cmpYear=savedYear.toInt()
+      //  val cmpMonth=savedMonth.toInt()
+      //  val cmpDay=savedDay.toInt
+
 
         //current year bigger than saved year
-        if(year> savedYear!!.toInt()){
+        if(year> savedYear.toInt()){
             return false
         }
 
         //current month bigger than saved month
-        if(month>savedMonth!!.toInt()){
+        if(month>savedMonth.toInt()){
             return false
         }
 

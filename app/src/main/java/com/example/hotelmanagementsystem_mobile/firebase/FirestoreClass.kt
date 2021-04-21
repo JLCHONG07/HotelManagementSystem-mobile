@@ -475,7 +475,8 @@ class FirestoreClass {
                             it.documents[document].data!!.get("savedDate") as String,
                             it.documents[document].data!!.get("cvtMonth") as String,
                             it.documents[document].data!!.get("categories") as String,
-                            ""
+                            it.documents[document].data!!.get("date") as String,
+
                         )
                     )
 
