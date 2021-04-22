@@ -183,7 +183,7 @@
             android:paddingTop="5dp"
             android:text="@string/booking_history"
             android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="30dp"
@@ -216,11 +216,11 @@
             android:layout_height="match_parent"
             android:gravity="top|center_vertical"
 
-            android:paddingLeft="8dp"
+            android:paddingLeft="10dp"
             android:paddingTop="5dp"
             android:text="@string/checkout_history"
             android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="30dp"
@@ -258,7 +258,7 @@
             android:paddingTop="5dp"
             android:text="@string/change_password"
             android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="30dp"
