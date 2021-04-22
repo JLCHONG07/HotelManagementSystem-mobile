@@ -302,9 +302,9 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         var currentRsvtID=String()
         var voucherID=String()
 
-        if(voucherCodeArray.size<0){
+        /*if(voucherCodeArray.size<0){
             txtViewVoucherErrorMsg.visibility = View.VISIBLE
-        }
+        }*/
         if (editTextVoucher.text.isNullOrBlank()) {
             txtViewVoucherErrorMsg.visibility = View.VISIBLE
 
