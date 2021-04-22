@@ -629,5 +629,32 @@ class FirestoreClass {
         }
     }
 
+    //Voucher
+    fun saveGeneratedVoucher(voucherArray: ArrayList<ModelVoucher>) {
+
+        val voucherData: MutableMap<String, Any> = HashMap()
+        for (i in voucherArray.indices) {
+
+            voucherData["voucherCat"] = voucherArray[i].vouchCat
+            voucherData["voucherType"] = voucherArray[i].vouchType
+            voucherData["voucherCode"] = voucherArray[i].vouchCode
+            voucherData["timeDuration"] = voucherArray[i].timeDuration
+            voucherData["reservationID"] = voucherArray[i].userID
+
+            mFirestore.collection("e_voucher").document(voucherArray[i].userID)
+                .collection("voucherID").document()
+                .set(voucherData)
+                .addOnSuccessListener {
+                    Log.d("status", "successful added Voucher")
+                }
+                .addOnFailureListener {
+                    Log.d("status", "fail added Voucher")
+                }
+
+
+        }
+
+    }
+
 
 }
