@@ -199,6 +199,6 @@
     <string name="previous">Previous</string>
 
     <string name="booking_history">Booking History</string>
-    <string name="checkout_history">Check In History</string>
+    <string name="checkout_history">Check Out History</string>
     <string name="dashboard">Dashboards</string>
 </resources>

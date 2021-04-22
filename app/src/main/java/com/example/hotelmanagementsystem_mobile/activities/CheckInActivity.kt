@@ -134,13 +134,19 @@ class CheckInActivity : BaseActivity() {
 
     fun successfulGetBookingDetails(bookingDetails : BookingDetails) {
         hideProgressDialog()
-        if((bookingDetails.status != "checkedin" ||
-            bookingDetails.status != "checkedout" ||
-                !bookingDetails.checkedInUser.contains(mUserDetail.id))) {
-            updateBookingDetails(bookingDetails)
-        } else {
-            showProgressDialog(resources.getString(R.string.please_wait))
-            getCheckedInDetails()
+        when {
+            bookingDetails.status == "" -> {
+                Toast.makeText(this, "This reservation id haven't check in!", Toast.LENGTH_SHORT).show()
+            }
+            bookingDetails.status != "checkedin" ||
+                    bookingDetails.status != "checkedout" ||
+                    !bookingDetails.checkedInUser.contains(mUserDetail.id) -> {
+                updateBookingDetails(bookingDetails)
+            }
+            else -> {
+                showProgressDialog(resources.getString(R.string.please_wait))
+                getCheckedInDetails()
+            }
         }
     }
 
