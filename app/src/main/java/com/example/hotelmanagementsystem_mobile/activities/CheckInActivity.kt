@@ -138,7 +138,6 @@ class CheckInActivity : BaseActivity() {
             bookingDetails.status != "checkedout" ||
                 !bookingDetails.checkedInUser.contains(mUserDetail.id))) {
             updateBookingDetails(bookingDetails)
-            EVouchers().generateVoucher(reservationId)
         } else {
             showProgressDialog(resources.getString(R.string.please_wait))
             getCheckedInDetails()
@@ -212,6 +211,7 @@ class CheckInActivity : BaseActivity() {
 
         val newCheckInDetailsArray: ArrayList<CheckInDetails> = ArrayList()
         if(oldCheckInDetails.status != "checkedin") {
+            EVouchers().generateVoucher(reservationId)
             bookingDetails.status = status
             newCheckInDetailsArray.add(newCheckInDetails)
             bookingDetails.check_in_details = newCheckInDetailsArray
