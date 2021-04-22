@@ -135,12 +135,8 @@ class CheckInActivity : BaseActivity() {
     fun successfulGetBookingDetails(bookingDetails : BookingDetails) {
         hideProgressDialog()
         when {
-            bookingDetails.status == "" -> {
-                Toast.makeText(this, "This reservation id haven't check in!", Toast.LENGTH_SHORT).show()
-            }
-            bookingDetails.status != "checkedin" ||
-                    bookingDetails.status != "checkedout" ||
-                    !bookingDetails.checkedInUser.contains(mUserDetail.id) -> {
+            (bookingDetails.status == "" && !bookingDetails.checkedInUser.contains(mUserDetail.id))
+                    || !bookingDetails.checkedInUser.contains(mUserDetail.id) -> {
                 updateBookingDetails(bookingDetails)
             }
             else -> {
@@ -217,7 +213,9 @@ class CheckInActivity : BaseActivity() {
 
         val newCheckInDetailsArray: ArrayList<CheckInDetails> = ArrayList()
         if(oldCheckInDetails.status != "checkedin") {
-            EVouchers().generateVoucher(reservationId)
+            if(reservationId != "") {
+                EVouchers().generateVoucher(reservationId)
+            }
             bookingDetails.status = status
             newCheckInDetailsArray.add(newCheckInDetails)
             bookingDetails.check_in_details = newCheckInDetailsArray
