@@ -79,7 +79,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             btnDate.text = sharedPreferences.getString("btnDate", btnDate.text.toString())
             selectedDate = sharedPreferences.getString("selectedDate", selectedDate)
             savedDay = sharedPreferences.getInt("savedDay", savedDay)
-
+           cvtMonth=sharedPreferences.getString("cvtMonth",cvtMonth)
         }
 
         txtViewCourtRoom.text = "$selection $type :"
@@ -114,6 +114,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
             putString("btnDate", btnDate.text.toString()).apply()
             putString("selectedDate", selectedDate).apply()
             putInt("savedDay", savedDay).apply()
+            putString("cvtMonth",cvtMonth).apply()
         }
     }
 
