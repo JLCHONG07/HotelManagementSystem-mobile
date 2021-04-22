@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.*
 import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
+import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckOutDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.Categories
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
 import com.example.hotelmanagementsystem_mobile.models.User
@@ -62,6 +63,13 @@ class AdminHomeFragment : Fragment() {
         btnAdminCheckin.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, AdminCheckInDetailsActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        btnAdminCheckout.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, AdminCheckOutDetailsActivity::class.java)
                 startActivity(intent)
             }
         }

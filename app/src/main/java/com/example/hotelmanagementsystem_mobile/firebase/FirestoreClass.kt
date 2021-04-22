@@ -2,13 +2,13 @@ package com.example.hotelmanagementsystem_mobile.firebase
 
 import android.app.Activity
 import android.os.Build
-import android.text.format.DateUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.hotelmanagementsystem_mobile.activities.*
 import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
+import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckOutDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
 import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
@@ -30,7 +30,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.time.milliseconds
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -248,7 +247,7 @@ class FirestoreClass {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity) {
+    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity, checkInID : String) {
         mFirestore.collection(Constants.BOOKING_DETAILS)
             .whereEqualTo(Constants.STATUS, "checkedin")
             .get()
@@ -256,6 +255,7 @@ class FirestoreClass {
                     document ->
                 val todayBookingDetails = ArrayList<BookingDetails>()
                 val otherDayBookingDetails = ArrayList<BookingDetails>()
+                val searchResultList = ArrayList<BookingDetails>()
 
                 for(result in document.documents) {
                     val bookingDetails = result.toObject(BookingDetails::class.java)!!
@@ -268,16 +268,62 @@ class FirestoreClass {
                     Log.i("Date", c.get(Calendar.YEAR).toString())
 
                     if (c.get(Calendar.DAY_OF_MONTH) == datetime.dayOfMonth
-                        && c.time.month == datetime.monthValue - 1
+                        && c.get(Calendar.MONTH) == datetime.monthValue - 1
                         && c.get(Calendar.YEAR) == datetime.year) {
                         todayBookingDetails.add(bookingDetails)
                     }
                     else {
                         otherDayBookingDetails.add(bookingDetails)
                     }
+
+                    if(bookingDetails.check_in_details[0].checkInID == checkInID && checkInID.isNotEmpty()) {
+                        searchResultList.add(bookingDetails)
+                    }
                 }
 
-                activity.successfulGetCheckInDetails(todayBookingDetails, otherDayBookingDetails)
+                activity.successfulGetCheckInDetails(todayBookingDetails, otherDayBookingDetails, searchResultList)
+            }
+            .addOnFailureListener {exception ->
+                Log.e(activity.javaClass.simpleName, "Error while get all booking details !", exception)
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getTodayOtherDayCheckOutDetails(activity : AdminCheckOutDetailsActivity, checkOutID : String) {
+        mFirestore.collection(Constants.BOOKING_DETAILS)
+            .whereEqualTo(Constants.STATUS, "checkedout")
+            .get()
+            .addOnSuccessListener {
+                    document ->
+                val todayBookingDetails = ArrayList<BookingDetails>()
+                val otherDayBookingDetails = ArrayList<BookingDetails>()
+                val searchResultList = ArrayList<BookingDetails>()
+
+                for(result in document.documents) {
+                    val bookingDetails = result.toObject(BookingDetails::class.java)!!
+                    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    val c = Calendar.getInstance()
+                    val datetime = LocalDateTime.parse(bookingDetails.check_out_details[0].checkOutDateTime, format)
+                    Log.i("Date", datetime.toString())
+                    Log.i("Date", c.get(Calendar.DATE).toString())
+                    Log.i("Date", c.time.month.toString())
+                    Log.i("Date", c.get(Calendar.YEAR).toString())
+
+                    if (c.get(Calendar.DAY_OF_MONTH) == datetime.dayOfMonth
+                        && c.get(Calendar.MONTH) == datetime.monthValue - 1
+                        && c.get(Calendar.YEAR) == datetime.year) {
+                        todayBookingDetails.add(bookingDetails)
+                    }
+                    else {
+                        otherDayBookingDetails.add(bookingDetails)
+                    }
+
+                    if(bookingDetails.check_out_details[0].checkOutID == checkOutID && checkOutID.isNotEmpty()) {
+                        searchResultList.add(bookingDetails)
+                    }
+                }
+
+                activity.successfulGetCheckOutDetails(todayBookingDetails, otherDayBookingDetails, searchResultList)
             }
             .addOnFailureListener {exception ->
                 Log.e(activity.javaClass.simpleName, "Error while get all booking details !", exception)

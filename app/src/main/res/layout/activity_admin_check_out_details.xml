@@ -4,42 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.admin.AdminCheckInDetailsActivity">
+    tools:context=".activities.admin.AdminCheckOutDetailsActivity">
 
     <LinearLayout
-        android:id="@+id/ll_today_text"
+        android:id="@+id/ll_admin_check_out_today_text"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/admin_check_in_today"
+            android:id="@+id/admin_check_out_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_total_text_check_in_today"
+            android:text="@string/tv_total_text_check_out_today"
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/tv_admin_today_total"
+            android:id="@+id/tv_admin_today_total_check_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="1"
+            android:text="0"
             android:textSize="16sp"
             android:gravity="start" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_rv_today_check_in_details"
+        android:id="@+id/ll_rv_today_check_out_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/ll_today_text"
+        app:layout_constraintTop_toBottomOf="@+id/ll_admin_check_out_today_text"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_admin_today_check_in_details"
+            android:id="@+id/rv_admin_today_check_out_details"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -47,39 +47,39 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_other_day_text"
-        app:layout_constraintTop_toBottomOf="@+id/ll_rv_today_check_in_details"
+        android:id="@+id/ll_admin_check_out_other_day_text"
+        app:layout_constraintTop_toBottomOf="@+id/ll_rv_today_check_out_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/admin_check_in_other_day"
+            android:id="@+id/admin_check_out_other_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_total_text_check_in_other_day"
+            android:text="@string/tv_total_text_check_out_other_day"
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/tv_admin_other_day_total"
+            android:id="@+id/tv_admin_other_day_total_check_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="1"
+            android:text="0"
             android:textSize="16sp"
             android:gravity="start" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_rv_other_day_check_in_details"
+        android:id="@+id/ll_rv_admin_check_out_other_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/ll_other_day_text"
+        app:layout_constraintTop_toBottomOf="@+id/ll_admin_check_out_other_day_text"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_admin_other_day_check_in_details"
+            android:id="@+id/rv_admin_other_day_check_out_details"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -87,39 +87,39 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_result_text"
-        app:layout_constraintTop_toBottomOf="@+id/ll_rv_other_day_check_in_details"
+        android:id="@+id/ll_admin_check_out_result_text"
+        app:layout_constraintTop_toBottomOf="@+id/ll_rv_admin_check_out_other_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/admin_check_in_result"
+            android:id="@+id/admin_check_out_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_total_text_check_in_out_result"
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/tv_admin_search_result_total"
+            android:id="@+id/tv_admin_search_total_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="1"
+            android:text="0"
             android:textSize="16sp"
             android:gravity="start" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_rv_result_check_in_details"
+        android:id="@+id/ll_rv_admin_check_out_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/ll_result_text"
+        app:layout_constraintTop_toBottomOf="@+id/ll_admin_check_out_result_text"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_admin_result_check_in_details"
+            android:id="@+id/rv_admin_check_out_details_result"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -146,7 +146,7 @@
             android:theme="@style/Theme.MaterialComponents.Light">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_admin_check_in_search"
+                android:id="@+id/tiet_admin_check_out_search"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -159,7 +159,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_admin_check_in_search"
+            android:id="@+id/btn_admin_check_out_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="10dp"

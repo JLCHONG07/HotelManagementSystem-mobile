@@ -30,7 +30,7 @@ open class CheckOutHistoryDetailsAdapter(private val context : CheckOutHistoryAc
                 .into(holder.itemView.civ_profile_image)
 
             holder.itemView.tv_check_in_user_name.text = mUserDetails.name
-            holder.itemView.tv_check_in_id.text = model.check_in_details[0].checkInID
+            holder.itemView.tv_check_in_id.text = model.check_out_details[0].checkOutID
             holder.itemView.tv_check_in_number_of_room.text = model.room_reservation_details[0].numberOfRooms.toString()
             holder.itemView.tv_check_in_number_of_customer.text = model.room_reservation_details[0].numberOfGuests.toString()
             holder.itemView.tv_check_in__date_range.text = model.room_reservation_details[0].reservationDateTime

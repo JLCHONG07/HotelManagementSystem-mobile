@@ -159,10 +159,15 @@
 
     <!-- Admin -->
     <string name="admin_check_in_details_title">Check In Details</string>
-    <string name="tv_admin_search_hint">Search by Check in ID</string>
+    <string name="admin_check_out_details_title">Check Out Details</string>
+    <string name="tv_admin_check_in_search_hint">Search by Check in ID</string>
+    <string name="tv_admin_check_out_search_hint">Search by Check Out ID</string>
     <string name="btn_admin_search_text">Search</string>
     <string name="tv_total_text_check_in_today">Today\'s Check In :</string>
-    <string name="tv_total_text_check_in_other_day">Other\'s Day Check In</string>
+    <string name="tv_total_text_check_in_other_day">Other\'s Day Check In :</string>
+    <string name="tv_total_text_check_out_today">Today\'s Check Out :</string>
+    <string name="tv_total_text_check_out_other_day">Other\'s Day Check Out :</string>
+    <string name="tv_total_text_check_in_out_result">Search Result :</string>
 
     <!-- User -->
     <string name="username">Username</string>
