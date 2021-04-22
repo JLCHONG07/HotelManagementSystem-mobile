@@ -282,7 +282,7 @@ class FirestoreClass {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity) {
+    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity, checkInID : String) {
         mFirestore.collection(Constants.BOOKING_DETAILS)
             .whereEqualTo(Constants.STATUS, "checkedin")
             .get()
