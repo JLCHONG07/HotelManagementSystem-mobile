@@ -107,6 +107,7 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         textViewTAndC.setOnClickListener(this)
 
         FirestoreClass().loadUserData(this,HomeFragment())
+        getTotalPrice(cvtToHours)
         //btnApply.setOnClickListener(this)
 
 
@@ -269,7 +270,21 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
     fun getUserName(user : User){
 
-        usernameWord.text=user.name
+        username.text=user.name
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getTotalPrice(price:Int){
+        if(price==1){
+            totalPrice.text="RM "+(price*20).toString()
+        }
+        else if(price==2){
+            totalPrice.text="RM "+(price*20).toString()
+        }
+        else{
+            totalPrice.text="RM "+(price*20).toString()
+        }
+
     }
 
 
