@@ -15,7 +15,9 @@ import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
+import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.example.hotelmanagementsystem_mobile.models.ModelVoucher
+import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
 import com.example.hotelmanagementsystem_mobile.utils.Constants
 import kotlinx.android.synthetic.main.activity_booking_available.*
@@ -103,6 +105,8 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         endTime.text = calEndTime
         btnConfirm.setOnClickListener(this)
         textViewTAndC.setOnClickListener(this)
+
+        FirestoreClass().loadUserData(this,HomeFragment())
         //btnApply.setOnClickListener(this)
 
 
@@ -261,6 +265,11 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         alertDialog.show()
         alertDialog.setCanceledOnTouchOutside(false);
 
+    }
+
+    fun getUserName(user : User){
+
+        usernameWord.text=user.name
     }
 
 
