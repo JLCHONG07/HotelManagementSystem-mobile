@@ -540,7 +540,7 @@ class BookingAvailable : BaseActivity(), View.OnClickListener, AdapterView.OnIte
     //check for booking time
     private fun assignFakeData(timeSlot: MutableMap<String, Any>) {
         //selected date is not current date or same date before 9AM
-        if ((savedHour < 9 && day == savedDay) || day < savedDay) {
+        if ((savedHour < 9 && day == savedDay) || (day < savedDay || month<savedMonth)) {
 
             showCustomDialogAvailable(timeSlot)
 
