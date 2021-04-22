@@ -81,13 +81,6 @@ class AdminHomeFragment : Fragment() {
                 it.startActivity(intent)
             }
         }
-        btnAdminVoucher.setOnClickListener{
-            activity?.let {
-                val intent = Intent(it, EVouchers::class.java)
-                it.startActivity(intent)
-            }
-
-        }
     }
 
     fun updateUserDetails(user: User) {
