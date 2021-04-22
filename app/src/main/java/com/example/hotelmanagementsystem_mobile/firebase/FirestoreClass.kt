@@ -2,21 +2,25 @@ package com.example.hotelmanagementsystem_mobile.firebase
 
 import android.app.Activity
 import android.os.Build
+import android.text.format.DateUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.*
 import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckInDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.admin.AdminCheckOutDetailsActivity
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingAvailable
 import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.BookingHistory
+import com.example.hotelmanagementsystem_mobile.activities.facilities_booking.SummaryBookDetails
 import com.example.hotelmanagementsystem_mobile.activities.user_profile.EditUserProfile
 import com.example.hotelmanagementsystem_mobile.fragments.AccountFragment
 import com.example.hotelmanagementsystem_mobile.fragments.AdminAccountFragment
 import com.example.hotelmanagementsystem_mobile.fragments.AdminHomeFragment
 import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.example.hotelmanagementsystem_mobile.models.BookFacilitiesHistory
+import com.example.hotelmanagementsystem_mobile.models.ModelVoucher
 import com.example.hotelmanagementsystem_mobile.models.User
 import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
 import com.example.hotelmanagementsystem_mobile.utils.Constants
@@ -30,6 +34,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.time.milliseconds
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -60,6 +65,9 @@ class FirestoreClass {
                     is EditUserProfile -> {
                         activity.getUserDetails(loggedInUser)
                     }
+                    is SummaryBookDetails -> {
+                        activity.getUserName(loggedInUser)
+                    }
                 }
                 when (fragment) {
                     is HomeFragment -> {
@@ -88,6 +96,7 @@ class FirestoreClass {
             }
     }
 
+    //update the user information in database
     fun updateUserProfileData(activity: EditUserProfile, userHashMap: HashMap<String, Any>) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -215,6 +224,32 @@ class FirestoreClass {
                         }
                         activity.successfulGetCheckedOutDetails(checkedInDetails)
                     }
+                    is EVouchers -> {
+                        val checkedInDetails: ArrayList<BookingDetails> = ArrayList()
+
+                        for (result in document.documents) {
+                            val details = result.toObject(BookingDetails::class.java)!!
+                            if (details.status == "checkedin") {
+                                checkedInDetails.add(details)
+                            }
+                            activity.retrieveVoucher(checkedInDetails)
+                        }
+                    }
+                    is SummaryBookDetails -> {
+                        val checkedInDetails: ArrayList<BookingDetails> = ArrayList()
+                        if(document.isEmpty) {
+                            activity.invalidCode()
+                        }
+                        for (result in document.documents) {
+                            val details = result.toObject(BookingDetails::class.java)!!
+                            if (details.status == "checkedin") {
+                                checkedInDetails.add(details)
+                            }
+                            Log.d("retrieveVoucher2", "retrieveVoucher2")
+                            activity.retrieveVoucher2(checkedInDetails)
+                        }
+
+                    }
                 }
 
             }.addOnFailureListener {exception ->
@@ -247,7 +282,7 @@ class FirestoreClass {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity, checkInID : String) {
+    fun getTodayOtherDayCheckInDetails(activity: AdminCheckInDetailsActivity) {
         mFirestore.collection(Constants.BOOKING_DETAILS)
             .whereEqualTo(Constants.STATUS, "checkedin")
             .get()
@@ -531,6 +566,117 @@ class FirestoreClass {
             .addOnCompleteListener{
                 activity.retrievedBookedHistory(bookFacilitiesHistory)
             }
+
+    }
+    fun updateVoucherCode(cmpVoucherCode: String, reservationID: String, voucherID: String) {
+        //  val voucherCode: HashMap<String, Any> = HashMap()
+
+        // voucherCode["voucherCode"]=cmpVoucherCode
+        //voucherCode["available"]=false
+        mFirestore.collection("e_voucher").document(reservationID).collection("voucherID")
+            .document(voucherID)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("status", "successful update")
+            }
+            .addOnFailureListener {
+                Log.d("status", "fail added History")
+            }
+
+
+    }
+
+    fun retrieveVoucher(activity: Activity, reservationID: ArrayList<String>) {
+        val arrayListVoucher = ArrayList<ModelVoucher>()
+        //val reservationID=reservationID
+        when (activity) {
+            is EVouchers -> {
+                for (i in reservationID) {
+                    mFirestore.collection("e_voucher").document(i).collection("voucherID")
+                        .get()
+                        .addOnSuccessListener {
+                            // var counter = 0
+                            for (a in it.documents.indices) {
+                                arrayListVoucher.add(
+                                    ModelVoucher(
+                                        R.drawable.e_voucher,
+                                        it.documents[a].data?.get("timeDuration") as String,
+                                        it.documents[a].data?.get("voucherType") as String,
+                                        it.documents[a].data?.get("voucherCode") as String,
+                                        it.documents[a].data?.get("voucherCat") as String,
+                                        it.documents[a].data?.get("reservationID") as String,
+                                        ""
+                                    )
+                                )
+                                //  counter++;
+                            }
+                            activity.assignVoucher(arrayListVoucher)
+
+                        }
+                        .addOnFailureListener {
+                            Log.d("status", "fail retrieved voucher")
+                        }
+                }
+            }
+            is SummaryBookDetails -> {
+                Log.d("retrieveVoucher", "retrieveVoucher")
+                for (i in reservationID) {
+                    mFirestore.collection("e_voucher").document(i).collection("voucherID")
+                        .get()
+                        .addOnSuccessListener {
+                            // var counter = 0
+                            for (a in it.documents.indices) {
+                                arrayListVoucher.add(
+                                    ModelVoucher(
+                                        R.drawable.e_voucher,
+
+                                        it.documents[a].data?.get("timeDuration") as String,
+                                        it.documents[a].data?.get("voucherType") as String,
+                                        it.documents[a].data?.get("voucherCode") as String,
+                                        it.documents[a].data?.get("voucherCat") as String,
+                                        it.documents[a].data?.get("reservationID") as String,
+                                        it.documents[a].id
+                                    )
+                                )
+                                //  counter++;
+                            }
+                            activity.getVoucherCode(arrayListVoucher)
+
+                        }
+                        .addOnFailureListener {
+                            Log.d("status", "fail retrieved voucher")
+                        }
+                }
+
+
+            }
+        }
+    }
+
+    //Voucher
+    fun saveGeneratedVoucher(voucherArray: ArrayList<ModelVoucher>) {
+
+        val voucherData: MutableMap<String, Any> = HashMap()
+        for (i in voucherArray.indices) {
+
+            voucherData["voucherCat"] = voucherArray[i].vouchCat
+            voucherData["voucherType"] = voucherArray[i].vouchType
+            voucherData["voucherCode"] = voucherArray[i].vouchCode
+            voucherData["timeDuration"] = voucherArray[i].timeDuration
+            voucherData["reservationID"] = voucherArray[i].userID
+
+            mFirestore.collection("e_voucher").document(voucherArray[i].userID)
+                .collection("voucherID").document()
+                .set(voucherData)
+                .addOnSuccessListener {
+                    Log.d("status", "successful added Voucher")
+                }
+                .addOnFailureListener {
+                    Log.d("status", "fail added Voucher")
+                }
+
+
+        }
 
     }
 }

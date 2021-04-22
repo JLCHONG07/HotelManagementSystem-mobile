@@ -37,6 +37,7 @@ class HomeFragment() : Fragment() {
 
     private lateinit var mUserDetail : User
 
+    //put the image into an array
     var sampleImages = intArrayOf(
         R.drawable.hotel1,
         R.drawable.hotel2,
@@ -50,6 +51,7 @@ class HomeFragment() : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+        //get user information
         FirestoreClass().loadUserData(Homepage(), this)
     }
 
@@ -67,6 +69,7 @@ class HomeFragment() : Fragment() {
         Log.i("HomeFragment", "OnViewCreated")
         (activity as AppCompatActivity).supportActionBar?.title = "Home"
 
+        //set the image to carousel
         carouselView.setImageListener { position, imageView ->
             imageView.setImageResource(sampleImages[position])
         }
@@ -97,7 +100,8 @@ class HomeFragment() : Fragment() {
         btnVoucher.setOnClickListener{
             activity?.let {
                 val intent = Intent(it, EVouchers::class.java)
-                it.startActivity(intent)
+                intent.putExtra(Constants.USERS, mUserDetail)
+               startActivity(intent)
             }
 
         }

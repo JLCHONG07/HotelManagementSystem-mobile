@@ -44,25 +44,26 @@ class EditUserProfile : BaseActivity() {
         name = findViewById(R.id.et_current_password)
         email = findViewById(R.id.et_confirm_new_password)
         IC = findViewById(R.id.et_new_password)
+        //show progress dialog when get user details from database
         showProgressDialog("Loading...")
+        //get user information
         FirestoreClass().loadUserData(this, HomeFragment())
 
+        //if user click on the image to upload image from device
         iv_profile_user_image.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
+            //check whether permission to read from external storage has be granted
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                //if yes, open the gallery
                 Constants.showImageChooser(this)
             } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                    Constants.READ_STORAGE_PERMISSION_CODE
-                )
+                //request the permission to read from external storage first
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), Constants.READ_STORAGE_PERMISSION_CODE)
             }
         }
+
+        //if user click on update button
         buttonUpdate.setOnClickListener {
+            //check whether there is an uploaded image
             if (mSelectedImageFileUri != null) {
                 uploadUserImage()
             } else {
@@ -71,38 +72,38 @@ class EditUserProfile : BaseActivity() {
         }
     }
 
+    //when user click on back button on top, go to previous page
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    //check the permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
+            //if permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Show Image chooser
                 Constants.showImageChooser(this)
             }
         } else {
+            //show error message permission is not granted
             Toast.makeText(
-                this,
-                "Oops, you just denied the permission for storage. You can also allow it from settings",
-                Toast.LENGTH_LONG
+                this, "Oops, you just denied the permission for storage. You can also allow it from settings", Toast.LENGTH_LONG
             ).show()
         }
     }
 
+    //after user choose image from gallery
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == Constants.PICK_IMAGE_REQUEST_CODE && data!!.data != null) {
+            //assign the image data to a variable
             mSelectedImageFileUri = data.data
-
             try {
+                //put the image uploaded to the user profile image view
                 Glide
                     .with(this)
                     .load(mSelectedImageFileUri)
@@ -115,15 +116,19 @@ class EditUserProfile : BaseActivity() {
         }
     }
 
+    //upload user image into firebase
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
+        //if user choose an image from gallery
         if (mSelectedImageFileUri != null) {
+
             val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
                 "USER_IMAGE" + System.currentTimeMillis()
                         + "." + Constants.getFileExtension(this, mSelectedImageFileUri)
             )
 
+            //write the image choosen into firebase
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
                 Log.i(
                     "Firebase Image URL",
@@ -146,22 +151,25 @@ class EditUserProfile : BaseActivity() {
         }
     }
 
+    //if profile update successfully
     fun profileUpdateSuccess() {
         hideProgressDialog()
         setResult(Activity.RESULT_OK)
         finish()
     }
 
+    //update user information in firebase
     private fun updateUserProfile() {
         var userHashMap = HashMap<String, Any>()
         val name: String = et_current_password.text.toString().trim { it <= ' ' }
         val passportNumber: String = et_new_password.text.toString().trim { it <= ' ' }
         val email: String = et_confirm_new_password.text.toString().trim { it <= ' ' }
 
+        //check the field in form
         if (validateForm(name, passportNumber, email)) {
             showProgressDialog(resources.getString(R.string.please_wait))
+            //if there is an new uploaded image, update the image in database
             if (mProfileImageUri.isNotEmpty() && mProfileImageUri != mUserDetails.image) {
-
                 userHashMap[Constants.IMAGE] = mProfileImageUri
             }
             userHashMap[Constants.NAME] = name
@@ -169,9 +177,9 @@ class EditUserProfile : BaseActivity() {
             userHashMap[Constants.EMAIL] = email
         }
         FirestoreClass().updateUserProfileData(this, userHashMap)
-
     }
 
+    //validate the form field
     private fun validateForm(name: String, passportNumber: String, email: String): Boolean {
         return when {
             TextUtils.isEmpty(name) -> {
@@ -192,6 +200,7 @@ class EditUserProfile : BaseActivity() {
         }
     }
 
+    //get user details when user navigate to the edit profile page
     fun getUserDetails(user: User) {
         mUserDetails = user
 

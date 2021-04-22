@@ -24,12 +24,13 @@ class SplashScreen : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
         )
 
-        // post a time delay to show the splash screen and navigate to intro activity
-
+        //get current user id
         var currentUserID = FirestoreClass().getCurrentUserId()
         var accountType = ""
+        //check whether there is an user logged in
         if (currentUserID.isNotEmpty()) {
             Log.i("account", "onStart")
+            //get current user information
             mFirestore.collection(Constants.USERS)
                 .document(currentUserID)
                 .get()
@@ -37,6 +38,7 @@ class SplashScreen : AppCompatActivity() {
                     val loggedInUser = document.toObject(User::class.java)!!
                     accountType = loggedInUser.accountType
                     Log.i("account", accountType)
+                    //check account type of user
                     if (accountType.equals("A")) {
                         startActivity(Intent(this, AdminHomepage::class.java))
                         finish()
@@ -46,6 +48,7 @@ class SplashScreen : AppCompatActivity() {
                     }
                 }
         } else {
+            // post a time delay to show the splash screen and navigate to login activity
             Handler(Looper.getMainLooper()).postDelayed({
                 startActivity(Intent(this, Login::class.java))
                 finish()

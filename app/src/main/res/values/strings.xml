@@ -121,6 +121,9 @@
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
 
+    <!--e_voucher-->
+    <string name="e_voucher">E-Voucher</string>
+
     <!-- Base Activity String -->
     <string name="please_wait">Please Wait&#8230;</string>
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>

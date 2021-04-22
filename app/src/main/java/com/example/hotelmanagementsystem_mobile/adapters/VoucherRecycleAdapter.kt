@@ -1,12 +1,12 @@
 package com.example.hotelmanagementsystem_mobile.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotelmanagementsystem_mobile.R
+import com.example.hotelmanagementsystem_mobile.activities.EVouchers
 import com.example.hotelmanagementsystem_mobile.models.ModelVoucher
 import kotlinx.android.synthetic.main.row_evoucher.view.*
 
@@ -44,6 +44,16 @@ class VoucherRecycleAdapter(private val arrayListVoucher: ArrayList<ModelVoucher
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(arrayListVoucher[position])
-        Log.d("holder", holder.bindItems(arrayListVoucher[position]).toString())
+        //Log.d("holder", holder.bindItems(arrayListVoucher[position]).toString())
+        holder.itemView.voucherImage.setOnClickListener {
+            val voucherPos=arrayListVoucher[position]
+            val voucherCode=voucherPos.vouchCode
+            when(context){
+                is EVouchers->{
+                    context.copyText(voucherCode)
+                }
+            }
+
+        }
     }
 }

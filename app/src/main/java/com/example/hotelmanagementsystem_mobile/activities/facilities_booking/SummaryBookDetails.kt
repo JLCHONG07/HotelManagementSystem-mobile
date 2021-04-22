@@ -15,7 +15,11 @@ import com.example.hotelmanagementsystem_mobile.R
 import com.example.hotelmanagementsystem_mobile.activities.BaseActivity
 import com.example.hotelmanagementsystem_mobile.activities.Homepage
 import com.example.hotelmanagementsystem_mobile.firebase.FirestoreClass
+import com.example.hotelmanagementsystem_mobile.fragments.HomeFragment
 import com.example.hotelmanagementsystem_mobile.models.ModelVoucher
+import com.example.hotelmanagementsystem_mobile.models.User
+import com.example.hotelmanagementsystem_mobile.models.booking_details.BookingDetails
+import com.example.hotelmanagementsystem_mobile.utils.Constants
 import kotlinx.android.synthetic.main.activity_booking_available.*
 import kotlinx.android.synthetic.main.activity_summary_book_details.*
 import java.util.*
@@ -37,14 +41,17 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
     private var savedYear = 0;
     private var cvtMonth: String? = null
 
-    private var weekOfDay: String?=null
+    private var weekOfDay: String? = null
 
     private var date: String? = null
+    private var invalidVoucher: Boolean = false
+    private var reservationID = ArrayList<String>()
 
     //private var imageCatURL:String?=null
     // private var color:String?=null
-    private var time:String?=null
-    private var catAndDuration:String?=null
+    private var time: String? = null
+    private var catAndDuration: String? = null
+    private val user = FirestoreClass().getCurrentUserId()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +71,7 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         savedMonth = intent.getIntExtra("savedMonth", 0)
         savedYear = intent.getIntExtra("savedYear", 0)
         cvtMonth = intent.getStringExtra("cvtMonth")
+       // username.text=user.name
 
 /*
         if (selectedTime != null) {
@@ -86,19 +94,21 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         cvtToHours /= 60
         Log.d("cvtToHours", cvtToHours.toString())
         val calEndTime = sumHours(cvtToHours, selectedTime)
-        weekOfDay= getWeekOfday()
-        cvtMonth=getMonth()
-        time="$selectedTime - ${calEndTime}"
-        date="${savedDay}_${savedMonth+1}_${savedYear}"
-        catAndDuration="$currentCat (${selectedDuration} minutes)"
+        weekOfDay = getWeekOfday()
+        cvtMonth = getMonth()
+        time = "$selectedTime - ${calEndTime}"
+        date = "${savedDay}_${savedMonth + 1}_${savedYear}"
+        catAndDuration = "$currentCat (${selectedDuration} minutes)"
         BookingDate.text = "$savedDay $cvtMonth $savedYear"
         startTime.text = selectedTime
         bookDrtMin.text = selectedDuration + " " + getString(R.string.sc_minutes)
         endTime.text = calEndTime
         btnConfirm.setOnClickListener(this)
         textViewTAndC.setOnClickListener(this)
-        //btnApply.setOnClickListener(this)
 
+        FirestoreClass().loadUserData(this,HomeFragment())
+        getTotalPrice(cvtToHours)
+        //btnApply.setOnClickListener(this)
 
 
     }
@@ -110,21 +120,13 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
                 val checkBoxChecked = findViewById<CheckBox>(R.id.CheckBoxPayment)
                 if (checkBoxChecked.isChecked) {
                     txtViewCheckErrorMsg.visibility = View.INVISIBLE
+                    Log.d("getCheckedInDetails","getCheckedInDetails")
+                    FirestoreClass().getCheckedInDetails(this@SummaryBookDetails, Constants.BOOKING_DETAILS)
 
-                }
-                else{
+                } else {
                     txtViewCheckErrorMsg.visibility = View.VISIBLE
                 }
-                validVoucher()
-                if (validVoucher() && checkBoxChecked.isChecked) {
-                    history()
-                    saveBookData()
-                    showSuccessfulAlertBox()
-                } else {
-                    if(!checkBoxChecked.isChecked) {
-                        txtViewCheckErrorMsg.visibility = View.VISIBLE
-                    }
-                }
+
             }
             R.id.textViewTAndC -> {
                 showTAndCAlertBox()
@@ -189,7 +191,6 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         }
         return "null"
     }
-
 
 
     private fun getWeekOfday(): String {
@@ -266,30 +267,101 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         alertDialog.setCanceledOnTouchOutside(false);
 
     }
-/*
-    private fun assignImgURL(){
 
-        if(currentCat.equals("Badminton")){
-            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/history_badminton.jpeg?alt=media&token=f22c0028-159a-40f3-a259-0d2e97d4b82c"
+    fun getUserName(user : User){
 
+        username.text=user.name
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getTotalPrice(price:Int){
+        if(price==1){
+            totalPrice.text="RM "+(price*20).toString()
         }
-        else if(currentCat.equals("Table Tennis")){
-            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/history_table_tennis.jpeg?alt=media&token=7fd2a446-9929-47d0-b163-2487f9cdbcdf"
-        }
-        else if(currentCat.equals("Snooker")){
-            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/history_snooker.jpeg?alt=media&token=22f4f9e3-38e4-4a80-808b-86c050b09fe2"
-        }
-        else if(currentCat.equals("Gaming Room")){
-            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/categories_gaming_rooms.jpg?alt=media&token=5127f173-d4ad-4151-b43c-3d7b517e596f"
+        else if(price==2){
+            totalPrice.text="RM "+(price*20).toString()
         }
         else{
-            imageCatURL="https://firebasestorage.googleapis.com/v0/b/hotelmanagementmobile.appspot.com/o/categories_board_game.jpg?alt=media&token=1515dec8-a093-4b4c-bbbc-d85fb7366ae3"
+            totalPrice.text="RM "+(price*20).toString()
         }
 
-    }*/
+    }
 
 
 
+    fun getVoucherCode(voucherCodeArray: ArrayList<ModelVoucher>) {
+
+        Log.d("getVoucherCode","getVoucherCode")
+
+        val cmpVoucherCode = editTextVoucher.text.toString()
+        var codeMatch = false
+        var currentRsvtID=String()
+        var voucherID=String()
+        if (editTextVoucher.text.isNullOrBlank()) {
+            txtViewVoucherErrorMsg.visibility = View.VISIBLE
+
+        } else {
+            txtViewVoucherErrorMsg.visibility = View.INVISIBLE
+            for (i in voucherCodeArray.indices) {
+/*                Log.d("vouchCode",voucherCodeArray[i].vouchCode)
+                Log.d("cmpVoucherCode",cmpVoucherCode.toString())
+                Log.d("available",voucherCodeArray[i].available.toString())
+                Log.d("timeDuration", voucherCodeArray[i].timeDuration)
+                Log.d("selectedDuration",selectedDuration)
+                Log.d("vouchType",voucherCodeArray[i].vouchType)
+                Log.d("currentCat",currentCat)*/
+                if (voucherCodeArray[i].vouchCode == cmpVoucherCode &&
+                    voucherCodeArray[i].timeDuration == selectedDuration && voucherCodeArray[i].vouchType == currentCat
+                ) {
+
+                    currentRsvtID=voucherCodeArray[i].userID
+                    codeMatch = true
+                    voucherID=voucherCodeArray[i].voucherID
+                    break
+                    Log.d("codeMatch",codeMatch.toString())
+                }
+/*                else {
+                    Log.d("codeMatch", codeMatch.toString())
+                }*/
+                //txtViewVoucherErrorMsg.visibility = View.INVISIBLE
+                //any validation here
+            }
+            if (!codeMatch) {
+                txtViewVoucherErrorMsg.text="Invalid voucher code"
+                txtViewVoucherErrorMsg.visibility = View.VISIBLE
+            } else {
+                txtViewVoucherErrorMsg.visibility = View.INVISIBLE
+                history()
+                saveBookData()
+                updateVoucherCode(cmpVoucherCode,currentRsvtID,voucherID)
+                showSuccessfulAlertBox()
+            }
+        }
+
+
+    }
+
+    fun updateVoucherCode(cmpVoucherCode:String,reservationID:String,voucherID:String){
+
+        FirestoreClass().updateVoucherCode(
+            cmpVoucherCode,reservationID,voucherID
+        )
+    }
+
+    fun retrieveVoucher2(bookingDetails: ArrayList<BookingDetails>) {
+
+        //var reservationID=ArrayList<String>()
+        Log.d("retrieveVoucher2","retrieveVoucher2")
+        for (i in bookingDetails) {
+            if (i.checkedInUser.contains(user)) {
+                reservationID.add(i.reservationID)
+            }
+        }
+        Log.d("retrieveVoucher","retrieveVoucher")
+        FirestoreClass().retrieveVoucher(this@SummaryBookDetails, reservationID)
+    }
+
+/*
     private fun validVoucher(): Boolean {
 
         val voucherEditText = findViewById<EditText>(R.id.editTextVoucher).text.toString().trim()
@@ -308,13 +380,14 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
 
     }
+*/
 
     fun sumHours(hours: Int, startTime: String?): String {
         //get hours of startTime
         var i = 0
         val startTimeLength = startTime!!.length
-        var startHours=String()
-        var totalSum=String()
+        var startHours = String()
+        var totalSum = String()
         while (i < startTimeLength) {
             val currentChar: Char = startTime.get(i)
             if (currentChar.compareTo(':') != 0) {
@@ -389,9 +462,6 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
         }
     }
-
-
-
 
 
     private fun history() {

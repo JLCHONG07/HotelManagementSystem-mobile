@@ -114,6 +114,7 @@ class CheckInActivity : BaseActivity() {
                         showProgressDialog(resources.getString(R.string.please_wait))
                         Log.i(javaClass.simpleName, bookingDetailsPath)
                         Log.i(javaClass.simpleName, reservationId)
+
                         FirestoreClass().getBookingDetails(this, bookingDetailsPath, reservationId)
                     } else {
                         Log.i(javaClass.simpleName, "No path")
@@ -137,6 +138,7 @@ class CheckInActivity : BaseActivity() {
             bookingDetails.status != "checkedout" ||
                 !bookingDetails.checkedInUser.contains(mUserDetail.id))) {
             updateBookingDetails(bookingDetails)
+            EVouchers().generateVoucher(reservationId)
         } else {
             showProgressDialog(resources.getString(R.string.please_wait))
             getCheckedInDetails()

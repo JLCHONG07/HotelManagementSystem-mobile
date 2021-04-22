@@ -18,7 +18,7 @@ class Homepage : BaseActivity() {
 
         FirestoreClass().loadUserData(this, HomeFragment())
 
-        //Pass user details to the fragment
+        //set the page to home fragment when customer first open/login to the app
         setCurrentFragment(HomeFragment())
 
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
