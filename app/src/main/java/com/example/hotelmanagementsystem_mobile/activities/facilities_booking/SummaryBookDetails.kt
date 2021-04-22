@@ -287,6 +287,10 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
 
     }
 
+    fun invalidCode(){
+        txtViewVoucherErrorMsg.text="Invalid voucher code"
+        txtViewVoucherErrorMsg.visibility = View.VISIBLE
+    }
 
 
     fun getVoucherCode(voucherCodeArray: ArrayList<ModelVoucher>) {
@@ -297,6 +301,10 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
         var codeMatch = false
         var currentRsvtID=String()
         var voucherID=String()
+
+        if(voucherCodeArray.size<0){
+            txtViewVoucherErrorMsg.visibility = View.VISIBLE
+        }
         if (editTextVoucher.text.isNullOrBlank()) {
             txtViewVoucherErrorMsg.visibility = View.VISIBLE
 
@@ -351,11 +359,13 @@ class SummaryBookDetails : BaseActivity(), View.OnClickListener {
     fun retrieveVoucher2(bookingDetails: ArrayList<BookingDetails>) {
 
         //var reservationID=ArrayList<String>()
+
         Log.d("retrieveVoucher2","retrieveVoucher2")
         for (i in bookingDetails) {
             if (i.checkedInUser.contains(user)) {
                 reservationID.add(i.reservationID)
             }
+
         }
         Log.d("retrieveVoucher","retrieveVoucher")
         FirestoreClass().retrieveVoucher(this@SummaryBookDetails, reservationID)
